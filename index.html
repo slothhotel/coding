@@ -240,7 +240,37 @@
 
     .about-geo {
       position: relative;
-      height: 320px;
+      height: 400px;
+    }
+
+    /* ── Waben-Portrait ──────────────────────────────────────────── */
+    .hex-portrait {
+      position: absolute;
+      bottom: 10px;
+      right: 30px;
+      width: 124px;
+      height: 143px;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      background: rgba(91, 184, 180, 0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hex-portrait-inner {
+      width: 108px;
+      height: 127px;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      overflow: hidden;
+      background: rgba(21, 35, 51, 0.4);
+    }
+
+    .hex-portrait-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
     }
 
     .geo { position: absolute; }
@@ -568,12 +598,17 @@
           <p>Stefan Kochert has worked with a wide range of notable directors in Germany and abroad, and has shot feature length documentaries, shorts, music videos and commercials. He has shot movies across the globe in USA, China, Brasil, Bolivia, Ukraine and Spain, is fluent in German and English.</p>
           <p>Since February 2016, Stefan Kochert works also as a voiceover artist for commercial, imagefilm or documentary. <a href="https://www.sprecher-stefankochert.de" target="_blank" rel="noopener">sprecher-stefankochert.de</a></p>
         </div>
-        <div class="about-geo fade-up" aria-hidden="true">
-          <div class="geo geo-ring-1"></div>
-          <div class="geo geo-ring-2"></div>
-          <div class="geo geo-disk"></div>
-          <div class="geo geo-sq"></div>
-          <div class="geo geo-line-h"></div>
+        <div class="about-geo fade-up">
+          <div class="geo geo-ring-1" aria-hidden="true"></div>
+          <div class="geo geo-ring-2" aria-hidden="true"></div>
+          <div class="geo geo-disk" aria-hidden="true"></div>
+          <div class="geo geo-sq" aria-hidden="true"></div>
+          <div class="geo geo-line-h" aria-hidden="true"></div>
+          <div class="hex-portrait">
+            <div class="hex-portrait-inner">
+              <img src="images/portrait.jpg" alt="Stefan Kochert">
+            </div>
+          </div>
         </div>
       </div>
     </div>
