@@ -40,109 +40,34 @@
       background: var(--dark-1);
     }
 
-    /* ── HEADER ─────────────────────────────────────────────────── */
+    /* ── HERO NAV ───────────────────────────────────────────────── */
 
-    .site-header {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      z-index: 1000;
-      padding: 18px 32px;
+    .hero-nav {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transition: background 0.4s, backdrop-filter 0.4s;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px 4px;
+      margin-top: 40px;
     }
 
-    .site-header.scrolled {
-      background: rgba(12, 24, 32, 0.88);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-    }
-
-    .header-name {
-      font-size: 0.68rem;
-      font-weight: 600;
+    .hero-nav a {
+      text-decoration: none;
+      font-size: 0.6rem;
+      font-weight: 500;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.6);
-      opacity: 0;
-      transition: opacity 0.4s;
-      pointer-events: none;
+      color: rgba(255, 255, 255, 0.35);
+      padding: 7px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      white-space: nowrap;
     }
 
-    .site-header.scrolled .header-name { opacity: 1; }
-
-    .hamburger {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      z-index: 1001;
+    .hero-nav a:hover {
+      color: var(--tq);
+      border-color: var(--tq);
+      background: rgba(91, 184, 180, 0.06);
     }
-
-    .hamburger span {
-      display: block;
-      width: 22px;
-      height: 1.5px;
-      background: rgba(255, 255, 255, 0.75);
-      transition: transform 0.3s, opacity 0.3s;
-      transform-origin: center;
-    }
-
-    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-    /* ── NAV OVERLAY ────────────────────────────────────────────── */
-
-    .nav-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(12, 24, 32, 0.97);
-      z-index: 999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s;
-    }
-
-    .nav-overlay.open { opacity: 1; pointer-events: all; }
-
-    .nav-overlay ul { list-style: none; text-align: center; }
-
-    .nav-overlay li {
-      margin: 14px 0;
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.4s, transform 0.4s;
-    }
-
-    .nav-overlay.open li { opacity: 1; transform: translateY(0); }
-    .nav-overlay.open li:nth-child(1) { transition-delay: 0.04s; }
-    .nav-overlay.open li:nth-child(2) { transition-delay: 0.08s; }
-    .nav-overlay.open li:nth-child(3) { transition-delay: 0.12s; }
-    .nav-overlay.open li:nth-child(4) { transition-delay: 0.16s; }
-    .nav-overlay.open li:nth-child(5) { transition-delay: 0.20s; }
-    .nav-overlay.open li:nth-child(6) { transition-delay: 0.24s; }
-    .nav-overlay.open li:nth-child(7) { transition-delay: 0.28s; }
-
-    .nav-overlay a {
-      text-decoration: none;
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      font-weight: 300;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-lighter);
-      transition: color 0.2s;
-    }
-
-    .nav-overlay a:hover { color: var(--tq); }
 
     /* ── SHARED SECTION STYLES ──────────────────────────────────── */
 
@@ -620,29 +545,6 @@
 </head>
 <body>
 
-  <!-- Fixed Header -->
-  <header class="site-header" id="site-header">
-    <span class="header-name">Stefan Kochert</span>
-    <button class="hamburger" id="hamburger" aria-label="Menü öffnen">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </header>
-
-  <!-- Navigation Overlay -->
-  <nav class="nav-overlay" id="nav-overlay" aria-label="Hauptnavigation">
-    <ul>
-      <li><a href="#home" class="nav-link">Home</a></li>
-      <li><a href="#about" class="nav-link">About</a></li>
-      <li><a href="#cinematography" class="nav-link">Cinematography</a></li>
-      <li><a href="#voice" class="nav-link">Voice</a></li>
-      <li><a href="#photography" class="nav-link">Photography</a></li>
-      <li><a href="#media-education" class="nav-link">Media Education</a></li>
-      <li><a href="#rocknroll" class="nav-link">Rock 'n' Roll</a></li>
-    </ul>
-  </nav>
-
   <!-- ── 01 HOME ─────────────────────────────────────────────── -->
   <section id="home">
     <div class="hero-grid" id="hero-grid" aria-hidden="true"></div>
@@ -662,6 +564,15 @@
         <div class="hero-sep" aria-hidden="true"></div>
         <span>Media Education</span>
       </div>
+
+      <nav class="hero-nav" aria-label="Hauptnavigation">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#cinematography" class="nav-link">Cinematography</a>
+        <a href="#voice" class="nav-link">Voice</a>
+        <a href="#photography" class="nav-link">Photography</a>
+        <a href="#media-education" class="nav-link">Media Education</a>
+        <a href="#rocknroll" class="nav-link">Rock 'n' Roll</a>
+      </nav>
     </div>
 
     <div class="scroll-hint" aria-hidden="true">Scroll</div>
@@ -859,42 +770,25 @@
   </footer>
 
   <script>
-    /* Hamburger / nav overlay */
-    const hamburger = document.getElementById('hamburger');
-    const navOverlay = document.getElementById('nav-overlay');
-
-    hamburger.addEventListener('click', () => {
-      const open = hamburger.classList.toggle('open');
-      navOverlay.classList.toggle('open', open);
-      document.body.style.overflow = open ? 'hidden' : '';
-    });
-
+    /* Smooth scroll für Hero-Navigation */
     document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', () => {
-        hamburger.classList.remove('open');
-        navOverlay.classList.remove('open');
-        document.body.style.overflow = '';
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
       });
     });
 
-    /* Header: becomes opaque after scrolling past hero */
-    const header = document.getElementById('site-header');
-    const onScroll = () => {
-      header.classList.toggle('scrolled', window.scrollY > 60);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    /* Parallax on hero grid */
+    /* Parallax auf Hero-Grid */
     const heroGrid = document.getElementById('hero-grid');
-    const parallax = () => {
+    window.addEventListener('scroll', () => {
       const y = window.scrollY;
       if (y < window.innerHeight * 1.5) {
         heroGrid.style.transform = `translateY(${y * 0.35}px)`;
       }
-    };
-    window.addEventListener('scroll', parallax, { passive: true });
+    }, { passive: true });
 
-    /* Fade-in on scroll using IntersectionObserver */
+    /* Fade-in beim Scrollen */
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
