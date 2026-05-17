@@ -538,6 +538,16 @@
       color: rgba(255,255,255,0.18);
     }
 
+    /* ── VIDEO WRAPPER ──────────────────────────────────────────── */
+
+    .video-wrap {
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+
     /* ── SCROLL ANIMATIONS ──────────────────────────────────────── */
 
     .fade-up {
@@ -619,7 +629,8 @@
     <div class="section-inner">
       <div class="section-label fade-up">02 — Showreel</div>
       <h2 class="section-title fade-up">Cinematography</h2>
-      <div class="video-grid fade-up">
+      <div class="video-wrap fade-up">
+      <div class="video-grid">
         <div class="video-card">
           <div class="video-card-label">Showreel</div>
           <div class="embed-wrap">
@@ -638,6 +649,7 @@
               allowfullscreen loading="lazy"></iframe>
           </div>
         </div>
+      </div>
       </div>
     </div>
   </section>
