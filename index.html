@@ -3,81 +3,903 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stefan Kochert</title>
+  <title>Stefan Kochert — Cinematographer · Voiceover · Photography</title>
+  <meta name="description" content="Stefan Kochert — Cinematographer, Voiceover Artist, Photographer, Media Education. Berlin.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --dark-1: #0c1820;
+      --dark-2: #152333;
+      --dark-3: #1b2d3c;
+      --light-1: #f0f5f8;
+      --light-2: #e6eff6;
+      --light-3: #daeef0;
+      --light-4: #e4f0f5;
+      --tq: #5bb8b4;
+      --blue: #5a9bbf;
+      --grey: #7a9ab0;
+      --tq-light: #8ed4d0;
+      --blue-light: #90c0d8;
+      --text-dark: #1a2a35;
+      --text-mid: #4a6577;
+      --text-light: #c5dce8;
+      --text-lighter: #e0eef5;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #0f0f0f;
-      color: #f0f0f0;
-      min-height: 100vh;
+      font-family: var(--font);
+      color: var(--text-dark);
+      overflow-x: hidden;
+      background: var(--dark-1);
+    }
+
+    /* ── HEADER ─────────────────────────────────────────────────── */
+
+    .site-header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.4s, backdrop-filter 0.4s;
+    }
+
+    .site-header.scrolled {
+      background: rgba(12, 24, 32, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .header-name {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.6);
+      opacity: 0;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+
+    .site-header.scrolled .header-name { opacity: 1; }
+
+    .hamburger {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: rgba(255, 255, 255, 0.75);
+      transition: transform 0.3s, opacity 0.3s;
+      transform-origin: center;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ── NAV OVERLAY ────────────────────────────────────────────── */
+
+    .nav-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(12, 24, 32, 0.97);
+      z-index: 999;
       display: flex;
       align-items: center;
       justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
     }
 
-    .card {
+    .nav-overlay.open { opacity: 1; pointer-events: all; }
+
+    .nav-overlay ul { list-style: none; text-align: center; }
+
+    .nav-overlay li {
+      margin: 14px 0;
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.4s, transform 0.4s;
+    }
+
+    .nav-overlay.open li { opacity: 1; transform: translateY(0); }
+    .nav-overlay.open li:nth-child(1) { transition-delay: 0.04s; }
+    .nav-overlay.open li:nth-child(2) { transition-delay: 0.08s; }
+    .nav-overlay.open li:nth-child(3) { transition-delay: 0.12s; }
+    .nav-overlay.open li:nth-child(4) { transition-delay: 0.16s; }
+    .nav-overlay.open li:nth-child(5) { transition-delay: 0.20s; }
+    .nav-overlay.open li:nth-child(6) { transition-delay: 0.24s; }
+    .nav-overlay.open li:nth-child(7) { transition-delay: 0.28s; }
+
+    .nav-overlay a {
+      text-decoration: none;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-lighter);
+      transition: color 0.2s;
+    }
+
+    .nav-overlay a:hover { color: var(--tq); }
+
+    /* ── SHARED SECTION STYLES ──────────────────────────────────── */
+
+    section { position: relative; overflow: hidden; }
+
+    .section-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 120px 40px;
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      opacity: 0.45;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: clamp(1.5rem, 3vw, 2.6rem);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 52px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 0;
+      width: 32px;
+      height: 1px;
+    }
+
+    /* ── SECTION 1: HOME ────────────────────────────────────────── */
+
+    #home {
+      background: var(--dark-1);
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      padding: 48px 40px;
     }
 
-    .character {
-      font-size: 80px;
-      animation: wave 2s ease-in-out infinite;
-      display: inline-block;
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      opacity: 0.055;
+      background-image:
+        linear-gradient(rgba(91, 184, 180, 0.8) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(91, 184, 180, 0.8) 1px, transparent 1px);
+      background-size: 56px 56px;
+      will-change: transform;
     }
 
-    @keyframes wave {
-      0%, 100% { transform: rotate(0deg); }
-      25%       { transform: rotate(18deg); }
-      75%       { transform: rotate(-8deg); }
+    .hero-corner {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      opacity: 0.15;
     }
 
-    h1 {
-      font-size: 2.2rem;
+    .hero-corner--tl { top: 80px; left: 40px; border-top: 1px solid var(--tq); border-left: 1px solid var(--tq); }
+    .hero-corner--br { bottom: 80px; right: 40px; border-bottom: 1px solid var(--tq); border-right: 1px solid var(--tq); }
+
+    .hero-content { position: relative; z-index: 1; padding: 0 24px; }
+
+    .hero-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--tq);
+      margin-bottom: 28px;
+    }
+
+    .hero-name {
+      font-size: clamp(2.6rem, 8vw, 7rem);
       font-weight: 700;
-      margin-top: 24px;
-      letter-spacing: -0.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-lighter);
+      line-height: 1;
+      margin-bottom: 28px;
     }
 
-    p {
-      margin-top: 12px;
-      color: #888;
-      font-size: 1.05rem;
+    .hero-divider {
+      width: 32px;
+      height: 1px;
+      background: var(--tq);
+      margin: 0 auto 28px;
+      opacity: 0.5;
     }
 
-    .dot {
-      display: inline-block;
-      width: 8px;
-      height: 8px;
-      background: #4ade80;
+    .hero-subtitle {
+      font-size: clamp(0.62rem, 1.4vw, 0.8rem);
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0 20px;
+    }
+
+    .hero-subtitle span { white-space: nowrap; }
+
+    .hero-sep {
+      width: 1px;
+      height: 1em;
+      background: var(--grey);
+      opacity: 0.35;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.58rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.18);
+    }
+
+    .scroll-hint::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 36px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.18), transparent);
+      animation: dropLine 2.2s ease-in-out infinite;
+    }
+
+    @keyframes dropLine {
+      0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
+      49%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+      50%  { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
+      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+    }
+
+    /* ── SECTION 2: ABOUT ───────────────────────────────────────── */
+
+    #about { background: var(--light-1); }
+
+    #about .section-title { color: var(--text-dark); }
+    #about .section-title::after { background: var(--blue); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 72px;
+      align-items: start;
+    }
+
+    @media (max-width: 800px) {
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+    }
+
+    .about-text {
+      font-size: 0.92rem;
+      line-height: 1.9;
+      color: var(--text-mid);
+      font-weight: 300;
+    }
+
+    .about-text p + p { margin-top: 18px; }
+
+    .about-text a { color: var(--blue); text-decoration: none; border-bottom: 1px solid rgba(90,155,191,0.3); transition: border-color 0.2s; }
+    .about-text a:hover { border-color: var(--blue); }
+
+    .about-geo {
+      position: relative;
+      height: 320px;
+    }
+
+    .geo { position: absolute; }
+
+    .geo-ring-1 {
+      width: 220px; height: 220px;
       border-radius: 50%;
-      margin-right: 6px;
-      animation: pulse 2s ease-in-out infinite;
-      vertical-align: middle;
+      border: 1px solid rgba(91,184,180,0.25);
+      top: 20px; right: 20px;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.4; transform: scale(0.8); }
+    .geo-ring-2 {
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      border: 1px solid rgba(90,155,191,0.15);
+      top: -20px; right: -20px;
     }
 
-    .status {
-      margin-top: 32px;
-      font-size: 0.85rem;
-      color: #555;
+    .geo-disk {
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      border: 1px solid rgba(91,184,180,0.4);
+      background: rgba(91,184,180,0.04);
+      top: 115px; right: 95px;
+    }
+
+    .geo-sq {
+      width: 60px; height: 60px;
+      border: 1px solid rgba(90,155,191,0.3);
+      bottom: 20px; left: 30px;
+      transform: rotate(18deg);
+    }
+
+    .geo-line-h {
+      width: 80px; height: 1px;
+      background: rgba(91,184,180,0.25);
+      top: 172px; right: 140px;
+    }
+
+    /* ── SECTION 3: CINEMATOGRAPHY ─────────────────────────────── */
+
+    #cinematography { background: var(--dark-2); }
+
+    #cinematography .section-label { color: var(--tq-light); }
+    #cinematography .section-title { color: var(--text-lighter); }
+    #cinematography .section-title::after { background: var(--tq); }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    @media (max-width: 680px) { .video-grid { grid-template-columns: 1fr; } }
+
+    .video-card {
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.03);
+      overflow: hidden;
+    }
+
+    .video-card-label {
+      padding: 12px 18px;
+      font-size: 0.63rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--tq-light);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .embed-wrap {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+    }
+
+    .embed-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* ── SECTION 4: VOICE ──────────────────────────────────────── */
+
+    #voice { background: var(--light-3); }
+
+    #voice .section-label { color: var(--tq); }
+    #voice .section-title { color: var(--text-dark); }
+    #voice .section-title::after { background: var(--tq); }
+
+    .voice-intro {
+      max-width: 680px;
+      font-size: 0.9rem;
+      line-height: 1.85;
+      color: var(--text-mid);
+      font-weight: 300;
+      margin-bottom: 52px;
+    }
+
+    .voice-intro p + p { margin-top: 14px; }
+
+    .voice-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 0;
+      margin-top: 20px;
+    }
+
+    .voice-meta-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--tq);
+      border: 1px solid rgba(91,184,180,0.35);
+      padding: 5px 12px;
+      margin-right: 8px;
+    }
+
+    .voice-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 860px) { .voice-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 520px) { .voice-grid { grid-template-columns: 1fr; } }
+
+    .voice-card {
+      border: 1px solid rgba(91,184,180,0.22);
+      background: rgba(255,255,255,0.55);
+      overflow: hidden;
+    }
+
+    .voice-card-label {
+      padding: 11px 16px;
+      font-size: 0.63rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-dark);
+      border-bottom: 1px solid rgba(91,184,180,0.18);
+    }
+
+    /* ── SECTION 5: PHOTOGRAPHY ────────────────────────────────── */
+
+    #photography { background: var(--light-4); }
+
+    #photography .section-label { color: var(--blue); }
+    #photography .section-title { color: var(--text-dark); }
+    #photography .section-title::after { background: var(--blue); }
+
+    .photography-text {
+      max-width: 580px;
+      font-size: 0.9rem;
+      line-height: 1.85;
+      color: var(--text-mid);
+      font-weight: 300;
+      margin-bottom: 48px;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3px;
+    }
+
+    @media (max-width: 600px) { .photo-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .photo-cell {
+      aspect-ratio: 1;
+      background: linear-gradient(135deg,
+        rgba(90,155,191,0.08),
+        rgba(91,184,180,0.08));
+      border: 1px solid rgba(91,184,180,0.16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(91,184,180,0.4);
+    }
+
+    /* ── SECTION 6: MEDIA EDUCATION ────────────────────────────── */
+
+    #media-education { background: var(--dark-3); }
+
+    #media-education .section-label { color: var(--blue-light); }
+    #media-education .section-title { color: var(--text-lighter); }
+    #media-education .section-title::after { background: var(--blue); }
+
+    .media-edu-inner {
+      display: grid;
+      grid-template-columns: 1fr 240px;
+      gap: 60px;
+      align-items: start;
+    }
+
+    @media (max-width: 720px) { .media-edu-inner { grid-template-columns: 1fr; } }
+
+    .media-edu-text {
+      font-size: 0.9rem;
+      line-height: 1.95;
+      color: rgba(224, 238, 245, 0.65);
+      font-weight: 300;
+    }
+
+    .media-edu-text p + p { margin-top: 18px; }
+
+    .media-edu-diagram {
+      opacity: 0.12;
+      flex-shrink: 0;
+    }
+
+    .media-edu-diagram svg { width: 100%; max-width: 200px; display: block; margin: 0 auto; }
+
+    /* ── SECTION 7: ROCK'N ROLL ─────────────────────────────────── */
+
+    #rocknroll { background: var(--dark-1); }
+
+    #rocknroll .section-label { color: var(--tq-light); }
+    #rocknroll .section-title { color: var(--text-lighter); }
+    #rocknroll .section-title::after { background: var(--tq); }
+
+    .rocknroll-text {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: rgba(224, 238, 245, 0.6);
+      font-weight: 300;
+      max-width: 520px;
+      margin-bottom: 36px;
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 28px;
+      border: 1px solid var(--tq);
+      color: var(--tq);
+      text-decoration: none;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-family: var(--font);
+      transition: background 0.22s, color 0.22s;
+    }
+
+    .btn-outline:hover {
+      background: var(--tq);
+      color: var(--dark-1);
+    }
+
+    /* ── FOOTER ─────────────────────────────────────────────────── */
+
+    footer {
+      background: #060e13;
+      padding: 36px 40px;
+      text-align: center;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.18);
+    }
+
+    /* ── SCROLL ANIMATIONS ──────────────────────────────────────── */
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-up:nth-child(2) { transition-delay: 0.1s; }
+    .fade-up:nth-child(3) { transition-delay: 0.2s; }
+    .fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+    /* ── RESPONSIVE ─────────────────────────────────────────────── */
+
+    @media (max-width: 480px) {
+      .section-inner { padding: 90px 24px; }
+      .hero-corner { display: none; }
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="character">👋</div>
-    <h1>Hello, World.</h1>
-    <p>Ich bin Stefan — schön dass du da bist.</p>
-    <div class="status">
-      <span class="dot"></span>Website im Aufbau
+
+  <!-- Fixed Header -->
+  <header class="site-header" id="site-header">
+    <span class="header-name">Stefan Kochert</span>
+    <button class="hamburger" id="hamburger" aria-label="Menü öffnen">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <!-- Navigation Overlay -->
+  <nav class="nav-overlay" id="nav-overlay" aria-label="Hauptnavigation">
+    <ul>
+      <li><a href="#home" class="nav-link">Home</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#cinematography" class="nav-link">Cinematography</a></li>
+      <li><a href="#voice" class="nav-link">Voice</a></li>
+      <li><a href="#photography" class="nav-link">Photography</a></li>
+      <li><a href="#media-education" class="nav-link">Media Education</a></li>
+      <li><a href="#rocknroll" class="nav-link">Rock 'n' Roll</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── 01 HOME ─────────────────────────────────────────────── -->
+  <section id="home">
+    <div class="hero-grid" id="hero-grid" aria-hidden="true"></div>
+    <div class="hero-corner hero-corner--tl" aria-hidden="true"></div>
+    <div class="hero-corner hero-corner--br" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">Portfolio</div>
+      <h1 class="hero-name">Stefan Kochert</h1>
+      <div class="hero-divider"></div>
+      <div class="hero-subtitle">
+        <span>Cinematographer</span>
+        <div class="hero-sep" aria-hidden="true"></div>
+        <span>Voiceover Artist</span>
+        <div class="hero-sep" aria-hidden="true"></div>
+        <span>Photographer</span>
+        <div class="hero-sep" aria-hidden="true"></div>
+        <span>Media Education</span>
+      </div>
     </div>
-  </div>
+
+    <div class="scroll-hint" aria-hidden="true">Scroll</div>
+  </section>
+
+  <!-- ── 02 ABOUT ────────────────────────────────────────────── -->
+  <section id="about">
+    <div class="section-inner">
+      <div class="section-label fade-up">01 — About</div>
+      <h2 class="section-title fade-up">About</h2>
+      <div class="about-grid">
+        <div class="about-text fade-up">
+          <p>Stefan Kochert studied Art and Media Studies at the University of Konstanz from 1996 to 2000. During this time, his long-time passion for photography and his enthusiasm for theater grew into the desire to become a DoP. Before he studied 'The Art of Cinematography' at the prestigious film academy of Baden-Württemberg, between 2004 and 2010, he realized a number of independent projects and worked as a camera assistant for producers such as Teamworx, Studio Babelsberg, and Hoffman und Voges.</p>
+          <p>The movies he made until his graduation in 2010 were awarded numerous prizes. In 2009 he received, with the cinema-commercial "way of money", among others, the silver Award in Cannes — YDA 2009, best Commercial — Los Angeles Short Film Festival 2010 and was finalist at the New York International Advertising Award. He worked for brands like Audi, Siemens, eBay, Sixt, Joop, Bahlsen and Amnesty International.</p>
+          <p>Stefan Kochert has worked with a wide range of notable directors in Germany and abroad, and has shot feature length documentaries, shorts, music videos and commercials. He has shot movies across the globe in USA, China, Brasil, Bolivia, Ukraine and Spain, is fluent in German and English.</p>
+          <p>Since February 2016, Stefan Kochert works also as a voiceover artist for commercial, imagefilm or documentary. <a href="https://www.sprecher-stefankochert.de" target="_blank" rel="noopener">sprecher-stefankochert.de</a></p>
+        </div>
+        <div class="about-geo fade-up" aria-hidden="true">
+          <div class="geo geo-ring-1"></div>
+          <div class="geo geo-ring-2"></div>
+          <div class="geo geo-disk"></div>
+          <div class="geo geo-sq"></div>
+          <div class="geo geo-line-h"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 03 CINEMATOGRAPHY ──────────────────────────────────── -->
+  <section id="cinematography">
+    <div class="section-inner">
+      <div class="section-label fade-up">02 — Showreel</div>
+      <h2 class="section-title fade-up">Cinematography</h2>
+      <div class="video-grid fade-up">
+        <div class="video-card">
+          <div class="video-card-label">Showreel</div>
+          <div class="embed-wrap">
+            <iframe src="https://player.vimeo.com/video/116652620"
+              title="Stefan Kochert — Showreel"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+        <div class="video-card">
+          <div class="video-card-label">TK Imagefilm — Hörsturz</div>
+          <div class="embed-wrap">
+            <iframe src="https://player.vimeo.com/video/200169021"
+              title="TK Imagefilm Hörsturz"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 04 VOICE ────────────────────────────────────────────── -->
+  <section id="voice">
+    <div class="section-inner">
+      <div class="section-label fade-up">03 — Sprecher</div>
+      <h2 class="section-title fade-up">Voice</h2>
+      <div class="voice-intro fade-up">
+        <p>Werbung, Stationvoice, Imagefilm, Voiceover, Dokumentationen, Hörspiel, Audioguide, Synchron</p>
+        <p>Sie suchen einen professionellen Sprecher, mit eigenem Tonstudio? Dann sind sie hier richtig! Damit sie sich einen ersten Eindruck machen können, finden sie hier einige Hörproben. Sollten sie Fragen haben, oder weitere Hörbeispiele benötigen, zögern sie nicht, mich zu kontaktieren. Bei Fragen zu Preisen, rufen sie mich gerne an. Allgemein orientiere ich mich am VDS-Gagenkompass.</p>
+        <div class="voice-meta">
+          <span class="voice-meta-tag">markant · kräftig · warm</span>
+          <span class="voice-meta-tag">Stimmalter 30–50</span>
+          <span class="voice-meta-tag">Englisch fließend</span>
+          <span class="voice-meta-tag">Alemannisch / Schwäbisch</span>
+        </div>
+      </div>
+      <div class="voice-grid fade-up">
+        <div class="voice-card">
+          <div class="voice-card-label">TV-Spot</div>
+          <div class="embed-wrap">
+            <iframe src="https://player.vimeo.com/video/313548657"
+              title="Hörprobe TV-Spot"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+        <div class="voice-card">
+          <div class="voice-card-label">Radio-Spot</div>
+          <div class="embed-wrap">
+            <iframe src="https://player.vimeo.com/video/313549237"
+              title="Hörprobe Radio-Spot"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+        <div class="voice-card">
+          <div class="voice-card-label">Werbung</div>
+          <div class="embed-wrap">
+            <iframe src="https://player.vimeo.com/video/865510345"
+              title="Hörprobe Werbung"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+        <div class="voice-card">
+          <div class="voice-card-label">Stationvoice</div>
+          <div class="embed-wrap">
+            <iframe src="https://player.vimeo.com/video/877026803"
+              title="Hörprobe Stationvoice"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+        <div class="voice-card">
+          <div class="voice-card-label">Infomercial</div>
+          <div class="embed-wrap">
+            <iframe src="https://player.vimeo.com/video/372093240"
+              title="Hörprobe Infomercial"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+        <div class="voice-card">
+          <div class="voice-card-label">Imagefilm</div>
+          <div class="embed-wrap">
+            <iframe src="https://player.vimeo.com/video/803925335"
+              title="Hörprobe Imagefilm"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 05 PHOTOGRAPHY ─────────────────────────────────────── -->
+  <section id="photography">
+    <div class="section-inner">
+      <div class="section-label fade-up">04 — Bilder</div>
+      <h2 class="section-title fade-up">Photography</h2>
+      <div class="photography-text fade-up">
+        <p>Fotografie ist für Stefan Kochert der Ursprung aller visuellen Arbeit — die Stille im Bild, bevor der Film beginnt. Vom analogen Prozess der Dunkelkammer zur digitalen Bildsprache, immer auf der Suche nach dem entscheidenden Moment.</p>
+      </div>
+      <div class="photo-grid fade-up" aria-label="Platzhalter — Portfolio folgt">
+        <div class="photo-cell">soon</div>
+        <div class="photo-cell">soon</div>
+        <div class="photo-cell">soon</div>
+        <div class="photo-cell">soon</div>
+        <div class="photo-cell">soon</div>
+        <div class="photo-cell">soon</div>
+        <div class="photo-cell">soon</div>
+        <div class="photo-cell">soon</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 06 MEDIA EDUCATION ─────────────────────────────────── -->
+  <section id="media-education">
+    <div class="section-inner">
+      <div class="section-label fade-up">05 — Pädagogik</div>
+      <h2 class="section-title fade-up">Media Education</h2>
+      <div class="media-edu-inner">
+        <div class="media-edu-text fade-up">
+          <p>Seit 2023 ist Stefan Kochert Teil des Kollektivs für Freiraum. Dort hat er einen erfüllenden und sinnstiftenden Weg gefunden, seine Faszination, mit Bildern Geschichten zu erzählen, mit Kindern und Jugendlichen zu teilen und sie für visuelle kreative Schaffensprozesse zu begeistern.</p>
+          <p>Um sich medienpädagogisch weiterzubilden, besuchte er das zertifizierte Fachprofil "digital kulturelle Bildung" bei der WeTek Berlin. Dort lernte er die Grundlagen der Bedeutung von Medialisierung und Digitalisierung, und über die gesellschaftlichen Herausforderungen des Aufwachsens mit Medien. Grundlegende digitale Kompetenzen, die Kinder und Jugendliche entwickeln sollen, wurden hier vermittelt.</p>
+          <p>In Ideenwerkstätten bekamen er die Möglichkeit, in offenen Lernräumen zu experimentieren, und eigene Ideen zu entwickeln. Er wurden über die Risiken der Wirkung digitaler Medien auf Kinder und Jugendliche aufgeklärt, und bekamen Werkzeuge an die Hand, um inhaltlich und methodisch ausgearbeitete medienpädagogische Projekte zu entwickeln.</p>
+        </div>
+        <div class="media-edu-diagram fade-up" aria-hidden="true">
+          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="100" r="90" stroke="white" stroke-width="0.8"/>
+            <circle cx="100" cy="100" r="60" stroke="white" stroke-width="0.8"/>
+            <circle cx="100" cy="100" r="30" stroke="white" stroke-width="0.8"/>
+            <line x1="10" y1="100" x2="190" y2="100" stroke="white" stroke-width="0.8"/>
+            <line x1="100" y1="10" x2="100" y2="190" stroke="white" stroke-width="0.8"/>
+            <line x1="36.3" y1="36.3" x2="163.7" y2="163.7" stroke="white" stroke-width="0.5" opacity="0.5"/>
+            <line x1="163.7" y1="36.3" x2="36.3" y2="163.7" stroke="white" stroke-width="0.5" opacity="0.5"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 07 ROCK'N ROLL ─────────────────────────────────────── -->
+  <section id="rocknroll">
+    <div class="section-inner">
+      <div class="section-label fade-up">06 — Musik</div>
+      <h2 class="section-title fade-up">Rock 'n' Roll</h2>
+      <p class="rocknroll-text fade-up">Square Go are a rock band in Berlin. They are James (vocals), Phil (guitar), Craig (bass), Stevie (drums), and Alex (guitar). They sound like the Nineties, but in a good way. Check it out.</p>
+      <a href="https://squarego.bandcamp.com/album/circle-the-square"
+        target="_blank" rel="noopener"
+        class="btn-outline fade-up">
+        Listen on Bandcamp &rarr;
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Stefan Kochert &nbsp;&middot;&nbsp; Berlin</p>
+  </footer>
+
+  <script>
+    /* Hamburger / nav overlay */
+    const hamburger = document.getElementById('hamburger');
+    const navOverlay = document.getElementById('nav-overlay');
+
+    hamburger.addEventListener('click', () => {
+      const open = hamburger.classList.toggle('open');
+      navOverlay.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        navOverlay.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+
+    /* Header: becomes opaque after scrolling past hero */
+    const header = document.getElementById('site-header');
+    const onScroll = () => {
+      header.classList.toggle('scrolled', window.scrollY > 60);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    /* Parallax on hero grid */
+    const heroGrid = document.getElementById('hero-grid');
+    const parallax = () => {
+      const y = window.scrollY;
+      if (y < window.innerHeight * 1.5) {
+        heroGrid.style.transform = `translateY(${y * 0.35}px)`;
+      }
+    };
+    window.addEventListener('scroll', parallax, { passive: true });
+
+    /* Fade-in on scroll using IntersectionObserver */
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+  </script>
 </body>
 </html>
