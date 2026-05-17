@@ -56,15 +56,24 @@
     /* ── HERO NAV (Subtitle-Stil) ───────────────────────────────── */
 
     .hero-subtitle a {
-      color: inherit;
+      color: rgba(255, 255, 255, 0.75);
       text-decoration: none;
-      transition: color 0.2s;
       white-space: nowrap;
+      padding: 6px 14px;
+      background: rgba(21, 35, 51, 0.55);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid rgba(91, 184, 180, 0.2);
+      transition: color 0.2s, background 0.2s, border-color 0.2s;
     }
 
-    .hero-subtitle a:hover { color: var(--tq-light); }
+    .hero-subtitle a:hover {
+      color: var(--tq-light);
+      background: rgba(21, 35, 51, 0.75);
+      border-color: var(--tq);
+    }
 
-    .hero-subtitle + .hero-subtitle { margin-top: 14px; }
+    .hero-subtitle + .hero-subtitle { margin-top: 10px; }
 
     /* ── SHARED SECTION STYLES ──────────────────────────────────── */
 
@@ -146,8 +155,8 @@
     }
 
     .hero-subtitle {
-      font-size: clamp(0.62rem, 1.4vw, 0.8rem);
-      font-weight: 400;
+      font-size: clamp(0.62rem, 1.4vw, 0.75rem);
+      font-weight: 500;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--grey);
@@ -155,17 +164,12 @@
       align-items: center;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 0 20px;
+      gap: 8px;
     }
 
     .hero-subtitle span { white-space: nowrap; }
 
-    .hero-sep {
-      width: 1px;
-      height: 1em;
-      background: var(--grey);
-      opacity: 0.35;
-    }
+    .hero-sep { display: none; }
 
     .scroll-hint {
       position: absolute;
