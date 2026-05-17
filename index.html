@@ -61,6 +61,8 @@
       max-width: 1080px;
       margin: 0 auto;
       padding: 120px 40px;
+      position: relative;
+      z-index: 1;
     }
 
     .section-label {
@@ -101,15 +103,29 @@
       text-align: center;
     }
 
+    /* Waben-SVG: pointy-top, Umkreisradius 30px → Tile 104×90
+       3 Sechsecke pro Kachel, je unterschiedlich gestrichelt ("im Bau") */
     .hero-grid {
       position: absolute;
       inset: 0;
-      opacity: 0.055;
-      background-image:
-        linear-gradient(rgba(91, 184, 180, 0.8) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(91, 184, 180, 0.8) 1px, transparent 1px);
-      background-size: 56px 56px;
+      opacity: 0.09;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='104' height='90'%3E%3Cpolygon points='26,0 52,15 52,45 26,60 0,45 0,15' fill='none' stroke='rgba(91,184,180,0.7)' stroke-width='0.8'/%3E%3Cpolygon points='78,0 104,15 104,45 78,60 52,45 52,15' fill='none' stroke='rgba(90,155,191,0.45)' stroke-width='0.8' stroke-dasharray='12 5'/%3E%3Cpolygon points='52,45 78,60 78,90 52,105 26,90 26,60' fill='none' stroke='rgba(91,184,180,0.55)' stroke-width='0.8' stroke-dasharray='5 8'/%3E%3C/svg%3E");
+      background-size: 104px 90px;
       will-change: transform;
+    }
+
+    /* Gleiches Waben-Muster für alle anderen dunklen Sektionen */
+    #cinematography::before,
+    #media-education::before,
+    #rocknroll::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.07;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='104' height='90'%3E%3Cpolygon points='26,0 52,15 52,45 26,60 0,45 0,15' fill='none' stroke='rgba(91,184,180,0.7)' stroke-width='0.8'/%3E%3Cpolygon points='78,0 104,15 104,45 78,60 52,45 52,15' fill='none' stroke='rgba(90,155,191,0.45)' stroke-width='0.8' stroke-dasharray='12 5'/%3E%3Cpolygon points='52,45 78,60 78,90 52,105 26,90 26,60' fill='none' stroke='rgba(91,184,180,0.55)' stroke-width='0.8' stroke-dasharray='5 8'/%3E%3C/svg%3E");
+      background-size: 104px 90px;
+      pointer-events: none;
+      z-index: 0;
     }
 
     .hero-corner {
