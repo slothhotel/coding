@@ -407,18 +407,19 @@
 
     .photo-cell {
       aspect-ratio: 1;
-      background: linear-gradient(135deg,
-        rgba(90,155,191,0.08),
-        rgba(91,184,180,0.08));
-      border: 1px solid rgba(91,184,180,0.16);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.55rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(91,184,180,0.4);
+      overflow: hidden;
+      background: rgba(90,155,191,0.06);
     }
+
+    .photo-cell img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .photo-cell:hover img { transform: scale(1.04); }
 
     /* ── SECTION 6: MEDIA EDUCATION ────────────────────────────── */
 
@@ -693,15 +694,15 @@
       <div class="photography-text fade-up">
         <p>Fotografie ist für Stefan Kochert der Ursprung aller visuellen Arbeit — die Stille im Bild, bevor der Film beginnt. Vom analogen Prozess der Dunkelkammer zur digitalen Bildsprache, immer auf der Suche nach dem entscheidenden Moment.</p>
       </div>
-      <div class="photo-grid fade-up" aria-label="Platzhalter — Portfolio folgt">
-        <div class="photo-cell">soon</div>
-        <div class="photo-cell">soon</div>
-        <div class="photo-cell">soon</div>
-        <div class="photo-cell">soon</div>
-        <div class="photo-cell">soon</div>
-        <div class="photo-cell">soon</div>
-        <div class="photo-cell">soon</div>
-        <div class="photo-cell">soon</div>
+      <div class="photo-grid fade-up">
+        <div class="photo-cell"><img src="images/foto-1.jpg" alt="Fotografie Stefan Kochert"></div>
+        <div class="photo-cell"><img src="images/foto-2.jpg" alt="Fotografie Stefan Kochert"></div>
+        <div class="photo-cell"><img src="images/foto-3.jpg" alt="Fotografie Stefan Kochert"></div>
+        <div class="photo-cell"><img src="images/foto-4.jpg" alt="Fotografie Stefan Kochert"></div>
+        <div class="photo-cell"><img src="images/foto-5.jpg" alt="Fotografie Stefan Kochert"></div>
+        <div class="photo-cell"><img src="images/foto-6.jpg" alt="Fotografie Stefan Kochert"></div>
+        <div class="photo-cell"><img src="images/foto-7.jpg" alt="Fotografie Stefan Kochert"></div>
+        <div class="photo-cell"><img src="images/foto-8.jpg" alt="Fotografie Stefan Kochert"></div>
       </div>
     </div>
   </section>
