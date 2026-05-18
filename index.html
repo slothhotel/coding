@@ -210,10 +210,110 @@
 
     /* ── SECTION 2: ABOUT ───────────────────────────────────────── */
 
-    #about { background: var(--light-1); }
+    #about { background: transparent; }
+
+    /* Helle Fläche mit Ausschnitt oben rechts für den Lebenslauf-Tab */
+    .about-panel {
+      background: var(--light-1);
+      clip-path: polygon(
+        0% 0%,
+        calc(100% - 210px) 0%,
+        calc(100% - 237px) 27px,
+        calc(100% - 210px) 54px,
+        100% 54px,
+        100% 100%,
+        0% 100%
+      );
+      position: relative;
+    }
 
     #about .section-title { color: var(--text-dark); }
     #about .section-title::after { background: var(--blue); }
+
+    /* ── Lebenslauf Tab ─────────────────────────────────────────── */
+    .cv-tab {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 210px;
+      height: 54px;
+      clip-path: polygon(27px 0%, 100% 0%, 100% 100%, 27px 100%, 0% 50%);
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: none;
+      cursor: pointer;
+      font-family: var(--font);
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-lighter);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-left: 20px;
+      transition: background 0.2s;
+    }
+
+    .cv-tab:hover { background: rgba(255, 255, 255, 0.28); }
+
+    .cv-tab.open { background: rgba(255, 255, 255, 0.32); color: var(--tq-light); }
+
+    /* ── Lebenslauf Panel ───────────────────────────────────────── */
+    .cv-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+      background: var(--light-1);
+    }
+
+    .cv-panel.open { max-height: 900px; }
+
+    .cv-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 52px 40px 64px;
+    }
+
+    .cv-section-title {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 16px;
+      margin-top: 36px;
+      border-bottom: 1px solid rgba(90,155,191,0.2);
+      padding-bottom: 8px;
+    }
+
+    .cv-section-title:first-child { margin-top: 0; }
+
+    .cv-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      color: var(--text-mid);
+    }
+
+    .cv-table tr { border-bottom: 1px solid rgba(0,0,0,0.05); }
+    .cv-table tr:last-child { border-bottom: none; }
+
+    .cv-table td {
+      padding: 10px 0;
+      vertical-align: top;
+      line-height: 1.6;
+    }
+
+    .cv-table td:first-child {
+      width: 140px;
+      font-size: 0.75rem;
+      color: var(--grey);
+      letter-spacing: 0.05em;
+      padding-right: 24px;
+      white-space: nowrap;
+    }
 
     .about-grid {
       display: grid;
@@ -598,29 +698,72 @@
 
   <!-- ── 02 ABOUT ────────────────────────────────────────────── -->
   <section id="about">
-    <div class="section-inner">
-      <div class="section-label fade-up">01 — Über mich</div>
-      <h2 class="section-title fade-up">Über mich</h2>
-      <div class="about-grid">
-        <div class="about-text fade-up">
-          <p>Ich bin Stefan Kochert – Bildgestalter, Sprecher und seit einigen Jahren auch immer mehr da zu finden, wo Medien auf Bildung treffen.</p>
-          <p>Mein Weg begann mit einem Studium der Kunst- und Medienwissenschaften in Konstanz, bevor ich von 2004 bis 2010 an der Filmakademie Baden-Württemberg Bildgestaltung studierte. Seitdem habe ich als freiberuflicher Kameramann Dokumentar- und Spielfilme, Musikvideos und Imagefilme realisiert – in Deutschland, aber auch in Brasilien, Indien, Hong Kong, Bolivien, der Ukraine und den USA. Dabei durfte ich mit namhaften Regisseurinnen und Regisseuren zusammenarbeiten – meine Filme wurden auf internationalen Festivals ausgezeichnet. Mehr dazu in meiner Filmographie.</p>
-          <p>Seit 2017 bin ich außerdem als professioneller Sprecher tätig – als Stationvoice von FluxFM, für Werbung, Imagefilme und Dokumentationen, mit eigenem Tonstudio in Berlin.</p>
-          <p>In den letzten Jahren hat sich mein Fokus weiterentwickelt: Ich interessiere mich zunehmend dafür, mein Wissen über visuelle Kommunikation und Medien weiterzugeben. Mit dem Kollektiv für Freiraum entwickle und leite ich Workshops für Kinder und Jugendliche im Bereich kulturelle Bildung. 2024 habe ich diesen Weg mit einer Zertifizierung in digitalem kulturellen Bildung bei der WeTek Berlin vertieft.</p>
-          <p>Ich lebe mit meiner Familie in Berlin Friedrichshain – und wenn ich nicht gerade filme, spreche oder Workshops leite, sitze ich vermutlich am Schlagzeug.</p>
-        </div>
-        <div class="about-geo fade-up">
-          <div class="geo geo-ring-1" aria-hidden="true"></div>
-          <div class="geo geo-ring-2" aria-hidden="true"></div>
-          <div class="geo geo-disk" aria-hidden="true"></div>
-          <div class="geo geo-sq" aria-hidden="true"></div>
-          <div class="geo geo-line-h" aria-hidden="true"></div>
-          <div class="hex-portrait">
-            <div class="hex-portrait-inner">
-              <img src="images/portrait.jpg" alt="Stefan Kochert">
+    <div class="about-panel">
+      <div class="section-inner">
+        <div class="section-label fade-up">01 — Über mich</div>
+        <h2 class="section-title fade-up">Über mich</h2>
+        <div class="about-grid">
+          <div class="about-text fade-up">
+            <p>Ich bin Stefan Kochert – Bildgestalter, Sprecher und seit einigen Jahren auch immer mehr da zu finden, wo Medien auf Bildung treffen.</p>
+            <p>Mein Weg begann mit einem Studium der Kunst- und Medienwissenschaften in Konstanz, bevor ich von 2004 bis 2010 an der Filmakademie Baden-Württemberg Bildgestaltung studierte. Seitdem habe ich als freiberuflicher Kameramann Dokumentar- und Spielfilme, Musikvideos und Imagefilme realisiert – in Deutschland, aber auch in Brasilien, Indien, Hong Kong, Bolivien, der Ukraine und den USA. Dabei durfte ich mit namhaften Regisseurinnen und Regisseuren zusammenarbeiten – meine Filme wurden auf internationalen Festivals ausgezeichnet. Mehr dazu in meiner Filmographie.</p>
+            <p>Seit 2017 bin ich außerdem als professioneller Sprecher tätig – als Stationvoice von FluxFM, für Werbung, Imagefilme und Dokumentationen, mit eigenem Tonstudio in Berlin.</p>
+            <p>In den letzten Jahren hat sich mein Fokus weiterentwickelt: Ich interessiere mich zunehmend dafür, mein Wissen über visuelle Kommunikation und Medien weiterzugeben. Mit dem Kollektiv für Freiraum entwickle und leite ich Workshops für Kinder und Jugendliche im Bereich kulturelle Bildung. 2024 habe ich diesen Weg mit einer Zertifizierung in digitalem kulturellen Bildung bei der WeTek Berlin vertieft.</p>
+            <p>Ich lebe mit meiner Familie in Berlin Friedrichshain – und wenn ich nicht gerade filme, spreche oder Workshops leite, sitze ich vermutlich am Schlagzeug.</p>
+          </div>
+          <div class="about-geo fade-up">
+            <div class="geo geo-ring-1" aria-hidden="true"></div>
+            <div class="geo geo-ring-2" aria-hidden="true"></div>
+            <div class="geo geo-disk" aria-hidden="true"></div>
+            <div class="geo geo-sq" aria-hidden="true"></div>
+            <div class="geo geo-line-h" aria-hidden="true"></div>
+            <div class="hex-portrait">
+              <div class="hex-portrait-inner">
+                <img src="images/portrait.jpg" alt="Stefan Kochert">
+              </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Lebenslauf-Tab (Reiter oben rechts) -->
+    <button class="cv-tab" id="cv-tab" aria-expanded="false" aria-controls="cv-panel">
+      Lebenslauf
+    </button>
+
+    <!-- Aufklapp-Panel -->
+    <div class="cv-panel" id="cv-panel" role="region">
+      <div class="cv-inner">
+
+        <div class="cv-section-title">Ausbildung</div>
+        <table class="cv-table">
+          <tr><td>1996 – 2000</td><td>Studium Kunst- und Medienwissenschaften, Universität Konstanz</td></tr>
+          <tr><td>2004 – 2010</td><td>Studium Bildgestaltung (DoP), Filmakademie Baden-Württemberg, Ludwigsburg</td></tr>
+          <tr><td>2024</td><td>Zertifizierung Digitale kulturelle Bildung, WeTek Berlin</td></tr>
+        </table>
+
+        <div class="cv-section-title">Berufliche Tätigkeit</div>
+        <table class="cv-table">
+          <tr><td>seit 2023</td><td>Medienpädagoge &amp; Workshop-Leiter, Kollektiv für Freiraum, Berlin</td></tr>
+          <tr><td>seit 2017</td><td>Professioneller Sprecher – Stationvoice FluxFM, Werbung, Imagefilm, Dokumentation; eigenes Tonstudio Berlin</td></tr>
+          <tr><td>seit 2010</td><td>Freiberuflicher Kameramann / DoP – Dokumentar- &amp; Spielfilm, Musikvideo, Imagefilm, Werbung</td></tr>
+          <tr><td>2004 – 2010</td><td>Kameraassistent u. a. bei Teamworx, Studio Babelsberg, Hoffman und Voges</td></tr>
+        </table>
+
+        <div class="cv-section-title">Auszeichnungen</div>
+        <table class="cv-table">
+          <tr><td>2009</td><td>Silver Award, Cannes Young Directors Award – Kinospot „way of money"</td></tr>
+          <tr><td>2010</td><td>Best Commercial, Los Angeles Short Film Festival</td></tr>
+          <tr><td>2010</td><td>Finalist, New York International Advertising Award</td></tr>
+        </table>
+
+        <div class="cv-section-title">Kenntnisse</div>
+        <table class="cv-table">
+          <tr><td>Sprachen</td><td>Deutsch (Muttersprache), Englisch (fließend)</td></tr>
+          <tr><td>Dialekte</td><td>Alemannisch / Schwäbisch</td></tr>
+          <tr><td>Stimmalter</td><td>30 – 50</td></tr>
+        </table>
+
       </div>
     </div>
   </section>
@@ -808,6 +951,15 @@
       });
     });
 
+
+    /* Lebenslauf aufklappen */
+    const cvTab = document.getElementById('cv-tab');
+    const cvPanel = document.getElementById('cv-panel');
+    cvTab.addEventListener('click', () => {
+      const open = cvPanel.classList.toggle('open');
+      cvTab.classList.toggle('open', open);
+      cvTab.setAttribute('aria-expanded', open);
+    });
 
     /* Fade-in beim Scrollen */
     const io = new IntersectionObserver(entries => {
