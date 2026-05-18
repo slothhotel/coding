@@ -217,11 +217,11 @@
       background: var(--light-1);
       clip-path: polygon(
         0% 0%,
-        calc(100% - 210px) 0%,
-        calc(100% - 237px) 27px,
-        calc(100% - 210px) 54px,
-        100% 54px,
-        100% 100%,
+        100% 0%,
+        100% calc(100% - 54px),
+        calc(100% - 210px) calc(100% - 54px),
+        calc(100% - 237px) calc(100% - 27px),
+        calc(100% - 210px) 100%,
         0% 100%
       );
       position: relative;
@@ -233,7 +233,7 @@
     /* ── Lebenslauf Tab ─────────────────────────────────────────── */
     .cv-tab {
       position: absolute;
-      top: 0;
+      bottom: 0;
       right: 0;
       width: 210px;
       height: 54px;
@@ -340,13 +340,13 @@
 
     .about-geo {
       position: relative;
-      height: 640px;
+      height: 580px;
     }
 
     /* ── Waben-Portrait ──────────────────────────────────────────── */
     .hex-portrait {
       position: absolute;
-      top: 372px;
+      top: 312px;
       right: -40px;
       width: 206px;
       height: 243px;
@@ -379,14 +379,14 @@
       width: 220px; height: 220px;
       border-radius: 50%;
       border: 1px solid rgba(91,184,180,0.25);
-      top: 20px; right: 20px;
+      top: -40px; right: 20px;
     }
 
     .geo-ring-2 {
       width: 300px; height: 300px;
       border-radius: 50%;
       border: 1px solid rgba(90,155,191,0.15);
-      top: -20px; right: -20px;
+      top: -80px; right: -20px;
     }
 
     .geo-disk {
@@ -394,20 +394,20 @@
       border-radius: 50%;
       border: 1px solid rgba(91,184,180,0.4);
       background: rgba(91,184,180,0.04);
-      top: 115px; right: 95px;
+      top: 55px; right: 95px;
     }
 
     .geo-sq {
       width: 60px; height: 60px;
       border: 1px solid rgba(90,155,191,0.3);
-      bottom: 20px; left: 30px;
+      bottom: 80px; left: 30px;
       transform: rotate(18deg);
     }
 
     .geo-line-h {
       width: 80px; height: 1px;
       background: rgba(91,184,180,0.25);
-      top: 172px; right: 140px;
+      top: 112px; right: 140px;
     }
 
     /* ── SECTION 3: CINEMATOGRAPHY ─────────────────────────────── */
@@ -724,12 +724,12 @@
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Lebenslauf-Tab (Reiter oben rechts) -->
-    <button class="cv-tab" id="cv-tab" aria-expanded="false" aria-controls="cv-panel">
-      Lebenslauf
-    </button>
+      <!-- Lebenslauf-Tab (Reiter unten rechts) -->
+      <button class="cv-tab" id="cv-tab" aria-expanded="false" aria-controls="cv-panel">
+        Lebenslauf
+      </button>
+    </div>
 
     <!-- Aufklapp-Panel -->
     <div class="cv-panel" id="cv-panel" role="region">
