@@ -684,8 +684,8 @@
       bottom: 36px;
       right: 36px;
       z-index: 50;
-      width: 156px;
-      height: 180px;
+      width: 260px;
+      height: 300px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1023,14 +1023,14 @@
   <!-- Footer -->
   <!-- Schwebender Kontakt-Button -->
   <a href="mailto:info@stefankochert.com" class="contact-float" aria-label="E-Mail senden">
-    <svg viewBox="0 0 156 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Waben-Rand – 3× skaliert -->
-      <polygon points="78,0 156,45 156,135 78,180 0,135 0,45"
+    <svg viewBox="0 0 260 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Waben-Rand – 5× skaliert -->
+      <polygon points="130,0 260,75 260,225 130,300 0,225 0,75"
         stroke="currentColor" stroke-width="1.5" fill="var(--hex-fill)"/>
-      <!-- Briefumschlag – 3× skaliert -->
-      <rect x="39" y="63" width="78" height="54" rx="3.5"
+      <!-- Briefumschlag – 5× skaliert -->
+      <rect x="65" y="105" width="130" height="90" rx="5"
         stroke="currentColor" stroke-width="1.4"/>
-      <path d="M39 67 L78 93 L117 67"
+      <path d="M65 112 L130 155 L195 112"
         stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
     </svg>
   </a>
@@ -1064,7 +1064,7 @@
       const btn = document.querySelector('.contact-float');
       if (!btn) return;
       const TW = 104, TH = 90;
-      const BW = 156, BH = 180; // Button-Größe
+      const BW = 260, BH = 300; // Button-Größe
       const MARGIN = 24; // Mindestabstand zum Rand
       // Hex-Zentren im Kachel-Muster (relativ zu Kachel-Ursprung)
       const tileCenters = [[26,30],[78,30],[52,75]];
