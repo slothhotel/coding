@@ -674,9 +674,9 @@
 
     /* ── Schwebender Kontakt-Button ─────────────────────────────── */
     @keyframes contact-pulse {
-      0%   { background: rgba(21,35,51,0.08); border-color: rgba(91,184,180,0.2); color: rgba(91,184,180,0.25); }
-      50%  { background: rgba(21,35,51,0.45); border-color: rgba(91,184,180,0.85); color: rgba(91,184,180,0.95); }
-      100% { background: rgba(21,35,51,0.08); border-color: rgba(91,184,180,0.2); color: rgba(91,184,180,0.25); }
+      0%   { background: rgba(21,35,51,0.08); color: rgba(91,184,180,0.25); filter: drop-shadow(0 0 2px rgba(91,184,180,0.15)); }
+      50%  { background: rgba(21,35,51,0.45); color: rgba(91,184,180,0.95); filter: drop-shadow(0 0 8px rgba(91,184,180,0.7)); }
+      100% { background: rgba(21,35,51,0.08); color: rgba(91,184,180,0.25); filter: drop-shadow(0 0 2px rgba(91,184,180,0.15)); }
     }
 
     .contact-float {
@@ -685,24 +685,21 @@
       right: 36px;
       z-index: 50;
       width: 58px;
-      height: 58px;
+      height: 68px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1.5px solid rgba(91, 184, 180, 0.2);
-      border-radius: 4px;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
       color: rgba(91, 184, 180, 0.25);
-      backdrop-filter: blur(3px);
-      -webkit-backdrop-filter: blur(3px);
       text-decoration: none;
       animation: contact-pulse 8s ease-in-out infinite;
     }
 
     .contact-float:hover {
       animation: none;
-      background: rgba(21, 35, 51, 0.45) !important;
-      border-color: rgba(91, 184, 180, 0.85) !important;
-      color: rgba(91, 184, 180, 0.95) !important;
+      background: rgba(21, 35, 51, 0.55);
+      color: rgba(91, 184, 180, 0.95);
+      filter: drop-shadow(0 0 10px rgba(91,184,180,0.8));
     }
 
     .contact-float svg {
