@@ -235,13 +235,24 @@
     #about .section-title::after { background: var(--blue); }
 
     /* ── Lebenslauf Tab ─────────────────────────────────────────── */
-    .cv-tab {
+    /* Türkiser Rahmen-Wrapper für den Tab */
+    .cv-tab-frame {
       position: absolute;
       bottom: 0;
       right: 0;
       width: 210px;
       height: 54px;
       clip-path: polygon(27px 0%, 100% 0%, 100% 100%, 27px 100%, 0% 50%);
+      background: rgba(91, 184, 180, 0.85);
+      padding: 2px;
+      box-sizing: border-box;
+    }
+
+    .cv-tab {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      clip-path: polygon(24px 0%, 100% 0%, 100% 100%, 24px 100%, 0% 50%);
       background: rgba(255, 255, 255, 0.18);
       backdrop-filter: blur(4px);
       -webkit-backdrop-filter: blur(4px);
@@ -256,9 +267,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding-left: 20px;
+      padding-left: 18px;
       transition: background 0.2s;
-      filter: drop-shadow(-2px -2px 0px rgba(91, 184, 180, 0.85));
     }
 
     .cv-tab:hover { background: rgba(255, 255, 255, 0.28); }
@@ -745,9 +755,11 @@
     </div>
 
     <!-- Lebenslauf-Tab (Reiter unten rechts, außerhalb clip-path) -->
-    <button class="cv-tab" id="cv-tab" aria-expanded="false" aria-controls="cv-panel">
-      Lebenslauf
-    </button>
+    <div class="cv-tab-frame">
+      <button class="cv-tab" id="cv-tab" aria-expanded="false" aria-controls="cv-panel">
+        Lebenslauf
+      </button>
+    </div>
     </div><!-- /.about-panel-wrap -->
 
     <!-- Aufklapp-Panel -->
