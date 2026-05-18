@@ -1007,6 +1007,196 @@
     }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
 
     document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+
+    /* ── Waben-Strom-Animation ──────────────────────────────────── */
+    (function() {
+      const canvas = document.createElement('canvas');
+      canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;';
+      document.body.insertBefore(canvas, document.body.firstChild);
+      const ctx = canvas.getContext('2d');
+
+      // Passt zum CSS-Hintergrund: 104×90px-Kachel, spitze Waben
+      const TW = 104, TH = 90;
+      // [relX, relY, gestrichelt?] der drei Waben-Zentren pro Kachel
+      const TILE = [[26,30,false],[78,30,true],[52,75,true]];
+      // Vertex-Offsets vom Zentrum (spitze Wabe, r=30)
+      const VO = [[0,-30],[26,-15],[26,15],[0,30],[-26,15],[-26,-15]];
+
+      let W=0, H=0, nodes=[], nmap=new Map();
+
+      function nkey(x,y){ return Math.round(x)+','+Math.round(y); }
+
+      function gnode(x,y){
+        const k=nkey(x,y);
+        if(!nmap.has(k)){ const n={x,y,edges:[]}; nmap.set(k,n); nodes.push(n); }
+        return nmap.get(k);
+      }
+
+      function buildGraph(){
+        nodes=[]; nmap=new Map();
+        const mc=2;
+        for(let r=-mc; r<=Math.ceil(H/TH)+mc; r++){
+          for(let c=-mc; c<=Math.ceil(W/TW)+mc; c++){
+            for(const [hx,hy,dash] of TILE){
+              const cx=hx+c*TW, cy=hy+r*TH;
+              for(let i=0;i<6;i++){
+                const [ax,ay]=[cx+VO[i][0], cy+VO[i][1]];
+                const [bx,by]=[cx+VO[(i+1)%6][0], cy+VO[(i+1)%6][1]];
+                const na=gnode(ax,ay), nb=gnode(bx,by);
+                if(!na.edges.find(e=>e.to===nb)){
+                  na.edges.push({to:nb,dash});
+                  nb.edges.push({to:na,dash});
+                }
+              }
+            }
+          }
+        }
+      }
+
+      function resize(){
+        W=canvas.width=window.innerWidth;
+        H=canvas.height=window.innerHeight;
+        buildGraph();
+        snakes.forEach(s=>s.init());
+      }
+
+      /* Funken-Klasse */
+      class Spark {
+        constructor(x,y){
+          this.life=1;
+          this.pts=Array.from({length:5},()=>({
+            x,y,
+            vx:(Math.random()-.5)*90,
+            vy:(Math.random()-.5)*90,
+            l:0.5+Math.random()*.5
+          }));
+        }
+        update(dt){
+          this.life-=dt*3.5;
+          this.pts.forEach(p=>{
+            p.x+=p.vx*dt; p.y+=p.vy*dt;
+            p.vx*=.88; p.vy*=.88;
+            p.l-=dt*4;
+          });
+        }
+        get alive(){ return this.life>0; }
+        draw(c){
+          this.pts.forEach(p=>{
+            if(p.l<=0) return;
+            c.save();
+            c.shadowBlur=10; c.shadowColor='rgba(190,255,248,.9)';
+            c.fillStyle=`rgba(220,255,252,${p.l*.95})`;
+            c.beginPath(); c.arc(p.x,p.y,1.2,0,Math.PI*2); c.fill();
+            c.restore();
+          });
+        }
+      }
+
+      /* Schlangen-Klasse */
+      class Snake {
+        init(){
+          const on=nodes.filter(n=>n.x>0&&n.x<W&&n.y>0&&n.y<H&&n.edges.length>0);
+          if(!on.length) return;
+          this.from=on[Math.random()*on.length|0];
+          const e=this.from.edges[Math.random()*this.from.edges.length|0];
+          this.to=e.to; this.curDash=e.dash;
+          this.t=0;
+          this.speed=60+Math.random()*45; // px/s – langsam, fast wie Zündschnur
+          this.trail=[];
+          this.sparks=[];
+          this.prev=null;
+        }
+        get pos(){
+          return {
+            x:this.from.x+(this.to.x-this.from.x)*this.t,
+            y:this.from.y+(this.to.y-this.from.y)*this.t
+          };
+        }
+        update(dt){
+          if(!this.from){ this.init(); return; }
+          const dx=this.to.x-this.from.x, dy=this.to.y-this.from.y;
+          const len=Math.sqrt(dx*dx+dy*dy)||1;
+          this.t+=(this.speed*dt)/len;
+
+          const p=this.pos;
+          this.trail.push({x:p.x,y:p.y});
+          if(this.trail.length>28) this.trail.shift();
+
+          // Funken auf gestrichelten Kanten gelegentlich in der Mitte
+          if(this.curDash && this.t>.45 && this.t<.55 && Math.random()<.04){
+            this.sparks.push(new Spark(p.x,p.y));
+          }
+
+          if(this.t>=1){
+            this.t-=1;
+            this.prev=this.from;
+            this.from=this.to;
+            // Abseits des Bildschirms? Neu starten
+            if(this.from.x<-TW*3||this.from.x>W+TW*3||
+               this.from.y<-TH*3||this.from.y>H+TH*3){ this.init(); return; }
+            // Nächste Kante – nicht zurück
+            let ch=this.from.edges.filter(e=>e.to!==this.prev);
+            if(!ch.length) ch=this.from.edges;
+            const ne=ch[Math.random()*ch.length|0];
+            this.to=ne.to; this.curDash=ne.dash;
+            // Funke am Knotenpunkt
+            if(ne.dash&&Math.random()<.55 || Math.random()<.12){
+              this.sparks.push(new Spark(this.from.x,this.from.y));
+            }
+          }
+          this.sparks.forEach(s=>s.update(dt));
+          this.sparks=this.sparks.filter(s=>s.alive);
+        }
+        draw(c){
+          if(!this.from||this.trail.length<2) return;
+          c.save(); c.lineCap='round';
+          // Leuchtender Schweif
+          for(let i=1;i<this.trail.length;i++){
+            const a=i/this.trail.length;
+            c.beginPath();
+            c.moveTo(this.trail[i-1].x,this.trail[i-1].y);
+            c.lineTo(this.trail[i].x,this.trail[i].y);
+            c.strokeStyle=`rgba(91,210,195,${a*.5})`;
+            c.lineWidth=a*2;
+            c.shadowBlur=a*12; c.shadowColor='rgba(91,184,180,.5)';
+            c.stroke();
+          }
+          // Kopf – heller Funken
+          const p=this.pos;
+          c.shadowBlur=20; c.shadowColor='rgba(210,255,252,.95)';
+          c.fillStyle='rgba(238,255,253,.97)';
+          c.beginPath(); c.arc(p.x,p.y,2.5,0,Math.PI*2); c.fill();
+          // Extraglow
+          c.shadowBlur=8; c.fillStyle='rgba(91,210,195,.4)';
+          c.beginPath(); c.arc(p.x,p.y,5,0,Math.PI*2); c.fill();
+          c.restore();
+          this.sparks.forEach(s=>s.draw(c));
+        }
+      }
+
+      const snakes=[new Snake(), new Snake()];
+      let last=null;
+
+      function frame(ts){
+        if(!last) last=ts;
+        const dt=Math.min((ts-last)/1000,.05);
+        last=ts;
+        ctx.clearRect(0,0,W,H);
+        ctx.save(); ctx.lineCap='round';
+        snakes.forEach(s=>{ s.update(dt); s.draw(ctx); });
+        ctx.restore();
+        requestAnimationFrame(frame);
+      }
+
+      // Zweite Schlange mit Versatz starten
+      snakes[0].init();
+      setTimeout(()=>snakes[1].init(), 2200);
+
+      resize();
+      window.addEventListener('resize', resize);
+      requestAnimationFrame(frame);
+    })();
+
   </script>
 </body>
 </html>
