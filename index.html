@@ -672,6 +672,38 @@
 
     .cine-text p + p { margin-top: 16px; }
 
+    /* ── Schwebender Kontakt-Button ─────────────────────────────── */
+    .contact-float {
+      position: fixed;
+      bottom: 36px;
+      right: 36px;
+      z-index: 50;
+      width: 58px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(21, 35, 51, 0.22);
+      border: 1.5px solid rgba(91, 184, 180, 0.45);
+      border-radius: 4px;
+      color: rgba(91, 184, 180, 0.55);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      transition: background 0.25s, border-color 0.25s, color 0.25s;
+      text-decoration: none;
+    }
+
+    .contact-float svg {
+      width: 26px;
+      height: 26px;
+    }
+
+    .contact-float:hover {
+      background: rgba(21, 35, 51, 0.45);
+      border-color: rgba(91, 184, 180, 0.85);
+      color: rgba(91, 184, 180, 0.95);
+    }
+
     /* ── SCROLL ANIMATIONS ──────────────────────────────────────── */
 
     .fade-up {
@@ -983,6 +1015,14 @@
   </section>
 
   <!-- Footer -->
+  <!-- Schwebender Kontakt-Button -->
+  <a href="mailto:info@stefankochert.com" class="contact-float" aria-label="E-Mail senden">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.4"/>
+      <path d="M2 7 L12 13.5 L22 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    </svg>
+  </a>
+
   <footer>
     <p>&copy; 2025 Stefan Kochert &nbsp;&middot;&nbsp; Berlin</p>
   </footer>
