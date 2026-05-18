@@ -1060,7 +1060,7 @@
       function snap() {
         const W = window.innerWidth, H = window.innerHeight;
         // Ziel: die Wabe, die am nächsten zur unteren rechten Ecke liegt
-        const tx = W - BW / 2 - 6;
+        const tx = W - BW / 2 - 58; // eine Wabe nach links versetzt
         const ty = H - BH / 2 - 6;
         let best = null, bestDist = Infinity;
         for (let row = 0; row <= Math.ceil(H / TH) + 1; row++) {
