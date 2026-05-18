@@ -1053,14 +1053,17 @@
       // Puls-Objekte: expandierende Ringe von einem Ursprung aus
       const pulses=[];
       function spawnPulse(){
+        const speed = 90 + Math.random()*60;
+        const life  = 10 + Math.random()*6;   // viel länger → großer Radius
         pulses.push({
           x: W*0.1 + Math.random()*W*0.8,
           y: H*0.1 + Math.random()*H*0.8,
           t: 0,
-          speed:  90 + Math.random()*70,   // px/s
-          width:  80 + Math.random()*60,   // Ringbreite
-          alpha:  0.38 + Math.random()*0.22,
-          life:   3.5 + Math.random()*2    // Sekunden bis Verblassen
+          speed,
+          width:    110 + Math.random()*70,   // breiterer Ring
+          alpha:    0.65 + Math.random()*0.25, // heller
+          life,
+          maxR:     speed * life               // max. Radius beim Verblassen
         });
       }
 
@@ -1120,8 +1123,8 @@
             const ring=p.t*p.speed;
             const diff=Math.abs(dist-ring);
             if(diff<p.width){
-              const shape=(1-diff/p.width);          // weicher Übergang
-              const fade =Math.max(0,1-p.t/p.life);  // zeitliches Verblassen
+              const shape=(1-diff/p.width);              // weicher Übergang
+              const fade =Math.max(0,1-ring/p.maxR);     // heller am Anfang, dunkler je weiter
               extra+=p.alpha * shape*shape * fade;
             }
           });
