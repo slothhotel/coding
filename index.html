@@ -673,6 +673,12 @@
     .cine-text p + p { margin-top: 16px; }
 
     /* ── Schwebender Kontakt-Button ─────────────────────────────── */
+    @keyframes contact-pulse {
+      0%   { background: rgba(21,35,51,0.08); border-color: rgba(91,184,180,0.2); color: rgba(91,184,180,0.25); }
+      50%  { background: rgba(21,35,51,0.45); border-color: rgba(91,184,180,0.85); color: rgba(91,184,180,0.95); }
+      100% { background: rgba(21,35,51,0.08); border-color: rgba(91,184,180,0.2); color: rgba(91,184,180,0.25); }
+    }
+
     .contact-float {
       position: fixed;
       bottom: 36px;
@@ -683,14 +689,20 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(21, 35, 51, 0.45);
-      border: 1.5px solid rgba(91, 184, 180, 0.85);
+      border: 1.5px solid rgba(91, 184, 180, 0.2);
       border-radius: 4px;
-      color: rgba(91, 184, 180, 0.95);
+      color: rgba(91, 184, 180, 0.25);
       backdrop-filter: blur(3px);
       -webkit-backdrop-filter: blur(3px);
-      transition: background 0.25s, border-color 0.25s, color 0.25s;
       text-decoration: none;
+      animation: contact-pulse 3s ease-in-out infinite;
+    }
+
+    .contact-float:hover {
+      animation: none;
+      background: rgba(21, 35, 51, 0.45) !important;
+      border-color: rgba(91, 184, 180, 0.85) !important;
+      color: rgba(91, 184, 180, 0.95) !important;
     }
 
     .contact-float svg {
@@ -698,11 +710,6 @@
       height: 36px;
     }
 
-    .contact-float:hover {
-      background: rgba(21, 35, 51, 0.45);
-      border-color: rgba(91, 184, 180, 0.85);
-      color: rgba(91, 184, 180, 0.95);
-    }
 
     /* ── SCROLL ANIMATIONS ──────────────────────────────────────── */
 
