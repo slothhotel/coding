@@ -983,11 +983,29 @@
 
   <script>
     /* Smooth scroll für Hero-Navigation */
+    function smoothScrollTo(target, duration = 950) {
+      const start = window.scrollY;
+      const end   = target.getBoundingClientRect().top + window.scrollY;
+      const dist  = end - start;
+      let t0 = null;
+      function ease(t) {
+        // cubic ease-in-out
+        return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2;
+      }
+      function step(now) {
+        if (!t0) t0 = now;
+        const p = Math.min((now - t0) / duration, 1);
+        window.scrollTo(0, start + dist * ease(p));
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
     document.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', e => {
         e.preventDefault();
         const target = document.querySelector(link.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
+        if (target) smoothScrollTo(target);
       });
     });
 
