@@ -213,6 +213,10 @@
     #about { background: transparent; overflow: visible; }
 
     /* Helle Fläche mit Ausschnitt oben rechts für den Lebenslauf-Tab */
+    .about-panel-wrap {
+      position: relative;
+    }
+
     .about-panel {
       background: var(--light-1);
       clip-path: polygon(
@@ -698,6 +702,7 @@
 
   <!-- ── 02 ABOUT ────────────────────────────────────────────── -->
   <section id="about">
+    <div class="about-panel-wrap">
     <div class="about-panel">
       <div class="section-inner">
         <div class="section-label fade-up">01 — Über mich</div>
@@ -725,11 +730,13 @@
         </div>
       </div>
 
-      <!-- Lebenslauf-Tab (Reiter unten rechts) -->
-      <button class="cv-tab" id="cv-tab" aria-expanded="false" aria-controls="cv-panel">
-        Lebenslauf
-      </button>
     </div>
+
+    <!-- Lebenslauf-Tab (Reiter unten rechts, außerhalb clip-path) -->
+    <button class="cv-tab" id="cv-tab" aria-expanded="false" aria-controls="cv-panel">
+      Lebenslauf
+    </button>
+    </div><!-- /.about-panel-wrap -->
 
     <!-- Aufklapp-Panel -->
     <div class="cv-panel" id="cv-panel" role="region">
