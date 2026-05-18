@@ -684,8 +684,8 @@
       bottom: 36px;
       right: 36px;
       z-index: 50;
-      width: 104px;
-      height: 120px;
+      width: 156px;
+      height: 180px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1023,14 +1023,14 @@
   <!-- Footer -->
   <!-- Schwebender Kontakt-Button -->
   <a href="mailto:info@stefankochert.com" class="contact-float" aria-label="E-Mail senden">
-    <svg viewBox="0 0 104 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Waben-Rand – 2× skaliert -->
-      <polygon points="52,0 104,30 104,90 52,120 0,90 0,30"
+    <svg viewBox="0 0 156 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Waben-Rand – 3× skaliert -->
+      <polygon points="78,0 156,45 156,135 78,180 0,135 0,45"
         stroke="currentColor" stroke-width="1.5" fill="var(--hex-fill)"/>
-      <!-- Briefumschlag – 2× skaliert -->
-      <rect x="26" y="42" width="52" height="36" rx="2.5"
+      <!-- Briefumschlag – 3× skaliert -->
+      <rect x="39" y="63" width="78" height="54" rx="3.5"
         stroke="currentColor" stroke-width="1.4"/>
-      <path d="M26 45 L52 62 L78 45"
+      <path d="M39 67 L78 93 L117 67"
         stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
     </svg>
   </a>
@@ -1058,6 +1058,43 @@
       }
       requestAnimationFrame(step);
     }
+
+    /* Kontakt-Button auf nächste Hintergrundwabe ausrichten */
+    (function alignContactHex() {
+      const btn = document.querySelector('.contact-float');
+      if (!btn) return;
+      const TW = 104, TH = 90;
+      const BW = 156, BH = 180; // Button-Größe
+      const MARGIN = 24; // Mindestabstand zum Rand
+      // Hex-Zentren im Kachel-Muster (relativ zu Kachel-Ursprung)
+      const tileCenters = [[26,30],[78,30],[52,75]];
+
+      function snap() {
+        const W = window.innerWidth, H = window.innerHeight;
+        // Ziel-Bereich: unten rechts, mit Abstand
+        const tx = W - BW/2 - MARGIN;
+        const ty = H - BH/2 - MARGIN;
+        // Nächsten Hex-Mittelpunkt finden
+        let best = null, bestDist = Infinity;
+        for (let row = -1; row <= Math.ceil(H/TH)+1; row++) {
+          for (let col = -1; col <= Math.ceil(W/TW)+1; col++) {
+            for (const [hx, hy] of tileCenters) {
+              const cx = hx + col*TW, cy = hy + row*TH;
+              // Nur Punkte im unteren rechten Bereich
+              if (cx < W*0.5 || cy < H*0.5) continue;
+              const d = Math.hypot(cx - tx, cy - ty);
+              if (d < bestDist) { bestDist = d; best = {cx, cy}; }
+            }
+          }
+        }
+        if (!best) return;
+        // Button zentriert auf Hex-Mittelpunkt setzen
+        btn.style.right  = (W - best.cx - BW/2) + 'px';
+        btn.style.bottom = (H - best.cy - BH/2) + 'px';
+      }
+      snap();
+      window.addEventListener('resize', snap);
+    })();
 
     document.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', e => {
