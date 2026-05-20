@@ -1460,10 +1460,20 @@
       }
 
       function ringToD(ring) {
+        // Antimeridian-Fix: Stift heben wenn Längengrad um >180° springt
+        // (passiert bei Russland, Alaska, Antarktis die den 180°-Meridian überschreiten)
         let d = '';
+        let prevLon = null;
+        let penUp = true;
         for (let i = 0; i < ring.length; i++) {
-          const [x, y] = project(ring[i][0], ring[i][1]);
-          d += (i === 0 ? 'M' : 'L') + x.toFixed(1) + ' ' + y.toFixed(1);
+          const lon = ring[i][0], lat = ring[i][1];
+          if (prevLon !== null && Math.abs(lon - prevLon) > 180) {
+            penUp = true; // Querlinie über die Karte verhindern
+          }
+          const [x, y] = project(lon, lat);
+          d += (penUp ? 'M' : 'L') + x.toFixed(1) + ' ' + y.toFixed(1);
+          penUp = false;
+          prevLon = lon;
         }
         return d + 'Z';
       }
@@ -1495,6 +1505,7 @@
 
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         path.setAttribute('fill', '#152333');
+        path.setAttribute('fill-rule', 'evenodd');
         path.setAttribute('filter', 'url(#landShadow)');
         path.setAttribute('d', d);
         group.appendChild(path);
