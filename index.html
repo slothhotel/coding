@@ -1105,6 +1105,42 @@
                 </circle>
                 <circle class="pin-dot" cx="714" cy="169" r="4.5" fill="rgba(91,184,180,0.92)"/>
               </g>
+              <!-- Hong Kong (114.2°, 22.3°) -->
+              <g class="map-pin" data-location="hong-kong" data-name="Hong Kong">
+                <title>Hong Kong</title>
+                <circle cx="817" cy="188" r="7" fill="none" stroke="rgba(91,184,180,0.6)" stroke-width="1.5">
+                  <animate attributeName="r" values="5;18;5" dur="2.5s" repeatCount="indefinite" begin="2.5s"/>
+                  <animate attributeName="opacity" values="0.7;0;0.7" dur="2.5s" repeatCount="indefinite" begin="2.5s"/>
+                </circle>
+                <circle class="pin-dot" cx="817" cy="188" r="4.5" fill="rgba(91,184,180,0.92)"/>
+              </g>
+              <!-- Washington D.C. (-77°, 38.9°) -->
+              <g class="map-pin" data-location="washington" data-name="Washington D.C.">
+                <title>Washington D.C.</title>
+                <circle cx="286" cy="142" r="7" fill="none" stroke="rgba(91,184,180,0.6)" stroke-width="1.5">
+                  <animate attributeName="r" values="5;18;5" dur="2.5s" repeatCount="indefinite" begin="3.0s"/>
+                  <animate attributeName="opacity" values="0.7;0;0.7" dur="2.5s" repeatCount="indefinite" begin="3.0s"/>
+                </circle>
+                <circle class="pin-dot" cx="286" cy="142" r="4.5" fill="rgba(91,184,180,0.92)"/>
+              </g>
+              <!-- Denver (-105°, 39.7°) -->
+              <g class="map-pin" data-location="denver" data-name="Denver">
+                <title>Denver</title>
+                <circle cx="208" cy="140" r="7" fill="none" stroke="rgba(91,184,180,0.6)" stroke-width="1.5">
+                  <animate attributeName="r" values="5;18;5" dur="2.5s" repeatCount="indefinite" begin="3.5s"/>
+                  <animate attributeName="opacity" values="0.7;0;0.7" dur="2.5s" repeatCount="indefinite" begin="3.5s"/>
+                </circle>
+                <circle class="pin-dot" cx="208" cy="140" r="4.5" fill="rgba(91,184,180,0.92)"/>
+              </g>
+              <!-- Berlin (13.4°, 52.5°) -->
+              <g class="map-pin" data-location="berlin" data-name="Berlin">
+                <title>Berlin</title>
+                <circle cx="537" cy="104" r="7" fill="none" stroke="rgba(91,184,180,0.6)" stroke-width="1.5">
+                  <animate attributeName="r" values="5;18;5" dur="2.5s" repeatCount="indefinite" begin="4.0s"/>
+                  <animate attributeName="opacity" values="0.7;0;0.7" dur="2.5s" repeatCount="indefinite" begin="4.0s"/>
+                </circle>
+                <circle class="pin-dot" cx="537" cy="104" r="4.5" fill="rgba(91,184,180,0.92)"/>
+              </g>
             </g>
           </svg>
         </div>
@@ -1253,11 +1289,15 @@
     (function() {
       // Foto-Daten pro Ort (Pfade anpassen sobald Fotos vorhanden)
       const photoData = {
-        'new-york':  ['images/foto-1.jpg', 'images/foto-2.jpg'],
-        'la':        ['images/foto-3.jpg', 'images/foto-4.jpg'],
-        'la-paz':    ['images/foto-5.jpg', 'images/foto-6.jpg'],
-        'dubrovnik': ['images/foto-7.jpg', 'images/foto-8.jpg'],
-        'new-delhi': [],
+        'new-york':   ['images/foto-1.jpg', 'images/foto-2.jpg'],
+        'la':         ['images/foto-3.jpg', 'images/foto-4.jpg'],
+        'la-paz':     ['images/foto-5.jpg', 'images/foto-6.jpg'],
+        'dubrovnik':  ['images/foto-7.jpg', 'images/foto-8.jpg'],
+        'new-delhi':  [],
+        'hong-kong':  [],
+        'washington': [],
+        'denver':     [],
+        'berlin':     [],
       };
 
       let currentPhotos = [];
