@@ -531,7 +531,15 @@
 
     /* ── SECTION 5: PHOTOGRAPHY ────────────────────────────────── */
 
-    #photography { background: var(--light-4); }
+    #photography { background: none; }
+
+    /* Heller Bereich: Text + Karte */
+    .photo-top-bg { background: var(--light-4); }
+    .photo-inner-top { max-width: 1080px; margin: 0 auto; padding: 120px 40px 40px; }
+
+    /* Carousel-Bereich: transparent → Wabenmuster scheint durch */
+    .photo-carousel-area { padding: 40px 0 80px; }
+    .photo-inner-bottom { max-width: 560px; margin: 0 auto; padding: 0 40px; }
 
     #photography .section-label { color: var(--blue); }
     #photography .section-title { color: var(--text-dark); }
@@ -569,7 +577,7 @@
     .photo-carousel-outer {
       position: relative;
       border: 6px solid #000;
-      background: #060e13;
+      background: transparent;
       margin-bottom: 12px;
     }
     .photo-carousel-inner {
@@ -620,7 +628,7 @@
       font-size: 0.65rem;
       letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: var(--text-mid);
+      color: rgba(255,255,255,0.4);
       min-height: 1em;
     }
 
@@ -1003,7 +1011,8 @@
 
   <!-- ── 05 PHOTOGRAPHY ─────────────────────────────────────── -->
   <section id="photography">
-    <div class="section-inner">
+    <div class="photo-top-bg">
+    <div class="photo-inner-top">
       <div class="section-label fade-up">04 — Bilder</div>
       <h2 class="section-title fade-up">Fotografie</h2>
       <div class="photography-text fade-up">
@@ -1032,14 +1041,28 @@
             <path d="M467,103 L469,97 L472,97 L472,103 L469,106 Z"/>
             <!-- Südamerika -->
             <path d="M278,228 L314,214 L333,217 L353,228 L375,244 L397,261 L403,281 L400,294 L394,311 L381,331 L361,344 L344,353 L333,361 L322,372 L319,400 L308,406 L297,403 L289,392 L283,375 L281,358 L278,344 L275,325 L275,297 L272,278 L272,261 L275,247 L278,236 Z"/>
-            <!-- Europa (Festland + Skandinavien) -->
-            <path d="M475,147 L483,150 L497,150 L506,144 L511,139 L519,131 L525,136 L528,139 L533,144 L542,144 L547,136 L553,139 L558,144 L561,150 L567,144 L572,144 L575,136 L583,133 L589,128 L597,128 L597,133 L603,119 L597,111 L592,67 L581,56 L572,53 L561,56 L547,58 L539,53 L531,56 L525,67 L519,78 L517,86 L514,89 L519,89 L525,94 L528,100 L525,103 L519,103 L514,103 L508,108 L503,111 L497,114 L494,119 L497,125 L494,128 L486,133 L481,139 L478,142 L475,139 Z"/>
+            <!-- Europa (Festland + Skandinavien + Stiefel + Griechenland) -->
+            <path d="M475,147 L481,150 L492,150 L503,147 L508,144 L511,139 L519,131
+              L522,133 L519,136 L522,139 L528,139 L528,133 L531,131 L533,133
+              L536,139 L536,144 L539,147 L542,144 L542,139 L544,144 L542,147
+              L547,142 L547,139 L550,139 L550,144 L547,147
+              L550,136 L553,133 L556,133 L558,136 L558,139 L556,142 L558,147 L556,150
+              L558,153 L561,150 L561,147 L564,144 L567,144 L569,142 L572,144
+              L575,136 L581,133 L586,128 L592,128 L597,131 L597,128 L603,119
+              L597,111 L592,67 L583,56 L572,53 L561,56 L550,58 L547,58 L539,53
+              L533,56 L528,64 L525,67 L522,75 L519,78 L517,86 L514,89
+              L519,89 L522,92 L525,94 L528,100 L525,103 L519,103 L514,103
+              L508,108 L503,111 L497,114 L494,119 L494,125 L497,128
+              L492,131 L486,133 L481,139 L478,142 L475,139 Z"/>
             <!-- Afrika -->
             <path d="M483,150 L503,147 L522,144 L533,153 L547,158 L561,161 L583,161 L592,167 L606,183 L619,200 L631,211 L636,225 L628,244 L622,256 L619,272 L617,294 L611,311 L606,322 L600,336 L594,344 L581,347 L564,347 L553,344 L539,336 L533,319 L531,300 L525,278 L519,261 L511,250 L511,242 L514,233 L508,233 L500,228 L492,222 L483,214 L472,208 L464,203 L458,194 L456,183 L456,172 L461,167 L469,161 L478,153 Z"/>
             <!-- Madagaskar -->
             <path d="M617,289 L622,278 L628,272 L631,278 L628,292 L622,297 Z"/>
             <!-- Asien -->
-            <path d="M572,144 L578,136 L586,131 L594,128 L603,128 L614,133 L622,131 L636,128 L650,122 L667,122 L694,103 L722,78 L756,64 L778,47 L833,42 L867,42 L889,47 L917,61 L944,72 L953,100 L947,108 L922,114 L903,122 L881,139 L864,156 L847,164 L844,172 L839,164 L836,175 L836,186 L831,194 L822,208 L811,219 L803,228 L797,236 L789,247 L781,233 L775,222 L769,211 L764,208 L758,200 L756,192 L753,186 L747,183 L739,183 L728,186 L719,192 L711,214 L703,208 L700,197 L694,189 L686,181 L675,178 L669,181 L661,183 L656,189 L650,197 L644,206 L639,211 L631,211 L625,211 L619,206 L611,194 L606,183 L603,172 L600,153 L594,144 L583,139 L578,139 L572,144 Z"/>
+            <path d="M572,144 L578,136 L586,131 L594,128 L603,128 L614,133 L622,131 L636,128 L650,122 L667,122 L694,103 L722,78 L756,64 L778,47 L833,42 L867,42 L889,47 L917,61 L944,72 L953,100 L947,108 L922,114 L903,122 L881,139 L864,156 L847,164 L844,172 L839,164 L836,175 L836,186 L831,194 L822,208 L811,219 L803,228 L797,236 L789,247 L781,233 L775,222 L769,211 L764,208 L758,200 L756,192 L753,186
+              L750,186 L747,186 L742,189 L736,194 L731,197 L725,203 L722,208 L719,214 L717,219 L714,228
+              L711,219 L708,211 L706,206 L703,197 L700,192 L697,189 L692,186 L689,183 L686,181
+              L681,181 L675,181 L669,183 L661,186 L656,194 L650,200 L644,208 L639,211 L631,211 L625,208 L619,203 L611,192 L606,183 L603,172 L600,153 L594,144 L583,139 L578,139 L572,144 Z"/>
             <!-- Sri Lanka -->
             <path d="M717,231 L719,225 L722,225 L722,231 Z"/>
             <!-- Japan (vereinfacht) -->
@@ -1107,6 +1130,10 @@
         </svg>
       </div>
 
+    </div><!-- /.photo-inner-top -->
+    </div><!-- /.photo-top-bg -->
+    <div class="photo-carousel-area">
+    <div class="photo-inner-bottom">
       <!-- Foto-Carousel -->
       <div class="photo-carousel-outer fade-up">
         <div class="photo-carousel-inner" id="photoCarousel">
@@ -1116,7 +1143,8 @@
         <button class="carousel-nav next" id="carouselNext" aria-label="Nächstes Bild">&#8250;</button>
       </div>
       <div class="carousel-location-label" id="carouselLocationLabel"></div>
-    </div>
+    </div><!-- /.photo-inner-bottom -->
+    </div><!-- /.photo-carousel-area -->
   </section>
 
   <!-- ── 06 MEDIA EDUCATION ─────────────────────────────────── -->
