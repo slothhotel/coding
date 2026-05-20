@@ -531,15 +531,7 @@
 
     /* ── SECTION 5: PHOTOGRAPHY ────────────────────────────────── */
 
-    #photography { background: none; }
-
-    /* Heller Bereich: Text + Karte */
-    .photo-top-bg { background: var(--light-4); }
-    .photo-inner-top { max-width: 1080px; margin: 0 auto; padding: 120px 40px 40px; }
-
-    /* Carousel-Bereich: transparent → Wabenmuster scheint durch */
-    .photo-carousel-area { padding: 40px 0 80px; }
-    .photo-inner-bottom { max-width: 560px; margin: 0 auto; padding: 0 40px; }
+    #photography { background: var(--light-4); }
 
     #photography .section-label { color: var(--blue); }
     #photography .section-title { color: var(--text-dark); }
@@ -555,8 +547,25 @@
     }
 
     /* ── Weltkarte ──────────────────────────────────────────────── */
+    .world-map-container {
+      position: relative;
+      margin: 0 -40px 36px;
+    }
+    .map-window-bg {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 780px;
+      top: 0;
+      bottom: 0;
+      background: rgba(255,255,255,0.48);
+      box-shadow: 0 0 0 1.5px rgba(21,35,51,0.09), 0 6px 28px rgba(0,0,0,0.09);
+      z-index: 0;
+      pointer-events: none;
+    }
     .world-map-wrap {
-      margin: 0 -40px 28px;
+      position: relative;
+      z-index: 1;
     }
     .world-map-svg { width: 100%; height: auto; display: block; overflow: visible; }
 
@@ -577,8 +586,9 @@
     .photo-carousel-outer {
       position: relative;
       border: 6px solid #000;
-      background: transparent;
-      margin-bottom: 12px;
+      background: #060e13;
+      max-width: 780px;
+      margin: 0 auto 12px;
     }
     .photo-carousel-inner {
       position: relative;
@@ -628,8 +638,10 @@
       font-size: 0.65rem;
       letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
+      color: var(--text-mid);
       min-height: 1em;
+      max-width: 780px;
+      margin: 0 auto;
     }
 
     /* ── SECTION 6: MEDIA EDUCATION ────────────────────────────── */
@@ -1011,8 +1023,7 @@
 
   <!-- ── 05 PHOTOGRAPHY ─────────────────────────────────────── -->
   <section id="photography">
-    <div class="photo-top-bg">
-    <div class="photo-inner-top">
+    <div class="section-inner">
       <div class="section-label fade-up">04 — Bilder</div>
       <h2 class="section-title fade-up">Fotografie</h2>
       <div class="photography-text fade-up">
@@ -1020,120 +1031,127 @@
         <p>Die Kamera ist für mich mehr als ein technisches Gerät – sie ist ein Grund, innezuhalten und den Moment wirklich wahrzunehmen. Lange habe ich Schwarz-Weiß-Filme selbst entwickelt und im Labor vergrößert. Diese Langsamkeit und Sorgfalt im Umgang mit Bildern hat meine Arbeit bis heute geprägt.</p>
       </div>
       <!-- Weltkarte -->
-      <div class="world-map-wrap fade-up">
-        <svg class="world-map-svg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <filter id="landShadow" x="-8%" y="-8%" width="125%" height="125%">
-              <feDropShadow dx="3" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.42"/>
-            </filter>
-          </defs>
-          <!-- Kontinente -->
-          <g fill="#152333" filter="url(#landShadow)">
-            <!-- Nordamerika -->
-            <path d="M33,100 L47,97 L42,72 L64,53 L164,44 L222,33 L278,19 L300,56 L319,78 L347,97 L350,103 L353,119 L336,122 L325,128 L314,128 L306,133 L297,136 L292,150 L283,161 L278,178 L275,181 L272,175 L264,167 L258,167 L253,169 L244,172 L239,169 L231,178 L231,189 L233,197 L244,200 L250,192 L258,192 L258,208 L267,219 L275,225 L278,228 L264,222 L250,214 L247,208 L236,206 L222,200 L208,194 L189,178 L175,161 L161,144 L156,128 L156,117 L150,111 L139,100 L75,92 L47,97 Z"/>
-            <!-- Grönland -->
-            <path d="M347,75 L344,61 L344,47 L356,36 L375,22 L406,19 L428,25 L447,39 L444,56 L436,78 L414,86 L392,86 L375,81 L361,81 L350,78 Z"/>
-            <!-- Island -->
-            <path d="M439,89 L444,86 L453,86 L456,89 L453,94 L444,97 L439,94 Z"/>
-            <!-- Großbritannien -->
-            <path d="M472,100 L475,89 L481,89 L483,94 L481,103 L475,106 Z"/>
-            <!-- Irland -->
-            <path d="M467,103 L469,97 L472,97 L472,103 L469,106 Z"/>
-            <!-- Südamerika -->
-            <path d="M278,228 L314,214 L333,217 L353,228 L375,244 L397,261 L403,281 L400,294 L394,311 L381,331 L361,344 L344,353 L333,361 L322,372 L319,400 L308,406 L297,403 L289,392 L283,375 L281,358 L278,344 L275,325 L275,297 L272,278 L272,261 L275,247 L278,236 Z"/>
-            <!-- Europa (Festland + Skandinavien + Stiefel + Griechenland) -->
-            <path d="M475,147 L481,150 L492,150 L503,147 L508,144 L511,139 L519,131
-              L522,133 L519,136 L522,139 L528,139 L528,133 L531,131 L533,133
-              L536,139 L536,144 L539,147 L542,144 L542,139 L544,144 L542,147
-              L547,142 L547,139 L550,139 L550,144 L547,147
-              L550,136 L553,133 L556,133 L558,136 L558,139 L556,142 L558,147 L556,150
-              L558,153 L561,150 L561,147 L564,144 L567,144 L569,142 L572,144
-              L575,136 L581,133 L586,128 L592,128 L597,131 L597,128 L603,119
-              L597,111 L592,67 L583,56 L572,53 L561,56 L550,58 L547,58 L539,53
-              L533,56 L528,64 L525,67 L522,75 L519,78 L517,86 L514,89
-              L519,89 L522,92 L525,94 L528,100 L525,103 L519,103 L514,103
-              L508,108 L503,111 L497,114 L494,119 L494,125 L497,128
-              L492,131 L486,133 L481,139 L478,142 L475,139 Z"/>
-            <!-- Afrika -->
-            <path d="M483,150 L503,147 L522,144 L533,153 L547,158 L561,161 L583,161 L592,167 L606,183 L619,200 L631,211 L636,225 L628,244 L622,256 L619,272 L617,294 L611,311 L606,322 L600,336 L594,344 L581,347 L564,347 L553,344 L539,336 L533,319 L531,300 L525,278 L519,261 L511,250 L511,242 L514,233 L508,233 L500,228 L492,222 L483,214 L472,208 L464,203 L458,194 L456,183 L456,172 L461,167 L469,161 L478,153 Z"/>
-            <!-- Madagaskar -->
-            <path d="M617,289 L622,278 L628,272 L631,278 L628,292 L622,297 Z"/>
-            <!-- Asien -->
-            <path d="M572,144 L578,136 L586,131 L594,128 L603,128 L614,133 L622,131 L636,128 L650,122 L667,122 L694,103 L722,78 L756,64 L778,47 L833,42 L867,42 L889,47 L917,61 L944,72 L953,100 L947,108 L922,114 L903,122 L881,139 L864,156 L847,164 L844,172 L839,164 L836,175 L836,186 L831,194 L822,208 L811,219 L803,228 L797,236 L789,247 L781,233 L775,222 L769,211 L764,208 L758,200 L756,192 L753,186
-              L750,186 L747,186 L742,189 L736,194 L731,197 L725,203 L722,208 L719,214 L717,219 L714,228
-              L711,219 L708,211 L706,206 L703,197 L700,192 L697,189 L692,186 L689,183 L686,181
-              L681,181 L675,181 L669,183 L661,186 L656,194 L650,200 L644,208 L639,211 L631,211 L625,208 L619,203 L611,192 L606,183 L603,172 L600,153 L594,144 L583,139 L578,139 L572,144 Z"/>
-            <!-- Sri Lanka -->
-            <path d="M717,231 L719,225 L722,225 L722,231 Z"/>
-            <!-- Japan (vereinfacht) -->
-            <path d="M869,150 L872,144 L878,142 L883,147 L881,153 L875,156 Z"/>
-            <path d="M875,142 L878,133 L883,131 L886,136 L883,142 L878,144 Z"/>
-            <path d="M881,133 L886,125 L892,122 L894,128 L889,133 L883,133 Z"/>
-            <!-- Taiwan -->
-            <path d="M844,178 L847,172 L850,172 L850,178 L847,181 Z"/>
-            <!-- Australien -->
-            <path d="M808,308 L819,303 L828,294 L844,281 L858,278 L872,278 L889,283 L906,294 L917,311 L922,328 L922,342 L919,356 L908,361 L897,358 L886,356 L875,356 L864,358 L856,353 L847,347 L836,344 L825,344 L817,342 L811,333 L808,322 Z"/>
-            <!-- Neuseeland -->
-            <path d="M950,392 L953,381 L958,375 L964,372 L967,375 L964,381 L958,386 Z"/>
-            <path d="M956,406 L961,397 L964,392 L969,392 L969,400 L964,406 L958,408 Z"/>
-            <!-- Antarktis -->
-            <path d="M0,474 L1000,474 L1000,500 L0,500 Z"/>
-          </g>
-          <!-- Ortsmarkierungen -->
-          <g class="map-pins">
-            <!-- New York (-74°, 40°) -->
-            <g class="map-pin" data-location="new-york" data-name="New York">
-              <title>New York</title>
-              <circle cx="294" cy="139" r="7" fill="none" stroke="rgba(91,184,180,0.6)" stroke-width="1.5">
-                <animate attributeName="r" values="5;18;5" dur="2.5s" repeatCount="indefinite"/>
-                <animate attributeName="opacity" values="0.7;0;0.7" dur="2.5s" repeatCount="indefinite"/>
-              </circle>
-              <circle class="pin-dot" cx="294" cy="139" r="4.5" fill="rgba(91,184,180,0.92)"/>
+      <div class="world-map-container">
+        <div class="map-window-bg"></div>
+        <div class="world-map-wrap fade-up">
+          <svg class="world-map-svg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <filter id="landShadow" x="-8%" y="-8%" width="125%" height="125%">
+                <feDropShadow dx="3" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.42"/>
+              </filter>
+            </defs>
+            <!-- Kontinente -->
+            <g fill="#152333" filter="url(#landShadow)">
+              <!-- Nordamerika -->
+              <path d="M33,100 L47,97 L42,72 L64,53 L164,44 L222,33 L278,19 L300,56 L319,78 L347,97 L350,103 L353,119 L336,122 L325,128 L314,128 L306,133 L297,136 L292,150 L283,161 L278,178 L275,181 L272,175 L264,167 L258,167 L253,169 L244,172 L239,169 L231,178 L231,189 L233,197 L244,200 L250,192 L258,192 L258,208 L267,219 L275,225 L278,228 L264,222 L250,214 L247,208 L236,206 L222,200 L208,194 L189,178 L175,161 L161,144 L156,128 L156,117 L150,111 L139,100 L75,92 L47,97 Z"/>
+              <!-- Grönland -->
+              <path d="M347,75 L344,61 L344,47 L356,36 L375,22 L406,19 L428,25 L447,39 L444,56 L436,78 L414,86 L392,86 L375,81 L361,81 L350,78 Z"/>
+              <!-- Island -->
+              <path d="M432,94 L436,86 L444,83 L453,83 L458,86 L458,92 L453,97 L444,100 L436,97 Z"/>
+              <!-- Großbritannien -->
+              <path d="M469,97 L472,86 L478,83 L483,86 L486,94 L483,103 L478,108 L472,108 Z"/>
+              <!-- Irland -->
+              <path d="M464,103 L466,97 L472,97 L472,106 L469,108 Z"/>
+              <!-- Südamerika -->
+              <path d="M278,228 L297,219 L314,214 L333,217 L353,228 L369,239 L381,250 L394,261 L400,272 L403,264 L406,272 L403,281 L400,294 L394,311 L381,331 L364,344 L347,356 L333,364 L322,372 L319,392 L314,403 L308,408 L300,406 L292,400 L286,389 L283,375 L281,358 L278,344 L275,325 L275,297 L272,278 L272,261 L275,247 L278,236 Z"/>
+              <!-- Europa (Festland + Skandinavien + Italiens Stiefel + Griechenland) -->
+              <path d="M475,147 L480,150 L484,150 L492,147 L500,142 L506,134 L508,131
+                L514,129 L519,128 L525,127
+                L528,130 L533,134 L537,138 L540,142 L543,145
+                L548,140 L551,139 L547,134 L543,129 L536,124 L539,123
+                L547,128 L551,131 L555,135
+                L558,137 L558,142 L556,148 L562,149 L565,143 L566,141 L569,136 L572,133
+                L572,144
+                L578,136 L578,129 L581,122 L583,117 L592,111
+                L597,94 L592,67 L583,56 L572,53 L561,56 L550,58 L539,53
+                L533,56 L525,67 L519,78 L514,89
+                L519,92 L522,92 L525,94 L528,100 L525,103 L519,103 L514,103
+                L508,108 L503,111 L497,114 L494,119 L494,125 L497,128
+                L492,131 L486,133 L481,139 L477,142 L475,139 Z"/>
+              <!-- Afrika -->
+              <path d="M484,150 L503,147 L519,144 L528,147 L536,153 L547,158 L561,161 L578,161 L592,167 L606,183 L619,200 L631,211 L636,225 L628,244 L622,256 L619,272 L617,294 L611,311 L606,322 L600,336 L594,344 L581,347 L564,347 L553,344 L539,336 L533,319 L531,300 L525,278 L519,261 L511,250 L511,242 L514,233 L508,233 L500,228 L492,222 L483,214 L472,208 L464,203 L458,194 L456,183 L456,172 L461,167 L469,161 L478,153 Z"/>
+              <!-- Madagaskar -->
+              <path d="M614,286 L619,272 L625,267 L628,272 L625,289 L619,297 Z"/>
+              <!-- Asien (inkl. Arabische Halbinsel und Südostasien) -->
+              <path d="M572,144 L578,136 L586,131 L594,128 L603,128 L614,133 L622,131 L636,128 L650,122 L667,122 L694,103 L722,78 L756,64 L778,47 L833,42 L867,42 L889,47 L917,61 L944,72 L953,100 L947,108 L922,114 L903,122 L881,139 L864,156 L847,164 L844,172 L839,164 L836,175 L836,186 L831,194 L822,208 L811,219 L803,228 L797,236 L789,247
+                L781,233 L775,222 L769,211 L764,208 L758,200 L756,192 L753,186
+                L750,186 L747,186 L742,189 L736,194 L731,197 L725,203 L722,208 L719,214 L717,219 L714,228
+                L711,219 L708,211 L706,206 L703,197 L700,192 L697,189 L692,186 L689,183 L686,181
+                L681,181 L675,181 L669,183 L661,186 L656,194 L650,200 L644,208 L639,211 L631,211
+                L625,208 L619,203 L611,192 L606,183 L603,172 L600,153 L594,144 L583,139 L578,139 L572,144 Z"/>
+              <!-- Arabische Halbinsel -->
+              <path d="M572,158 L578,153 L583,158 L592,164 L597,172 L597,183 L594,194 L592,208 L597,219 L603,228 L608,233 L606,242 L600,244 L594,239 L589,228 L583,222 L578,214 L575,208 L572,200 L569,192 L567,183 L567,172 Z"/>
+              <!-- Sri Lanka -->
+              <path d="M717,231 L719,225 L722,225 L722,231 Z"/>
+              <!-- Borneo (vereinfacht) -->
+              <path d="M789,253 L794,247 L803,244 L811,247 L817,256 L819,267 L817,278 L811,283 L803,281 L797,272 L792,261 Z"/>
+              <!-- Japan -->
+              <path d="M872,147 L875,139 L881,136 L886,139 L883,147 L878,153 L872,153 Z"/>
+              <path d="M878,136 L881,128 L886,125 L892,128 L889,136 L883,136 Z"/>
+              <path d="M883,128 L886,119 L892,117 L897,122 L894,128 L889,128 Z"/>
+              <!-- Taiwan -->
+              <path d="M844,178 L847,172 L850,172 L850,178 L847,181 Z"/>
+              <!-- Sumatra (vereinfacht) -->
+              <path d="M725,261 L731,256 L742,253 L756,258 L769,267 L781,278 L786,289 L781,294 L769,289 L756,281 L742,272 L731,267 Z"/>
+              <!-- Australien -->
+              <path d="M808,308 L819,303 L828,294 L844,281 L858,278 L872,278 L889,283 L906,294 L917,311 L922,328 L922,342 L919,356 L908,364 L897,361 L886,358 L875,358 L864,361 L856,356 L847,347 L836,344 L825,344 L817,342 L811,333 L808,322 Z"/>
+              <!-- Neuseeland -->
+              <path d="M953,389 L956,381 L961,375 L967,372 L969,378 L964,386 L958,389 Z"/>
+              <path d="M958,406 L961,397 L967,392 L972,394 L969,403 L964,408 L958,408 Z"/>
+              <!-- Antarktis -->
+              <path d="M0,474 L1000,474 L1000,500 L0,500 Z"/>
             </g>
-            <!-- Los Angeles (-118°, 34°) -->
-            <g class="map-pin" data-location="la" data-name="Los Angeles">
-              <title>Los Angeles</title>
-              <circle cx="172" cy="156" r="7" fill="none" stroke="rgba(91,184,180,0.6)" stroke-width="1.5">
-                <animate attributeName="r" values="5;18;5" dur="2.5s" repeatCount="indefinite" begin="0.5s"/>
-                <animate attributeName="opacity" values="0.7;0;0.7" dur="2.5s" repeatCount="indefinite" begin="0.5s"/>
-              </circle>
-              <circle class="pin-dot" cx="172" cy="156" r="4.5" fill="rgba(91,184,180,0.92)"/>
+            <!-- Ortsmarkierungen -->
+            <g class="map-pins">
+              <!-- New York (-74°, 40°) -->
+              <g class="map-pin" data-location="new-york" data-name="New York">
+                <title>New York</title>
+                <circle cx="294" cy="139" r="7" fill="none" stroke="rgba(91,184,180,0.6)" stroke-width="1.5">
+                  <animate attributeName="r" values="5;18;5" dur="2.5s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values="0.7;0;0.7" dur="2.5s" repeatCount="indefinite"/>
+                </circle>
+                <circle class="pin-dot" cx="294" cy="139" r="4.5" fill="rgba(91,184,180,0.92)"/>
+              </g>
+              <!-- Los Angeles (-118°, 34°) -->
+              <g class="map-pin" data-location="la" data-name="Los Angeles">
+                <title>Los Angeles</title>
+                <circle cx="172" cy="156" r="7" fill="none" stroke="rgba(91,184,180,0.6)" stroke-width="1.5">
+                  <animate attributeName="r" values="5;18;5" dur="2.5s" repeatCount="indefinite" begin="0.5s"/>
+                  <animate attributeName="opacity" values="0.7;0;0.7" dur="2.5s" repeatCount="indefinite" begin="0.5s"/>
+                </circle>
+                <circle class="pin-dot" cx="172" cy="156" r="4.5" fill="rgba(91,184,180,0.92)"/>
+              </g>
+              <!-- La Paz (-68°, -16°) -->
+              <g class="map-pin" data-location="la-paz" data-name="La Paz">
+                <title>La Paz</title>
+                <circle cx="311" cy="294" r="7" fill="none" stroke="rgba(91,184,180,0.6)" stroke-width="1.5">
+                  <animate attributeName="r" values="5;18;5" dur="2.5s" repeatCount="indefinite" begin="1.0s"/>
+                  <animate attributeName="opacity" values="0.7;0;0.7" dur="2.5s" repeatCount="indefinite" begin="1.0s"/>
+                </circle>
+                <circle class="pin-dot" cx="311" cy="294" r="4.5" fill="rgba(91,184,180,0.92)"/>
+              </g>
+              <!-- Dubrovnik (18°, 42°) -->
+              <g class="map-pin" data-location="dubrovnik" data-name="Dubrovnik">
+                <title>Dubrovnik</title>
+                <circle cx="550" cy="131" r="7" fill="none" stroke="rgba(91,184,180,0.6)" stroke-width="1.5">
+                  <animate attributeName="r" values="5;18;5" dur="2.5s" repeatCount="indefinite" begin="1.5s"/>
+                  <animate attributeName="opacity" values="0.7;0;0.7" dur="2.5s" repeatCount="indefinite" begin="1.5s"/>
+                </circle>
+                <circle class="pin-dot" cx="550" cy="131" r="4.5" fill="rgba(91,184,180,0.92)"/>
+              </g>
+              <!-- Neu-Delhi (77°, 29°) -->
+              <g class="map-pin" data-location="new-delhi" data-name="Neu-Delhi">
+                <title>Neu-Delhi</title>
+                <circle cx="714" cy="169" r="7" fill="none" stroke="rgba(91,184,180,0.6)" stroke-width="1.5">
+                  <animate attributeName="r" values="5;18;5" dur="2.5s" repeatCount="indefinite" begin="2.0s"/>
+                  <animate attributeName="opacity" values="0.7;0;0.7" dur="2.5s" repeatCount="indefinite" begin="2.0s"/>
+                </circle>
+                <circle class="pin-dot" cx="714" cy="169" r="4.5" fill="rgba(91,184,180,0.92)"/>
+              </g>
             </g>
-            <!-- La Paz (-68°, -16°) -->
-            <g class="map-pin" data-location="la-paz" data-name="La Paz">
-              <title>La Paz</title>
-              <circle cx="311" cy="294" r="7" fill="none" stroke="rgba(91,184,180,0.6)" stroke-width="1.5">
-                <animate attributeName="r" values="5;18;5" dur="2.5s" repeatCount="indefinite" begin="1.0s"/>
-                <animate attributeName="opacity" values="0.7;0;0.7" dur="2.5s" repeatCount="indefinite" begin="1.0s"/>
-              </circle>
-              <circle class="pin-dot" cx="311" cy="294" r="4.5" fill="rgba(91,184,180,0.92)"/>
-            </g>
-            <!-- Dubrovnik (18°, 42°) -->
-            <g class="map-pin" data-location="dubrovnik" data-name="Dubrovnik">
-              <title>Dubrovnik</title>
-              <circle cx="550" cy="133" r="7" fill="none" stroke="rgba(91,184,180,0.6)" stroke-width="1.5">
-                <animate attributeName="r" values="5;18;5" dur="2.5s" repeatCount="indefinite" begin="1.5s"/>
-                <animate attributeName="opacity" values="0.7;0;0.7" dur="2.5s" repeatCount="indefinite" begin="1.5s"/>
-              </circle>
-              <circle class="pin-dot" cx="550" cy="133" r="4.5" fill="rgba(91,184,180,0.92)"/>
-            </g>
-            <!-- Neu-Delhi (77°, 29°) -->
-            <g class="map-pin" data-location="new-delhi" data-name="Neu-Delhi">
-              <title>Neu-Delhi</title>
-              <circle cx="714" cy="169" r="7" fill="none" stroke="rgba(91,184,180,0.6)" stroke-width="1.5">
-                <animate attributeName="r" values="5;18;5" dur="2.5s" repeatCount="indefinite" begin="2.0s"/>
-                <animate attributeName="opacity" values="0.7;0;0.7" dur="2.5s" repeatCount="indefinite" begin="2.0s"/>
-              </circle>
-              <circle class="pin-dot" cx="714" cy="169" r="4.5" fill="rgba(91,184,180,0.92)"/>
-            </g>
-          </g>
-        </svg>
+          </svg>
+        </div>
       </div>
-
-    </div><!-- /.photo-inner-top -->
-    </div><!-- /.photo-top-bg -->
-    <div class="photo-carousel-area">
-    <div class="photo-inner-bottom">
       <!-- Foto-Carousel -->
       <div class="photo-carousel-outer fade-up">
         <div class="photo-carousel-inner" id="photoCarousel">
@@ -1143,8 +1161,7 @@
         <button class="carousel-nav next" id="carouselNext" aria-label="Nächstes Bild">&#8250;</button>
       </div>
       <div class="carousel-location-label" id="carouselLocationLabel"></div>
-    </div><!-- /.photo-inner-bottom -->
-    </div><!-- /.photo-carousel-area -->
+    </div>
   </section>
 
   <!-- ── 06 MEDIA EDUCATION ─────────────────────────────────── -->
