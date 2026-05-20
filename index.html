@@ -1301,6 +1301,7 @@
           document.querySelectorAll('.map-pin').forEach(p => p.classList.remove('active'));
           pin.classList.add('active');
           loadLocation(pin.dataset.location, pin.dataset.name);
+          smoothScrollTo(document.getElementById('photoCarousel'), 700);
         });
       });
 
