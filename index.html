@@ -531,30 +531,46 @@
 
     /* ── SECTION 5: PHOTOGRAPHY ────────────────────────────────── */
 
-    /* Transparent → Wabenstruktur scheint durch */
-    #photography { background: transparent; }
+    /* Section selbst transparent – heller Hintergrund nur in .photo-upper/.photo-lower */
+    #photography { background: transparent; overflow: hidden; }
 
-    #photography .section-label { color: var(--tq-light); }
-    #photography .section-title { color: var(--text-lighter); }
-    #photography .section-title::after { background: var(--tq); }
+    /* Helle Bereiche: Text oben + Carousel unten */
+    .photo-upper, .photo-lower {
+      background: var(--light-4);
+      position: relative;
+      z-index: 1;
+    }
+    .photo-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 40px;
+      position: relative;
+      z-index: 1;
+    }
+    .photo-upper .photo-inner { padding-top: 120px; padding-bottom: 40px; }
+    .photo-lower .photo-inner { padding-top: 40px;  padding-bottom: 80px; }
+
+    /* Textfarben – auf hellem Hintergrund (wie original) */
+    #photography .section-label { color: var(--blue); }
+    #photography .section-title { color: var(--text-dark); }
+    #photography .section-title::after { background: var(--blue); }
 
     .photography-text {
       max-width: 580px;
       font-size: 0.9rem;
       line-height: 1.85;
-      color: rgba(224, 238, 245, 0.72);
+      color: var(--text-mid);
       font-weight: 300;
-      margin-bottom: 48px;
+      margin-bottom: 0;
     }
 
-    /* ── Weltkarte ──────────────────────────────────────────────── */
+    /* ── Weltkarte: transparentes Fenster ──────────────────────── */
     .world-map-container {
-      position: relative;
-      margin: 0 -40px 36px;
+      position: relative;   /* kein margin nötig – ist jetzt auf Section-Ebene (volle Breite) */
     }
     .map-window-bg {
       position: absolute;
-      inset: 0;                              /* volle Breite + Höhe des Containers */
+      inset: 0;
       background: rgba(228, 240, 245, 0.5); /* --light-4 @ 50% → Waben scheinen durch */
       z-index: 0;
       pointer-events: none;
@@ -634,7 +650,7 @@
       font-size: 0.65rem;
       letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: rgba(224, 238, 245, 0.55);
+      color: var(--text-mid);
       min-height: 1em;
       max-width: 780px;
       margin: 0 auto;
@@ -1019,14 +1035,18 @@
 
   <!-- ── 05 PHOTOGRAPHY ─────────────────────────────────────── -->
   <section id="photography">
-    <div class="section-inner">
-      <div class="section-label fade-up">04 — Bilder</div>
-      <h2 class="section-title fade-up">Fotografie</h2>
-      <div class="photography-text fade-up">
-        <p>Mit der Fotografie hat alles angefangen. Lange bevor ich eine Filmkamera in der Hand hielt, war es die Fotografie, die mich gelehrt hat, hinzuschauen – wirklich hinzuschauen. Momente einzufangen, die sonst einfach verschwinden würden. Ein Blick, ein Licht, eine Stimmung, die sich in Sekundenbruchteilen verändert und nie mehr wiederkehrt.</p>
-        <p>Die Kamera ist für mich mehr als ein technisches Gerät – sie ist ein Grund, innezuhalten und den Moment wirklich wahrzunehmen. Lange habe ich Schwarz-Weiß-Filme selbst entwickelt und im Labor vergrößert. Diese Langsamkeit und Sorgfalt im Umgang mit Bildern hat meine Arbeit bis heute geprägt.</p>
+    <!-- Heller Bereich oben: Text -->
+    <div class="photo-upper">
+      <div class="photo-inner">
+        <div class="section-label fade-up">04 — Bilder</div>
+        <h2 class="section-title fade-up">Fotografie</h2>
+        <div class="photography-text fade-up">
+          <p>Mit der Fotografie hat alles angefangen. Lange bevor ich eine Filmkamera in der Hand hielt, war es die Fotografie, die mich gelehrt hat, hinzuschauen – wirklich hinzuschauen. Momente einzufangen, die sonst einfach verschwinden würden. Ein Blick, ein Licht, eine Stimmung, die sich in Sekundenbruchteilen verändert und nie mehr wiederkehrt.</p>
+          <p>Die Kamera ist für mich mehr als ein technisches Gerät – sie ist ein Grund, innezuhalten und den Moment wirklich wahrzunehmen. Lange habe ich Schwarz-Weiß-Filme selbst entwickelt und im Labor vergrößert. Diese Langsamkeit und Sorgfalt im Umgang mit Bildern hat meine Arbeit bis heute geprägt.</p>
+        </div>
       </div>
-      <!-- Weltkarte -->
+    </div>
+    <!-- Transparentes Fenster: Weltkarte (Waben scheinen durch) -->
       <div class="world-map-container">
         <div class="map-window-bg"></div>
         <div class="world-map-wrap fade-up">
@@ -1089,15 +1109,18 @@
           </svg>
         </div>
       </div>
-      <!-- Foto-Carousel -->
-      <div class="photo-carousel-outer fade-up">
-        <div class="photo-carousel-inner" id="photoCarousel">
-          <span class="carousel-placeholder" id="carouselPlaceholder">↑ Ort auf der Karte anklicken</span>
+    <!-- Heller Bereich unten: Carousel -->
+    <div class="photo-lower">
+      <div class="photo-inner">
+        <div class="photo-carousel-outer fade-up">
+          <div class="photo-carousel-inner" id="photoCarousel">
+            <span class="carousel-placeholder" id="carouselPlaceholder">↑ Ort auf der Karte anklicken</span>
+          </div>
+          <button class="carousel-nav prev" id="carouselPrev" aria-label="Vorheriges Bild">&#8249;</button>
+          <button class="carousel-nav next" id="carouselNext" aria-label="Nächstes Bild">&#8250;</button>
         </div>
-        <button class="carousel-nav prev" id="carouselPrev" aria-label="Vorheriges Bild">&#8249;</button>
-        <button class="carousel-nav next" id="carouselNext" aria-label="Nächstes Bild">&#8250;</button>
+        <div class="carousel-location-label" id="carouselLocationLabel"></div>
       </div>
-      <div class="carousel-location-label" id="carouselLocationLabel"></div>
     </div>
   </section>
 
