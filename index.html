@@ -1186,9 +1186,9 @@
 
   <script>
     /* Smooth scroll für Hero-Navigation */
-    function smoothScrollTo(target, duration = 950) {
+    function smoothScrollTo(target, duration = 950, offset = 0) {
       const start = window.scrollY;
-      const end   = target.getBoundingClientRect().top + window.scrollY;
+      const end   = target.getBoundingClientRect().top + window.scrollY + offset;
       const dist  = end - start;
       let t0 = null;
       function ease(t) {
@@ -1301,7 +1301,8 @@
           document.querySelectorAll('.map-pin').forEach(p => p.classList.remove('active'));
           pin.classList.add('active');
           loadLocation(pin.dataset.location, pin.dataset.name);
-          smoothScrollTo(document.getElementById('photoCarousel'), 700);
+          const el = document.getElementById('photoCarousel');
+          smoothScrollTo(el, 700, -(window.innerHeight / 2 - el.offsetHeight / 2));
         });
       });
 
