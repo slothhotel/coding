@@ -546,29 +546,86 @@
       margin-bottom: 48px;
     }
 
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 3px;
-    }
-
-    @media (max-width: 600px) { .photo-grid { grid-template-columns: repeat(2, 1fr); } }
-
-    .photo-cell {
-      aspect-ratio: 1;
+    /* ── Weltkarte ──────────────────────────────────────────────── */
+    .world-map-wrap {
+      margin-bottom: 28px;
+      border-radius: 6px;
       overflow: hidden;
-      background: rgba(90,155,191,0.06);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .world-map-svg { width: 100%; height: auto; display: block; }
+
+    .map-pin { cursor: pointer; }
+    .map-pin .pin-dot { transition: fill 0.2s; }
+    .map-pin:hover .pin-dot,
+    .map-pin.active .pin-dot { fill: #fff; }
+
+    .map-pin-label {
+      font-family: var(--font);
+      font-size: 13px;
+      fill: rgba(255,255,255,0.9);
+      pointer-events: none;
+      filter: drop-shadow(0 1px 3px rgba(0,0,0,0.7));
     }
 
-    .photo-cell img {
+    /* ── Foto-Carousel ───────────────────────────────────────────── */
+    .photo-carousel-outer {
+      position: relative;
+      border: 6px solid #000;
+      background: #060e13;
+      margin-bottom: 12px;
+    }
+    .photo-carousel-inner {
+      position: relative;
+      aspect-ratio: 16 / 7;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .carousel-img {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
-      transition: transform 0.4s ease;
+      opacity: 0;
+      transition: opacity 0.5s ease;
     }
-
-    .photo-cell:hover img { transform: scale(1.04); }
+    .carousel-img.active { opacity: 1; }
+    .carousel-placeholder {
+      color: rgba(255,255,255,0.22);
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-family: var(--font);
+      pointer-events: none;
+    }
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: rgba(255,255,255,0.45);
+      font-size: 3rem;
+      padding: 16px 14px;
+      z-index: 2;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .carousel-nav:hover { color: rgba(255,255,255,0.9); }
+    .carousel-nav.prev { left: 0; }
+    .carousel-nav.next { right: 0; }
+    .carousel-location-label {
+      text-align: center;
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      min-height: 1em;
+    }
 
     /* ── SECTION 6: MEDIA EDUCATION ────────────────────────────── */
 
@@ -956,16 +1013,97 @@
         <p>Mit der Fotografie hat alles angefangen. Lange bevor ich eine Filmkamera in der Hand hielt, war es die Fotografie, die mich gelehrt hat, hinzuschauen – wirklich hinzuschauen. Momente einzufangen, die sonst einfach verschwinden würden. Ein Blick, ein Licht, eine Stimmung, die sich in Sekundenbruchteilen verändert und nie mehr wiederkehrt.</p>
         <p>Die Kamera ist für mich mehr als ein technisches Gerät – sie ist ein Grund, innezuhalten und den Moment wirklich wahrzunehmen. Lange habe ich Schwarz-Weiß-Filme selbst entwickelt und im Labor vergrößert. Diese Langsamkeit und Sorgfalt im Umgang mit Bildern hat meine Arbeit bis heute geprägt.</p>
       </div>
-      <div class="photo-grid fade-up">
-        <div class="photo-cell"><img src="images/foto-1.jpg" alt="Fotografie Stefan Kochert"></div>
-        <div class="photo-cell"><img src="images/foto-2.jpg" alt="Fotografie Stefan Kochert"></div>
-        <div class="photo-cell"><img src="images/foto-3.jpg" alt="Fotografie Stefan Kochert"></div>
-        <div class="photo-cell"><img src="images/foto-4.jpg" alt="Fotografie Stefan Kochert"></div>
-        <div class="photo-cell"><img src="images/foto-5.jpg" alt="Fotografie Stefan Kochert"></div>
-        <div class="photo-cell"><img src="images/foto-6.jpg" alt="Fotografie Stefan Kochert"></div>
-        <div class="photo-cell"><img src="images/foto-7.jpg" alt="Fotografie Stefan Kochert"></div>
-        <div class="photo-cell"><img src="images/foto-8.jpg" alt="Fotografie Stefan Kochert"></div>
+      <!-- Weltkarte -->
+      <div class="world-map-wrap fade-up">
+        <svg class="world-map-svg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="landShadow" x="-8%" y="-8%" width="125%" height="125%">
+              <feDropShadow dx="4" dy="7" stdDeviation="9" flood-color="#000" flood-opacity="0.48"/>
+            </filter>
+          </defs>
+          <!-- Ozean -->
+          <rect width="1000" height="500" fill="#7a9eb8"/>
+          <!-- Kontinente -->
+          <g fill="#152333" filter="url(#landShadow)">
+            <!-- Nordamerika -->
+            <path d="M33,100 L50,64 L64,53 L158,44 L278,19 L319,56 L322,78 L350,103 L353,119 L333,122 L306,133 L294,136 L289,153 L278,181 L258,208 L286,228 L267,222 L239,206 L222,197 L194,186 L175,158 L156,139 L156,122 L150,111 L139,100 L75,92 L47,97 Z"/>
+            <!-- Grönland -->
+            <path d="M361,83 L353,64 L347,36 L406,19 L450,39 L442,61 L436,81 L378,86 Z"/>
+            <!-- Südamerika -->
+            <path d="M286,228 L328,219 L403,264 L389,311 L353,344 L339,356 L322,367 L319,403 L292,389 L281,361 L275,325 L275,264 L278,247 Z"/>
+            <!-- Europa (Festland) -->
+            <path d="M475,147 L486,150 L500,150 L519,131 L539,144 L550,139 L561,147 L572,144 L581,136 L597,133 L583,125 L603,119 L592,61 L572,53 L514,89 L528,92 L528,100 L514,103 L494,119 L494,128 L475,133 Z"/>
+            <!-- Großbritannien (vereinfacht) -->
+            <path d="M472,100 L478,88 L484,89 L481,103 L472,108 Z"/>
+            <!-- Afrika -->
+            <path d="M483,150 L528,147 L539,158 L586,164 L592,167 L644,219 L614,256 L600,300 L594,319 L553,344 L536,331 L533,300 L525,264 L508,236 L453,208 L464,172 L478,150 Z"/>
+            <!-- Asien -->
+            <path d="M572,144 L581,136 L614,133 L639,125 L667,125 L778,47 L889,47 L972,72 L953,108 L861,156 L839,164 L833,189 L803,222 L789,247 L772,206 L756,189 L711,228 L700,192 L667,181 L661,189 L625,211 L592,167 L600,147 L572,144 Z"/>
+            <!-- Australien -->
+            <path d="M817,311 L864,283 L906,289 L925,325 L919,344 L903,356 L858,344 L817,344 Z"/>
+            <!-- Antarktis (Streifen) -->
+            <path d="M0,474 L1000,474 L1000,500 L0,500 Z"/>
+          </g>
+          <!-- Ortsmarkierungen -->
+          <g class="map-pins">
+            <!-- New York (-74°, 40°) -->
+            <g class="map-pin" data-location="new-york" data-name="New York">
+              <title>New York</title>
+              <circle cx="294" cy="139" r="7" fill="none" stroke="rgba(91,184,180,0.6)" stroke-width="1.5">
+                <animate attributeName="r" values="5;18;5" dur="2.5s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.7;0;0.7" dur="2.5s" repeatCount="indefinite"/>
+              </circle>
+              <circle class="pin-dot" cx="294" cy="139" r="4.5" fill="rgba(91,184,180,0.92)"/>
+            </g>
+            <!-- Los Angeles (-118°, 34°) -->
+            <g class="map-pin" data-location="la" data-name="Los Angeles">
+              <title>Los Angeles</title>
+              <circle cx="172" cy="156" r="7" fill="none" stroke="rgba(91,184,180,0.6)" stroke-width="1.5">
+                <animate attributeName="r" values="5;18;5" dur="2.5s" repeatCount="indefinite" begin="0.5s"/>
+                <animate attributeName="opacity" values="0.7;0;0.7" dur="2.5s" repeatCount="indefinite" begin="0.5s"/>
+              </circle>
+              <circle class="pin-dot" cx="172" cy="156" r="4.5" fill="rgba(91,184,180,0.92)"/>
+            </g>
+            <!-- La Paz (-68°, -16°) -->
+            <g class="map-pin" data-location="la-paz" data-name="La Paz">
+              <title>La Paz</title>
+              <circle cx="311" cy="294" r="7" fill="none" stroke="rgba(91,184,180,0.6)" stroke-width="1.5">
+                <animate attributeName="r" values="5;18;5" dur="2.5s" repeatCount="indefinite" begin="1.0s"/>
+                <animate attributeName="opacity" values="0.7;0;0.7" dur="2.5s" repeatCount="indefinite" begin="1.0s"/>
+              </circle>
+              <circle class="pin-dot" cx="311" cy="294" r="4.5" fill="rgba(91,184,180,0.92)"/>
+            </g>
+            <!-- Dubrovnik (18°, 42°) -->
+            <g class="map-pin" data-location="dubrovnik" data-name="Dubrovnik">
+              <title>Dubrovnik</title>
+              <circle cx="550" cy="133" r="7" fill="none" stroke="rgba(91,184,180,0.6)" stroke-width="1.5">
+                <animate attributeName="r" values="5;18;5" dur="2.5s" repeatCount="indefinite" begin="1.5s"/>
+                <animate attributeName="opacity" values="0.7;0;0.7" dur="2.5s" repeatCount="indefinite" begin="1.5s"/>
+              </circle>
+              <circle class="pin-dot" cx="550" cy="133" r="4.5" fill="rgba(91,184,180,0.92)"/>
+            </g>
+            <!-- Neu-Delhi (77°, 29°) -->
+            <g class="map-pin" data-location="new-delhi" data-name="Neu-Delhi">
+              <title>Neu-Delhi</title>
+              <circle cx="714" cy="169" r="7" fill="none" stroke="rgba(91,184,180,0.6)" stroke-width="1.5">
+                <animate attributeName="r" values="5;18;5" dur="2.5s" repeatCount="indefinite" begin="2.0s"/>
+                <animate attributeName="opacity" values="0.7;0;0.7" dur="2.5s" repeatCount="indefinite" begin="2.0s"/>
+              </circle>
+              <circle class="pin-dot" cx="714" cy="169" r="4.5" fill="rgba(91,184,180,0.92)"/>
+            </g>
+          </g>
+        </svg>
       </div>
+
+      <!-- Foto-Carousel -->
+      <div class="photo-carousel-outer fade-up">
+        <div class="photo-carousel-inner" id="photoCarousel">
+          <span class="carousel-placeholder" id="carouselPlaceholder">↑ Ort auf der Karte anklicken</span>
+        </div>
+        <button class="carousel-nav prev" id="carouselPrev" aria-label="Vorheriges Bild">&#8249;</button>
+        <button class="carousel-nav next" id="carouselNext" aria-label="Nächstes Bild">&#8250;</button>
+      </div>
+      <div class="carousel-location-label" id="carouselLocationLabel"></div>
     </div>
   </section>
 
@@ -1093,6 +1231,71 @@
       });
     });
 
+
+    /* ── Weltkarte & Foto-Carousel ─────────────────────────────── */
+    (function() {
+      // Foto-Daten pro Ort (Pfade anpassen sobald Fotos vorhanden)
+      const photoData = {
+        'new-york':  ['images/foto-1.jpg', 'images/foto-2.jpg'],
+        'la':        ['images/foto-3.jpg', 'images/foto-4.jpg'],
+        'la-paz':    ['images/foto-5.jpg', 'images/foto-6.jpg'],
+        'dubrovnik': ['images/foto-7.jpg', 'images/foto-8.jpg'],
+        'new-delhi': [],
+      };
+
+      let currentPhotos = [];
+      let currentIdx    = 0;
+
+      const carousel   = document.getElementById('photoCarousel');
+      const placeholder= document.getElementById('carouselPlaceholder');
+      const label      = document.getElementById('carouselLocationLabel');
+      const prevBtn    = document.getElementById('carouselPrev');
+      const nextBtn    = document.getElementById('carouselNext');
+
+      function showIdx(idx) {
+        const imgs = carousel.querySelectorAll('.carousel-img');
+        imgs.forEach((img, i) => img.classList.toggle('active', i === idx));
+        currentIdx = idx;
+      }
+
+      function loadLocation(key, name) {
+        carousel.querySelectorAll('.carousel-img').forEach(img => img.remove());
+        currentPhotos = photoData[key] || [];
+        currentIdx    = 0;
+        label.textContent = name;
+
+        if (currentPhotos.length === 0) {
+          placeholder.style.display = '';
+          placeholder.textContent   = 'Bilder folgen demnächst';
+          return;
+        }
+        placeholder.style.display = 'none';
+        currentPhotos.forEach((src, i) => {
+          const img = document.createElement('img');
+          img.src   = src;
+          img.alt   = name;
+          img.className = 'carousel-img' + (i === 0 ? ' active' : '');
+          carousel.appendChild(img);
+        });
+      }
+
+      document.querySelectorAll('.map-pin').forEach(pin => {
+        pin.addEventListener('click', () => {
+          document.querySelectorAll('.map-pin').forEach(p => p.classList.remove('active'));
+          pin.classList.add('active');
+          loadLocation(pin.dataset.location, pin.dataset.name);
+        });
+      });
+
+      prevBtn.addEventListener('click', () => {
+        if (!currentPhotos.length) return;
+        showIdx((currentIdx - 1 + currentPhotos.length) % currentPhotos.length);
+      });
+      nextBtn.addEventListener('click', () => {
+        if (!currentPhotos.length) return;
+        showIdx((currentIdx + 1) % currentPhotos.length);
+      });
+    })();
 
     /* Lebenslauf aufklappen */
     const cvTab = document.getElementById('cv-tab');
