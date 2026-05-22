@@ -1549,18 +1549,18 @@
         buildEdges();
       }
 
-      let last=null, elapsed=0, nextSpawn=0.8;
+      let last=null, elapsed=0, nextSpawn=2;
 
       function frame(ts){
         if(!last) last=ts;
         const dt=Math.min((ts-last)/1000, 0.05);
         last=ts; elapsed+=dt;
 
-        // Neuen Puls erzeugen
+        // Großen Ring-Puls nur alle ~15 Sekunden
         if(elapsed>nextSpawn){
           spawnPulse();
-          nextSpawn=elapsed + 3 + Math.random()*3.5;
-          if(pulses.length>4) pulses.shift();
+          nextSpawn=elapsed + 12 + Math.random()*6;
+          if(pulses.length>2) pulses.shift();
         }
 
         // Pulse altern
@@ -1570,20 +1570,20 @@
         ctx.save();
         ctx.lineCap='round';
 
-        // Globales Grundatmen (sehr dezent)
-        const breathe = 0.018 + 0.008*Math.sin(elapsed*0.35);
+        // Globales Grundatmen – kräftiger, alle Waben sichtbar
+        const breathe = 0.042 + 0.022*Math.sin(elapsed*0.35);
 
         // Zwei Render-Pässe: erst Basis, dann helle Pulse mit Glow
-        // Pass 1 – Grundleuchten aller sichtbaren Kanten
+        // Pass 1 – Grundleuchten aller sichtbaren Kanten (stärker, individuelle Phase)
         ctx.shadowBlur=0;
         edges.forEach(e=>{
           if(e.mx<-TW||e.mx>W+TW||e.my<-TH||e.my>H+TH) return;
-          // Eigenatmen jeder Kante leicht versetzt
-          const a = breathe + 0.006*Math.sin(elapsed*0.55+e.phase);
+          // Eigenatmen jeder Kante deutlich versetzt → alle Waben pulsieren individuell
+          const a = breathe + 0.018*Math.sin(elapsed*0.55+e.phase);
           ctx.beginPath();
           ctx.moveTo(e.ax,e.ay); ctx.lineTo(e.bx,e.by);
           ctx.strokeStyle=`rgba(91,184,180,${a})`;
-          ctx.lineWidth=0.7;
+          ctx.lineWidth=0.9;
           ctx.stroke();
         });
 
