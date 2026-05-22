@@ -1607,8 +1607,8 @@
         });
 
         // Pass 2 – Puls-Ringe mit Glow
-        ctx.shadowBlur=7;
-        ctx.shadowColor='rgba(91,200,190,0.55)';
+        ctx.shadowBlur=11;
+        ctx.shadowColor='rgba(91,200,190,0.7)';
         edges.forEach(e=>{
           if(e.mx<-TW||e.mx>W+TW||e.my<-TH||e.my>H+TH) return;
           let extra=0;
@@ -1626,8 +1626,8 @@
           if(extra<0.015) return;
           ctx.beginPath();
           ctx.moveTo(e.ax,e.ay); ctx.lineTo(e.bx,e.by);
-          ctx.strokeStyle=`rgba(140,230,220,${Math.min(extra,0.82)})`;
-          ctx.lineWidth=extra>0.4 ? 1.4 : 1.0;
+          ctx.strokeStyle=`rgba(140,230,220,${Math.min(extra,0.95)})`;
+          ctx.lineWidth=extra>0.4 ? 1.8 : 1.2;
           ctx.stroke();
         });
 
