@@ -1918,8 +1918,40 @@
         }
       }
 
+      /* Kurzzes Ratschen/Zahnrad-Geräusch (Web Audio API) */
+      function playWheelSound() {
+        try {
+          var AC = window.AudioContext || window.webkitAudioContext;
+          if (!AC) return;
+          var ctx = new AC();
+          var dur = 0.13, sr = ctx.sampleRate;
+          var buf = ctx.createBuffer(1, sr * dur, sr);
+          var d   = buf.getChannelData(0);
+          for (var i = 0; i < d.length; i++) {
+            var t     = i / sr;
+            /* Ratschen: schnelle Klick-Folge (~55 Hz) */
+            var ratch = Math.pow(Math.abs(Math.sin(t * Math.PI * 55)), 4);
+            var env   = Math.pow(1 - t / dur, 1.5);   /* Ausklingen */
+            d[i] = (Math.random() * 2 - 1) * ratch * env;
+          }
+          var src  = ctx.createBufferSource();
+          src.buffer = buf;
+          var bp   = ctx.createBiquadFilter();
+          bp.type  = 'bandpass';
+          bp.frequency.value = 2600;
+          bp.Q.value = 1.4;
+          var gain = ctx.createGain();
+          gain.gain.value = 0.42;
+          src.connect(bp); bp.connect(gain); gain.connect(ctx.destination);
+          src.start();
+          src.stop(ctx.currentTime + dur);
+          src.onended = function() { ctx.close(); };
+        } catch(e) {}
+      }
+
       /* Ring drehen: dir = +1 (UZS) oder -1 (gegen UZS) */
       function rotate(dir) {
+        playWheelSound();
         stopPlayback();
         stepCount += dir;
         /* Track-Name sofort aktualisieren */
