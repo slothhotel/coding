@@ -472,9 +472,27 @@
     /* ── SECTION 4: VOICE ──────────────────────────────────────── */
 
     #voice {
-      background: var(--light-3);
+      background: transparent;
       position: relative;   /* Anker für Canvas-Visualisierung */
       overflow: hidden;
+    }
+    .voice-light-bg {
+      background: var(--light-3);
+      width: 100%;
+    }
+    .voice-text-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 120px 40px 32px;
+      position: relative;
+      z-index: 1;
+    }
+    .voice-player-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 40px 40px;
+      position: relative;
+      z-index: 1;
     }
 
     #voice .section-label {
@@ -525,12 +543,9 @@
     }
 
     /* ── WHEEL AUDIO PLAYER ──────────────────────────────────────── */
-    #voice .section-inner { padding-bottom: 40px; }
     .wheel-player-wrap {
       display: flex;
       justify-content: center;
-      margin-top: 12px;
-      margin-bottom: 0;
     }
     #hexPlayer {
       width: 100%;
@@ -1198,19 +1213,23 @@
 
   <!-- ── 04 VOICE ────────────────────────────────────────────── -->
   <section id="voice">
-    <div class="section-inner">
-      <div class="section-label fade-up">04 — Sprecher</div>
-      <h2 class="section-title fade-up">Sprecher</h2>
-      <div class="voice-intro fade-up">
-        <p>2017 fing ich eher pragmatisch mit dem professionellen Sprechen an – zwischen den Drehs war Zeit, die ich sinnvoll nutzen wollte. Dass es mir so großen Spaß macht, hätte ich damals nicht gedacht. Die Stimme als Instrument zu entdecken und zu entwickeln war eine spannende Erfahrung – und ist es bis heute geblieben.</p>
-        <p>Ob Werbung, Podcast, Imagefilm oder Hörbuch – wenn ich zu deinem Projekt passen sollte, melde dich gerne. Bei Fragen zu Preisen orientiere ich mich am VDS-Gagenkompass und stehe für ein persönliches Gespräch jederzeit zur Verfügung.</p>
-        <div class="voice-meta">
-          <span class="voice-meta-tag">markant · kräftig · warm</span>
-          <span class="voice-meta-tag">Stimmalter 30–50</span>
-          <span class="voice-meta-tag">Englisch fließend</span>
-          <span class="voice-meta-tag">Alemannisch / Schwäbisch</span>
+    <div class="voice-light-bg">
+      <div class="voice-text-inner">
+        <div class="section-label fade-up">04 — Sprecher</div>
+        <h2 class="section-title fade-up">Sprecher</h2>
+        <div class="voice-intro fade-up">
+          <p>2017 fing ich eher pragmatisch mit dem professionellen Sprechen an – zwischen den Drehs war Zeit, die ich sinnvoll nutzen wollte. Dass es mir so großen Spaß macht, hätte ich damals nicht gedacht. Die Stimme als Instrument zu entdecken und zu entwickeln war eine spannende Erfahrung – und ist es bis heute geblieben.</p>
+          <p>Ob Werbung, Podcast, Imagefilm oder Hörbuch – wenn ich zu deinem Projekt passen sollte, melde dich gerne. Bei Fragen zu Preisen orientiere ich mich am VDS-Gagenkompass und stehe für ein persönliches Gespräch jederzeit zur Verfügung.</p>
+          <div class="voice-meta">
+            <span class="voice-meta-tag">markant · kräftig · warm</span>
+            <span class="voice-meta-tag">Stimmalter 30–50</span>
+            <span class="voice-meta-tag">Englisch fließend</span>
+            <span class="voice-meta-tag">Alemannisch / Schwäbisch</span>
+          </div>
         </div>
       </div>
+    </div>
+    <div class="voice-player-inner">
       <!-- ── Wheel Audio Player (Glücksrad) ───────────────────── -->
       <div class="wheel-player-wrap fade-up">
         <svg id="hexPlayer" viewBox="0 0 700 755" xmlns="http://www.w3.org/2000/svg" aria-label="Hörproben">
