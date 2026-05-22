@@ -572,14 +572,14 @@
     /* ── Text + Carousel nebeneinander im oberen Foto-Bereich ── */
     .photo-upper-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 260px;
       gap: 40px;
       align-items: center;
     }
     @media (max-width: 820px) {
       .photo-upper-grid { grid-template-columns: 1fr; }
     }
-    /* Carousel im oberen Panel: volle Breite der Spalte */
+    /* Carousel im oberen Panel: volle Breite der Spalte, kein eigenes Margin */
     .photo-upper-grid .photo-carousel-outer {
       max-width: none;
       margin: 0;
@@ -1362,60 +1362,38 @@
       };
 
       let currentPhotos = [];
-      let currentIdx      = 0;
-      let currentIdxUpper = 0;
+      let currentIdx    = 0;
 
-      const carousel          = document.getElementById('photoCarousel');
-      const placeholder       = document.getElementById('carouselPlaceholder');
-      const label             = document.getElementById('carouselLocationLabel');
-      const prevBtn           = document.getElementById('carouselPrev');
-      const nextBtn           = document.getElementById('carouselNext');
-
-      const carouselUpper     = document.getElementById('photoCarouselUpper');
-      const placeholderUpper  = document.getElementById('carouselPlaceholderUpper');
-      const prevBtnUpper      = document.getElementById('carouselPrevUpper');
-      const nextBtnUpper      = document.getElementById('carouselNextUpper');
+      const carousel    = document.getElementById('photoCarousel');
+      const placeholder = document.getElementById('carouselPlaceholder');
+      const label       = document.getElementById('carouselLocationLabel');
+      const prevBtn     = document.getElementById('carouselPrev');
+      const nextBtn     = document.getElementById('carouselNext');
 
       function showIdx(idx) {
         carousel.querySelectorAll('.carousel-img').forEach((img, i) => img.classList.toggle('active', i === idx));
         currentIdx = idx;
       }
 
-      function showIdxUpper(idx) {
-        carouselUpper.querySelectorAll('.carousel-img').forEach((img, i) => img.classList.toggle('active', i === idx));
-        currentIdxUpper = idx;
-      }
+      function loadLocation(key, name) {
+        carousel.querySelectorAll('.carousel-img').forEach(img => img.remove());
+        currentPhotos = photoData[key] || [];
+        currentIdx    = 0;
+        label.textContent = name;
 
-      function fillCarousel(container, photos, name) {
-        container.querySelectorAll('.carousel-img').forEach(img => img.remove());
-        photos.forEach((src, i) => {
+        if (currentPhotos.length === 0) {
+          placeholder.style.display = '';
+          placeholder.textContent   = 'Bilder folgen demnächst';
+          return;
+        }
+        placeholder.style.display = 'none';
+        currentPhotos.forEach((src, i) => {
           const img = document.createElement('img');
           img.src   = src;
           img.alt   = name;
           img.className = 'carousel-img' + (i === 0 ? ' active' : '');
-          container.appendChild(img);
+          carousel.appendChild(img);
         });
-      }
-
-      function loadLocation(key, name) {
-        currentPhotos     = photoData[key] || [];
-        currentIdx        = 0;
-        currentIdxUpper   = 0;
-        label.textContent = name;
-
-        if (currentPhotos.length === 0) {
-          placeholder.style.display      = '';
-          placeholder.textContent        = 'Bilder folgen demnächst';
-          placeholderUpper.style.display = '';
-          placeholderUpper.textContent   = 'Bilder folgen demnächst';
-          carousel.querySelectorAll('.carousel-img').forEach(img => img.remove());
-          carouselUpper.querySelectorAll('.carousel-img').forEach(img => img.remove());
-          return;
-        }
-        placeholder.style.display      = 'none';
-        placeholderUpper.style.display = 'none';
-        fillCarousel(carousel, currentPhotos, name);
-        fillCarousel(carouselUpper, currentPhotos, name);
       }
 
       document.querySelectorAll('.map-pin').forEach(pin => {
@@ -1436,15 +1414,49 @@
         if (!currentPhotos.length) return;
         showIdx((currentIdx + 1) % currentPhotos.length);
       });
+    })();
 
-      prevBtnUpper.addEventListener('click', () => {
-        if (!currentPhotos.length) return;
-        showIdxUpper((currentIdxUpper - 1 + currentPhotos.length) % currentPhotos.length);
+    /* ── S/W Carousel: läuft autom. in Schleife ──────────────── */
+    (function() {
+      // Fotos aus dem Ordner images/SW/ – Dateinamen hier eintragen:
+      const swPhotos = [
+        // 'images/SW/1.jpg',
+        // 'images/SW/2.jpg',
+        // usw.
+      ];
+
+      const el          = document.getElementById('photoCarouselUpper');
+      const placeholder = document.getElementById('carouselPlaceholderUpper');
+      const prevBtn     = document.getElementById('carouselPrevUpper');
+      const nextBtn     = document.getElementById('carouselNextUpper');
+      let idx   = 0;
+      let timer = null;
+
+      if (!swPhotos.length) return; // Noch keine Fotos – Placeholder bleibt
+
+      placeholder.style.display = 'none';
+      swPhotos.forEach((src, i) => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = 'S/W';
+        img.className = 'carousel-img' + (i === 0 ? ' active' : '');
+        el.appendChild(img);
       });
-      nextBtnUpper.addEventListener('click', () => {
-        if (!currentPhotos.length) return;
-        showIdxUpper((currentIdxUpper + 1) % currentPhotos.length);
-      });
+
+      function show(n) {
+        el.querySelectorAll('.carousel-img').forEach((img, i) => img.classList.toggle('active', i === n));
+        idx = n;
+      }
+
+      function startLoop() {
+        clearInterval(timer);
+        timer = setInterval(() => show((idx + 1) % swPhotos.length), 4000);
+      }
+
+      prevBtn.addEventListener('click', () => { show((idx - 1 + swPhotos.length) % swPhotos.length); startLoop(); });
+      nextBtn.addEventListener('click', () => { show((idx + 1) % swPhotos.length); startLoop(); });
+
+      startLoop();
     })();
 
     /* Lebenslauf aufklappen */
