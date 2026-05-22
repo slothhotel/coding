@@ -1550,6 +1550,7 @@
       }
 
       let last=null, elapsed=0, nextSpawn=2;
+      let secondPulseAt = -1; // Zeitpunkt für optionalen zweiten Puls
 
       // ═══════════════════════════════════════════════════════════════
       // ANIMATION-EINSTELLUNGEN — bitte nicht ohne Rückfrage ändern!
@@ -1557,14 +1558,17 @@
       // GEWÜNSCHTER EFFEKT (Stefan Kochert, Mai 2025):
       //   Haupteffekt = alle kleinen Waben atmen individuell sichtbar.
       //   Großer Ring-Puls = seltener Zusatz, ca. alle 15 Sekunden.
+      //   Manchmal folgt ein zweiter Puls zeitversetzt (4–8 s später),
+      //   sodass zwei Ringe gleichzeitig sichtbar sind.
       //
       // WICHTIGE WERTE:
-      //   breathe-Basis:       0.042  (Grundhelligkeit aller Waben)
-      //   breathe-Amplitude:   0.022  (Stärke des globalen Pulsierens)
-      //   Eigenphase-Stärke:   0.018  (individuelle Variation pro Wabe)
-      //   Linienbreite Basis:  0.9
-      //   Ring-Puls-Intervall: 12–18 Sekunden   (nextSpawn + 12 + Math.random()*6)
-      //   Max. gleichz. Ringe: 2
+      //   breathe-Basis:         0.042  (Grundhelligkeit aller Waben)
+      //   breathe-Amplitude:     0.022  (Stärke des globalen Pulsierens)
+      //   Eigenphase-Stärke:     0.018  (individuelle Variation pro Wabe)
+      //   Linienbreite Basis:    0.9
+      //   Ring-Puls-Intervall:   13–19 Sekunden
+      //   Doppel-Puls-Chance:    50 %  (zweiter Puls 4–8 s nach dem ersten)
+      //   Max. gleichz. Ringe:   3
       // ═══════════════════════════════════════════════════════════════
 
       function frame(ts){
@@ -1572,11 +1576,20 @@
         const dt=Math.min((ts-last)/1000, 0.05);
         last=ts; elapsed+=dt;
 
-        // Großen Ring-Puls nur alle ~15 Sekunden (12–18 s)
+        // Haupt-Puls alle ~15 Sekunden
         if(elapsed>nextSpawn){
           spawnPulse();
-          nextSpawn=elapsed + 12 + Math.random()*6;
-          if(pulses.length>2) pulses.shift();
+          // 50 % Chance: zweiter Puls folgt 4–8 Sekunden später
+          if(Math.random()<0.5) secondPulseAt = elapsed + 4 + Math.random()*4;
+          nextSpawn = elapsed + 13 + Math.random()*6;
+          if(pulses.length>3) pulses.shift();
+        }
+
+        // Optionaler zweiter Puls (zeitversetzt)
+        if(secondPulseAt>0 && elapsed>secondPulseAt){
+          spawnPulse();
+          secondPulseAt = -1;
+          if(pulses.length>3) pulses.shift();
         }
 
         // Pulse altern
