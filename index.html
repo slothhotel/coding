@@ -531,11 +531,17 @@
 
     /* ── SECTION 5: PHOTOGRAPHY ────────────────────────────────── */
 
-    /* Section selbst transparent – heller Hintergrund nur in .photo-upper/.photo-lower */
+    /* Section selbst transparent – heller Hintergrund nur im Carousel-Bereich */
     #photography { background: transparent; overflow: hidden; }
 
-    /* Helle Bereiche: Text oben + Carousel unten */
-    .photo-upper, .photo-lower {
+    /* Oberer Bereich: transparent (Text im Glasfenster) */
+    .photo-upper {
+      background: transparent;
+      position: relative;
+      z-index: 1;
+    }
+    /* Unterer Bereich: heller Hintergrund fürs Carousel */
+    .photo-lower {
       background: var(--light-4);
       position: relative;
       z-index: 1;
@@ -547,19 +553,19 @@
       position: relative;
       z-index: 1;
     }
-    .photo-upper .photo-inner { padding-top: 120px; padding-bottom: 40px; }
+    .photo-upper .photo-inner { padding-top: 80px; padding-bottom: 40px; }
     .photo-lower .photo-inner { padding-top: 40px;  padding-bottom: 80px; }
 
-    /* Textfarben – auf hellem Hintergrund (wie original) */
-    #photography .section-label { color: var(--blue); }
-    #photography .section-title { color: var(--text-dark); }
+    /* Textfarben – auf dunklem Hintergrund (wie Kinematographie) */
+    #photography .section-label { color: var(--blue-light); }
+    #photography .section-title { color: var(--text-lighter); }
     #photography .section-title::after { background: var(--blue); }
 
     .photography-text {
       max-width: 580px;
       font-size: 0.9rem;
       line-height: 1.85;
-      color: var(--text-mid);
+      color: rgba(224, 238, 245, 0.78);
       font-weight: 300;
       margin-bottom: 0;
     }
@@ -923,11 +929,13 @@
     <!-- Heller Bereich oben: Text -->
     <div class="photo-upper">
       <div class="photo-inner">
-        <div class="section-label fade-up">02 — Bilder</div>
-        <h2 class="section-title fade-up">Fotografie</h2>
-        <div class="photography-text fade-up">
-          <p>Mit der Fotografie hat alles angefangen. Lange bevor ich eine Filmkamera in der Hand hielt, war es die Fotografie, die mich gelehrt hat, hinzuschauen – wirklich hinzuschauen. Momente einzufangen, die sonst einfach verschwinden würden. Ein Blick, ein Licht, eine Stimmung, die sich in Sekundenbruchteilen verändert und nie mehr wiederkehrt.</p>
-          <p>Die Kamera ist für mich mehr als ein technisches Gerät – sie ist ein Grund, innezuhalten und den Moment wirklich wahrzunehmen. Lange habe ich Schwarz-Weiß-Filme selbst entwickelt und im Labor vergrößert. Diese Langsamkeit und Sorgfalt im Umgang mit Bildern hat meine Arbeit bis heute geprägt.</p>
+        <div class="video-wrap fade-up">
+          <div class="section-label">02 — Bilder</div>
+          <h2 class="section-title">Fotografie</h2>
+          <div class="photography-text">
+            <p>Mit der Fotografie hat alles angefangen. Lange bevor ich eine Filmkamera in der Hand hielt, war es die Fotografie, die mich gelehrt hat, hinzuschauen – wirklich hinzuschauen. Momente einzufangen, die sonst einfach verschwinden würden. Ein Blick, ein Licht, eine Stimmung, die sich in Sekundenbruchteilen verändert und nie mehr wiederkehrt.</p>
+            <p>Die Kamera ist für mich mehr als ein technisches Gerät – sie ist ein Grund, innezuhalten und den Moment wirklich wahrzunehmen. Lange habe ich Schwarz-Weiß-Filme selbst entwickelt und im Labor vergrößert. Diese Langsamkeit und Sorgfalt im Umgang mit Bildern hat meine Arbeit bis heute geprägt.</p>
+          </div>
         </div>
       </div>
     </div>
