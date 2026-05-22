@@ -505,38 +505,42 @@
       margin-right: 8px;
     }
 
-    /* ── HEX AUDIO PLAYER ─────────────────────────────────────── */
-    .hex-player-wrap {
+    /* ── WHEEL AUDIO PLAYER ──────────────────────────────────────── */
+    .wheel-player-wrap {
       display: flex;
       justify-content: center;
-      margin-top: 8px;
+      margin-top: 20px;
+      margin-bottom: 10px;
     }
     #hexPlayer {
       width: 100%;
-      max-width: 560px;
+      max-width: 700px;
       height: auto;
-      overflow: visible;
     }
-    .hex-btn { cursor: pointer; }
-    .hp-bg {
-      fill: rgba(91,184,180,0.10);
-      transition: fill 0.25s;
-    }
-    .hex-btn:hover .hp-bg { fill: rgba(91,184,180,0.26); }
-    .hex-btn.playing .hp-bg { fill: rgba(91,184,180,0.38); }
-    .hp-icon {
-      font-size: 16px;
-      fill: #5bb8b4;
-      font-family: sans-serif;
-      pointer-events: none;
-      user-select: none;
-    }
-    .hp-label {
-      font-size: 8.5px;
+    .hp-outer-bg { fill: rgba(91,184,180,0.10); }
+    .hp-nav-btn { cursor: pointer; }
+    .hp-nav-btn circle { transition: fill 0.2s; }
+    .hp-nav-btn:hover circle { fill: rgba(91,184,180,0.30); }
+    .hp-outer-label {
+      font-size: 11px;
       fill: #1a2a35;
       font-family: var(--font);
       text-transform: uppercase;
-      letter-spacing: 0.13em;
+      letter-spacing: 0.12em;
+      pointer-events: none;
+      user-select: none;
+    }
+    .hp-track-name {
+      font-size: 10px;
+      fill: #5bb8b4;
+      font-family: var(--font);
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+    }
+    .hp-center-hex { cursor: pointer; }
+    .hp-center-icon {
+      font-size: 40px;
+      fill: rgba(255,255,255,0.92);
       pointer-events: none;
       user-select: none;
     }
@@ -1182,102 +1186,131 @@
           <span class="voice-meta-tag">Alemannisch / Schwäbisch</span>
         </div>
       </div>
-      <!-- ── Hex Audio Player ──────────────────────────────────── -->
-      <div class="hex-player-wrap fade-up">
-        <svg id="hexPlayer" viewBox="0 0 700 620" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Hörproben">
+      <!-- ── Wheel Audio Player (Glücksrad) ───────────────────── -->
+      <div class="wheel-player-wrap fade-up">
+        <svg id="hexPlayer" viewBox="0 0 700 755" xmlns="http://www.w3.org/2000/svg" aria-label="Hörproben">
           <defs>
-            <!-- Clip paths: central + 6 outer hexagons -->
-            <clipPath id="hpCC"><polygon points="350,180 463,245 463,375 350,440 237,375 237,245"/></clipPath>
-            <clipPath id="hpC0"><polygon points="350,180 358,132 420,139 463,164 500,214 463,245"/></clipPath>
-            <clipPath id="hpC1"><polygon points="463,245 508,228 533,285 533,335 508,392 463,375"/></clipPath>
-            <clipPath id="hpC2"><polygon points="463,375 500,406 463,456 420,481 358,488 350,440"/></clipPath>
-            <clipPath id="hpC3"><polygon points="350,440 342,488 280,481 237,456 200,406 237,375"/></clipPath>
-            <clipPath id="hpC4"><polygon points="237,375 192,392 167,335 167,285 192,228 237,245"/></clipPath>
-            <clipPath id="hpC5"><polygon points="237,245 200,214 237,164 280,139 342,132 350,180"/></clipPath>
+            <!-- Clip für Mittelwabe -->
+            <clipPath id="hpCCC">
+              <polygon points="445,440 397.5,357.75 302.5,357.75 255,440 302.5,522.25 397.5,522.25"/>
+            </clipPath>
           </defs>
 
-          <!-- CENTRAL HEX – Foto -->
-          <g clip-path="url(#hpCC)">
-            <image href="images/Audio-Player.png" x="237" y="180" width="226" height="260"
-                   preserveAspectRatio="xMidYMid slice"/>
-          </g>
-          <polygon points="350,180 463,245 463,375 350,440 237,375 237,245"
-                   fill="none" stroke="#5bb8b4" stroke-width="3"/>
+          <!-- ── Zeiger + Track-Name ──────────────────────────── -->
+          <text id="hpTrackName" class="hp-track-name" x="350" y="76" text-anchor="middle">IMAGEFILM</text>
+          <!-- Pfeil (Dreieck, zeigt nach unten) -->
+          <polygon points="327,93 373,93 350,133" fill="#5bb8b4"/>
+          <!-- Strichlinie zum Hex -->
+          <line x1="350" y1="133" x2="350" y2="193.25"
+                stroke="rgba(91,184,180,0.55)" stroke-width="2" stroke-dasharray="5,4"/>
 
-          <!-- BTN 0: oben-rechts — Imagefilm -->
-          <g class="hex-btn" data-track="0">
-            <g clip-path="url(#hpC0)">
-              <polygon class="hp-bg" points="350,180 358,132 420,139 463,164 500,214 463,245"/>
+          <!-- ── Außenring (rotiert per JS) ──────────────────── -->
+          <g id="hexRing">
+
+            <!-- Slot 0 – oben (Imagefilm) -->
+            <polygon class="hp-outer-bg"
+                     points="445,275.5 397.5,193.25 302.5,193.25 255,275.5 302.5,357.75 397.5,357.75"/>
+            <polygon fill="none" stroke="rgba(91,184,180,0.48)" stroke-width="1.5"
+                     points="445,275.5 397.5,193.25 302.5,193.25 255,275.5 302.5,357.75 397.5,357.75"/>
+            <g class="hp-label-group">
+              <text class="hp-outer-label" x="350" y="275.5"
+                    text-anchor="middle" dominant-baseline="middle">Imagefilm</text>
             </g>
-            <polygon points="350,180 358,132 420,139 463,164 500,214 463,245"
-                     fill="none" stroke="rgba(91,184,180,0.55)" stroke-width="1.5"/>
-            <polygon points="350,180 358,132 420,139 463,164 500,214 463,245" fill="transparent"/>
-            <text class="hp-icon" x="426" y="173" text-anchor="middle" dominant-baseline="middle">&#9654;</text>
-            <text class="hp-label" x="426" y="189" text-anchor="middle">Imagefilm</text>
+
+            <!-- Slot 1 – oben-rechts (TV-Spot) -->
+            <polygon class="hp-outer-bg"
+                     points="587.5,357.75 540,275.5 445,275.5 397.5,357.75 445,440 540,440"/>
+            <polygon fill="none" stroke="rgba(91,184,180,0.48)" stroke-width="1.5"
+                     points="587.5,357.75 540,275.5 445,275.5 397.5,357.75 445,440 540,440"/>
+            <g class="hp-label-group">
+              <text class="hp-outer-label" x="492.5" y="357.75"
+                    text-anchor="middle" dominant-baseline="middle">TV-Spot</text>
+            </g>
+
+            <!-- Slot 2 – unten-rechts (Infomercial) -->
+            <polygon class="hp-outer-bg"
+                     points="587.5,522.25 540,440 445,440 397.5,522.25 445,604.5 540,604.5"/>
+            <polygon fill="none" stroke="rgba(91,184,180,0.48)" stroke-width="1.5"
+                     points="587.5,522.25 540,440 445,440 397.5,522.25 445,604.5 540,604.5"/>
+            <g class="hp-label-group">
+              <text class="hp-outer-label" x="492.5" y="522.25"
+                    text-anchor="middle" dominant-baseline="middle">Infomercial</text>
+            </g>
+
+            <!-- Slot 3 – unten (Radio-Spot) -->
+            <polygon class="hp-outer-bg"
+                     points="445,604.5 397.5,522.25 302.5,522.25 255,604.5 302.5,686.75 397.5,686.75"/>
+            <polygon fill="none" stroke="rgba(91,184,180,0.48)" stroke-width="1.5"
+                     points="445,604.5 397.5,522.25 302.5,522.25 255,604.5 302.5,686.75 397.5,686.75"/>
+            <g class="hp-label-group">
+              <text class="hp-outer-label" x="350" y="604.5"
+                    text-anchor="middle" dominant-baseline="middle">Radio-Spot</text>
+            </g>
+
+            <!-- Slot 4 – unten-links (Stationvoice) -->
+            <polygon class="hp-outer-bg"
+                     points="302.5,522.25 255,604.5 160,604.5 112.5,522.25 160,440 255,440"/>
+            <polygon fill="none" stroke="rgba(91,184,180,0.48)" stroke-width="1.5"
+                     points="302.5,522.25 255,604.5 160,604.5 112.5,522.25 160,440 255,440"/>
+            <g class="hp-label-group">
+              <text class="hp-outer-label" x="207.5" y="522.25"
+                    text-anchor="middle" dominant-baseline="middle">Stationvoice</text>
+            </g>
+
+            <!-- Slot 5 – oben-links (Werbung Dummy) -->
+            <polygon class="hp-outer-bg"
+                     points="302.5,357.75 255,440 160,440 112.5,357.75 160,275.5 255,275.5"/>
+            <polygon fill="none" stroke="rgba(91,184,180,0.48)" stroke-width="1.5"
+                     points="302.5,357.75 255,440 160,440 112.5,357.75 160,275.5 255,275.5"/>
+            <g class="hp-label-group">
+              <text class="hp-outer-label" x="207.5" y="350.75"
+                    text-anchor="middle" dominant-baseline="middle">Werbung</text>
+              <text class="hp-outer-label" x="207.5" y="365.25"
+                    text-anchor="middle" dominant-baseline="middle">Dummy</text>
+            </g>
+
+          </g><!-- #hexRing -->
+
+          <!-- ── Mittelwabe (fest, über Ring gezeichnet) ────── -->
+          <g id="hpCenterHex" class="hp-center-hex">
+            <!-- Foto -->
+            <g clip-path="url(#hpCCC)">
+              <image href="images/Audio-Player.png"
+                     x="255" y="357.75" width="190" height="164.5"
+                     preserveAspectRatio="xMidYMid slice"/>
+            </g>
+            <!-- Overlay für Icon-Lesbarkeit -->
+            <g clip-path="url(#hpCCC)">
+              <polygon points="445,440 397.5,357.75 302.5,357.75 255,440 302.5,522.25 397.5,522.25"
+                       fill="rgba(0,0,0,0.22)"/>
+            </g>
+            <!-- Rahmen -->
+            <polygon points="445,440 397.5,357.75 302.5,357.75 255,440 302.5,522.25 397.5,522.25"
+                     fill="none" stroke="#5bb8b4" stroke-width="3"/>
+            <!-- Play/Pause-Icon -->
+            <text id="hpCenterIcon" class="hp-center-icon"
+                  x="350" y="441" text-anchor="middle" dominant-baseline="middle"
+                  style="cursor:pointer">&#9654;</text>
+            <!-- Unsichtbare Klickfläche -->
+            <polygon id="hpCenterClick"
+                     points="445,440 397.5,357.75 302.5,357.75 255,440 302.5,522.25 397.5,522.25"
+                     fill="transparent" style="cursor:pointer"/>
           </g>
 
-          <!-- BTN 1: rechts — TV-Spot (schmales Hex, Text gedreht) -->
-          <g class="hex-btn" data-track="1">
-            <g clip-path="url(#hpC1)">
-              <polygon class="hp-bg" points="463,245 508,228 533,285 533,335 508,392 463,375"/>
-            </g>
-            <polygon points="463,245 508,228 533,285 533,335 508,392 463,375"
-                     fill="none" stroke="rgba(91,184,180,0.55)" stroke-width="1.5"/>
-            <polygon points="463,245 508,228 533,285 533,335 508,392 463,375" fill="transparent"/>
-            <text class="hp-icon" x="501" y="300" text-anchor="middle" dominant-baseline="middle">&#9654;</text>
-            <text class="hp-label" x="501" y="320" text-anchor="middle"
-                  transform="rotate(-90,501,320)">TV-Spot</text>
+          <!-- ── Navigations-Pfeile ──────────────────────────── -->
+          <g id="hpRotLeft" class="hp-nav-btn">
+            <circle cx="45" cy="440" r="26"
+                    fill="rgba(91,184,180,0.12)" stroke="rgba(91,184,180,0.4)" stroke-width="1.5"/>
+            <text x="45" y="441" text-anchor="middle" dominant-baseline="middle"
+                  font-size="16" fill="#5bb8b4" style="pointer-events:none">&#9664;</text>
+          </g>
+          <g id="hpRotRight" class="hp-nav-btn">
+            <circle cx="655" cy="440" r="26"
+                    fill="rgba(91,184,180,0.12)" stroke="rgba(91,184,180,0.4)" stroke-width="1.5"/>
+            <text x="655" y="441" text-anchor="middle" dominant-baseline="middle"
+                  font-size="16" fill="#5bb8b4" style="pointer-events:none">&#9654;</text>
           </g>
 
-          <!-- BTN 2: unten-rechts — Infomercial -->
-          <g class="hex-btn" data-track="2">
-            <g clip-path="url(#hpC2)">
-              <polygon class="hp-bg" points="463,375 500,406 463,456 420,481 358,488 350,440"/>
-            </g>
-            <polygon points="463,375 500,406 463,456 420,481 358,488 350,440"
-                     fill="none" stroke="rgba(91,184,180,0.55)" stroke-width="1.5"/>
-            <polygon points="463,375 500,406 463,456 420,481 358,488 350,440" fill="transparent"/>
-            <text class="hp-icon" x="426" y="436" text-anchor="middle" dominant-baseline="middle">&#9654;</text>
-            <text class="hp-label" x="426" y="452" text-anchor="middle">Infomercial</text>
-          </g>
-
-          <!-- BTN 3: unten-links — Radio-Spot -->
-          <g class="hex-btn" data-track="3">
-            <g clip-path="url(#hpC3)">
-              <polygon class="hp-bg" points="350,440 342,488 280,481 237,456 200,406 237,375"/>
-            </g>
-            <polygon points="350,440 342,488 280,481 237,456 200,406 237,375"
-                     fill="none" stroke="rgba(91,184,180,0.55)" stroke-width="1.5"/>
-            <polygon points="350,440 342,488 280,481 237,456 200,406 237,375" fill="transparent"/>
-            <text class="hp-icon" x="274" y="436" text-anchor="middle" dominant-baseline="middle">&#9654;</text>
-            <text class="hp-label" x="274" y="452" text-anchor="middle">Radio-Spot</text>
-          </g>
-
-          <!-- BTN 4: links — Stationvoice (schmales Hex, Text gedreht) -->
-          <g class="hex-btn" data-track="4">
-            <g clip-path="url(#hpC4)">
-              <polygon class="hp-bg" points="237,375 192,392 167,335 167,285 192,228 237,245"/>
-            </g>
-            <polygon points="237,375 192,392 167,335 167,285 192,228 237,245"
-                     fill="none" stroke="rgba(91,184,180,0.55)" stroke-width="1.5"/>
-            <polygon points="237,375 192,392 167,335 167,285 192,228 237,245" fill="transparent"/>
-            <text class="hp-icon" x="199" y="300" text-anchor="middle" dominant-baseline="middle">&#9654;</text>
-            <text class="hp-label" x="199" y="320" text-anchor="middle"
-                  transform="rotate(90,199,320)">Stationvoice</text>
-          </g>
-
-          <!-- BTN 5: oben-links — Werbung Dummy -->
-          <g class="hex-btn" data-track="5">
-            <g clip-path="url(#hpC5)">
-              <polygon class="hp-bg" points="237,245 200,214 237,164 280,139 342,132 350,180"/>
-            </g>
-            <polygon points="237,245 200,214 237,164 280,139 342,132 350,180"
-                     fill="none" stroke="rgba(91,184,180,0.55)" stroke-width="1.5"/>
-            <polygon points="237,245 200,214 237,164 280,139 342,132 350,180" fill="transparent"/>
-            <text class="hp-icon" x="274" y="170" text-anchor="middle" dominant-baseline="middle">&#9654;</text>
-            <text class="hp-label" x="274" y="185" text-anchor="middle">Werbung</text>
-            <text class="hp-label" x="274" y="196" text-anchor="middle">Dummy</text>
-          </g>
         </svg>
       </div>
     </div>
@@ -1769,77 +1802,150 @@
       document.head.appendChild(topoScript);
     })();
 
-    /* ── Hex Audio Player ─────────────────────────────────────── */
+    /* ── Wheel Audio Player (Glücksrad) ──────────────────────────
+       Geometrie: Flat-Top-Waben, R=95, CX=350, CY=440
+       d = R*√3 ≈ 164.5 (Mittenabstand Nachbar-Waben)
+       Slots 0-5 im Ring (0=oben, im Uhrzeigersinn)
+       ◄ dreht Ring im UZS  → Slot-5-Inhalt kommt nach oben
+       ► dreht Ring gegen UZS → Slot-1-Inhalt kommt nach oben
+    ──────────────────────────────────────────────────────────── */
     (function() {
-      const files = [
-        'audio/Imagefilm.m4a',      // track 0 – oben-rechts
-        'audio/TV-Spot.m4a',        // track 1 – rechts
-        'audio/Infomercial.m4a',    // track 2 – unten-rechts
-        'audio/Radio-Spot.m4a',     // track 3 – unten-links
-        'audio/Stationvoice.m4a',   // track 4 – links
-        'audio/Werbung_Dummy.m4a',  // track 5 – oben-links
+      var CX = 350, CY = 440;
+
+      /* Tracks: Index entspricht Ring-Slot */
+      var tracks = [
+        { label: 'Imagefilm',     file: 'audio/Imagefilm.m4a'     }, // slot 0
+        { label: 'TV-Spot',       file: 'audio/TV-Spot.m4a'       }, // slot 1
+        { label: 'Infomercial',   file: 'audio/Infomercial.m4a'   }, // slot 2
+        { label: 'Radio-Spot',    file: 'audio/Radio-Spot.m4a'    }, // slot 3
+        { label: 'Stationvoice',  file: 'audio/Stationvoice.m4a'  }, // slot 4
+        { label: 'Werbung Dummy', file: 'audio/Werbung_Dummy.m4a' }, // slot 5
       ];
 
-      const audios = files.map(src => {
-        const a = new Audio();
-        a.src = src;
+      /* Mittelpunkte der 6 Außen-Slots in SVG-Koordinaten */
+      var slotCenters = [
+        { x: 350,   y: 275.5  }, // 0: oben
+        { x: 492.5, y: 357.75 }, // 1: oben-rechts
+        { x: 492.5, y: 522.25 }, // 2: unten-rechts
+        { x: 350,   y: 604.5  }, // 3: unten
+        { x: 207.5, y: 522.25 }, // 4: unten-links
+        { x: 207.5, y: 357.75 }, // 5: oben-links
+      ];
+
+      /* DOM-Referenzen */
+      var ring        = document.getElementById('hexRing');
+      var labelGroups = Array.prototype.slice.call(
+                          document.querySelectorAll('#hexRing .hp-label-group'));
+      var centerClick = document.getElementById('hpCenterClick');
+      var centerIcon  = document.getElementById('hpCenterIcon');
+      var trackNameEl = document.getElementById('hpTrackName');
+      var btnLeft     = document.getElementById('hpRotLeft');
+      var btnRight    = document.getElementById('hpRotRight');
+
+      /* Audio-Objekte */
+      var audios = tracks.map(function(t) {
+        var a = new Audio(t.file);
         a.preload = 'none';
         return a;
       });
 
-      let currentIdx = -1;
+      /* Zustand */
+      var ringAngle   = 0;   // aktueller Animations-Winkel (°)
+      var targetAngle = 0;   // Ziel-Winkel
+      var stepCount   = 0;   // kumulierte Schritte (+ = UZS)
+      var playingIdx  = -1;  // gerade spielender Track (-1 = keiner)
+      var animId      = null;
 
-      function getBtn(idx) {
-        return document.querySelector('.hex-btn[data-track="' + idx + '"]');
+      /* Welcher Track ist oben? */
+      function getActiveIdx() {
+        return ((-stepCount % 6) + 6) % 6;
       }
 
-      function resetBtn(idx) {
-        const btn = getBtn(idx);
-        if (!btn) return;
-        btn.querySelector('.hp-icon').textContent = '▶';
-        btn.classList.remove('playing');
-      }
-
-      function activateBtn(idx) {
-        const btn = getBtn(idx);
-        if (!btn) return;
-        btn.querySelector('.hp-icon').textContent = '⏸';
-        btn.classList.add('playing');
-      }
-
-      document.querySelectorAll('.hex-btn').forEach(function(btn) {
-        var idx = parseInt(btn.dataset.track, 10);
-
-        audios[idx].addEventListener('ended', function() {
-          resetBtn(idx);
-          if (currentIdx === idx) currentIdx = -1;
+      /* SVG-Transforms setzen */
+      function applyTransforms() {
+        ring.setAttribute('transform',
+          'rotate(' + ringAngle + ',' + CX + ',' + CY + ')');
+        labelGroups.forEach(function(grp, i) {
+          var sc = slotCenters[i];
+          /* Gegendrehung: Label bleibt horizontal */
+          grp.setAttribute('transform',
+            'rotate(' + (-ringAngle) + ',' + sc.x + ',' + sc.y + ')');
         });
+      }
 
-        btn.addEventListener('click', function() {
-          if (currentIdx === idx) {
-            // Gleicher Track: Play/Pause umschalten
-            if (audios[idx].paused) {
-              audios[idx].play();
-              activateBtn(idx);
-            } else {
-              audios[idx].pause();
-              resetBtn(idx);
-              currentIdx = -1;
-            }
-          } else {
-            // Anderen Track stoppen
-            if (currentIdx >= 0) {
-              audios[currentIdx].pause();
-              audios[currentIdx].currentTime = 0;
-              resetBtn(currentIdx);
-            }
-            // Neuen Track starten
+      /* Animation zum Zielwinkel */
+      function animateTo(target) {
+        targetAngle = target;
+        if (animId) cancelAnimationFrame(animId);
+        (function step() {
+          var diff = targetAngle - ringAngle;
+          if (Math.abs(diff) < 0.2) {
+            ringAngle = targetAngle;
+            applyTransforms();
+            trackNameEl.textContent = tracks[getActiveIdx()].label.toUpperCase();
+            animId = null;
+            return;
+          }
+          ringAngle += diff * 0.13;
+          applyTransforms();
+          animId = requestAnimationFrame(step);
+        })();
+      }
+
+      /* Wiedergabe stoppen */
+      function stopPlayback() {
+        if (playingIdx >= 0) {
+          audios[playingIdx].pause();
+          audios[playingIdx].currentTime = 0;
+          playingIdx = -1;
+          centerIcon.textContent = '▶';
+        }
+      }
+
+      /* Ring drehen: dir = +1 (UZS) oder -1 (gegen UZS) */
+      function rotate(dir) {
+        stopPlayback();
+        stepCount += dir;
+        /* Track-Name sofort aktualisieren */
+        trackNameEl.textContent = tracks[getActiveIdx()].label.toUpperCase();
+        animateTo(stepCount * 60);
+      }
+
+      /* Navigations-Pfeile */
+      btnLeft.addEventListener('click',  function() { rotate(+1); });
+      btnRight.addEventListener('click', function() { rotate(-1); });
+
+      /* Mittelwabe: aktiven Track play/pause */
+      centerClick.addEventListener('click', function() {
+        var idx = getActiveIdx();
+        if (playingIdx === idx) {
+          if (audios[idx].paused) {
             audios[idx].play();
-            activateBtn(idx);
-            currentIdx = idx;
+            centerIcon.textContent = '⏸';
+          } else {
+            audios[idx].pause();
+            centerIcon.textContent = '▶';
+          }
+        } else {
+          stopPlayback();
+          playingIdx = idx;
+          audios[idx].play();
+          centerIcon.textContent = '⏸';
+        }
+      });
+
+      /* Auto-Reset wenn Track zuende */
+      audios.forEach(function(audio, idx) {
+        audio.addEventListener('ended', function() {
+          if (playingIdx === idx) {
+            playingIdx = -1;
+            centerIcon.textContent = '▶';
           }
         });
       });
+
+      /* Init */
+      trackNameEl.textContent = tracks[0].label.toUpperCase();
     })();
 
   </script>
