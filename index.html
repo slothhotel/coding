@@ -1529,18 +1529,20 @@
       // Puls-Objekte: expandierende Ringe von einem Ursprung aus
       const pulses=[];
       function spawnPulse(){
-        const speed = 90 + Math.random()*60;
-        const life  = 10 + Math.random()*6;   // viel länger → großer Radius
-        pulses.push({
-          x: W*0.1 + Math.random()*W*0.8,
-          y: H*0.1 + Math.random()*H*0.8,
-          t: 0,
-          speed,
-          width:    110 + Math.random()*70,   // breiterer Ring
-          alpha:    0.65 + Math.random()*0.25, // heller
-          life,
-          maxR:     speed * life               // max. Radius beim Verblassen
-        });
+        // Position: best-of-8 — möglichst weit von bestehenden Pulsen entfernt
+        let best={x:W*0.5,y:H*0.5}, bestDist=-1;
+        for(let i=0;i<8;i++){
+          const x=W*0.1+Math.random()*W*0.8;
+          const y=H*0.1+Math.random()*H*0.8;
+          const d=pulses.length ? Math.min(...pulses.map(p=>Math.hypot(x-p.x,y-p.y))) : Infinity;
+          if(d>bestDist){ bestDist=d; best={x,y}; }
+        }
+        const speed=90+Math.random()*60;
+        const life =8+Math.random()*5;
+        pulses.push({x:best.x,y:best.y,t:0,speed,
+          width:90+Math.random()*60,
+          alpha:0.65+Math.random()*0.25,
+          life, maxR:speed*life});
       }
 
       function resize(){
@@ -1549,25 +1551,24 @@
         buildEdges();
       }
 
-      let last=null, elapsed=0, nextSpawn=2;
-      let secondPulseAt = -1; // Zeitpunkt für optionalen zweiten Puls
+      let last=null, elapsed=0, nextSpawn=1;
 
       // ═══════════════════════════════════════════════════════════════
       // ANIMATION-EINSTELLUNGEN — bitte nicht ohne Rückfrage ändern!
       //
       // GEWÜNSCHTER EFFEKT (Stefan Kochert, Mai 2025):
       //   Haupteffekt = alle kleinen Waben atmen individuell sichtbar.
-      //   Großer Ring-Puls = seltener Zusatz, ca. alle 15 Sekunden.
-      //   Manchmal folgt ein zweiter Puls zeitversetzt (4–8 s später),
-      //   sodass zwei Ringe gleichzeitig sichtbar sind.
+      //   Ring-Pulse kommen alle 5–9 s, an immer anderen Stellen,
+      //   sodass 2–3 Ringe gleichzeitig sichtbar sein können.
       //
       // WICHTIGE WERTE:
       //   breathe-Basis:         0.042  (Grundhelligkeit aller Waben)
       //   breathe-Amplitude:     0.022  (Stärke des globalen Pulsierens)
       //   Eigenphase-Stärke:     0.018  (individuelle Variation pro Wabe)
       //   Linienbreite Basis:    0.9
-      //   Ring-Puls-Intervall:   13–19 Sekunden
-      //   Doppel-Puls-Chance:    50 %  (zweiter Puls 4–8 s nach dem ersten)
+      //   Ring-Puls-Intervall:   5–9 Sekunden
+      //   Puls-Lebensdauer:      8–13 Sekunden  → natürliche Überlappung
+      //   Position:              best-of-8 (immer möglichst weit voneinander)
       //   Max. gleichz. Ringe:   3
       // ═══════════════════════════════════════════════════════════════
 
@@ -1576,19 +1577,10 @@
         const dt=Math.min((ts-last)/1000, 0.05);
         last=ts; elapsed+=dt;
 
-        // Haupt-Puls alle ~15 Sekunden
+        // Neuen Puls alle 5–9 Sekunden — Lebensdauer 8–13 s → Überlappung garantiert
         if(elapsed>nextSpawn){
           spawnPulse();
-          // 50 % Chance: zweiter Puls folgt 4–8 Sekunden später
-          if(Math.random()<0.5) secondPulseAt = elapsed + 4 + Math.random()*4;
-          nextSpawn = elapsed + 13 + Math.random()*6;
-          if(pulses.length>3) pulses.shift();
-        }
-
-        // Optionaler zweiter Puls (zeitversetzt)
-        if(secondPulseAt>0 && elapsed>secondPulseAt){
-          spawnPulse();
-          secondPulseAt = -1;
+          nextSpawn=elapsed + 5 + Math.random()*4;
           if(pulses.length>3) pulses.shift();
         }
 
