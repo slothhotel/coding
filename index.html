@@ -553,7 +553,7 @@
       position: relative;
       z-index: 1;
     }
-    .photo-upper .photo-inner { padding-top: 80px; padding-bottom: 40px; }
+    .photo-upper .photo-inner { padding-top: 80px; padding-bottom: 70px; }
     .photo-lower .photo-inner { padding-top: 40px;  padding-bottom: 80px; }
 
     /* Textfarben – auf dunklem Hintergrund (wie Kinematographie) */
@@ -572,7 +572,7 @@
     /* ── Text + Carousel nebeneinander im oberen Foto-Bereich ── */
     .photo-upper-grid {
       display: grid;
-      grid-template-columns: 1fr 260px;
+      grid-template-columns: 1fr 380px;
       gap: 40px;
       align-items: center;
     }
@@ -583,6 +583,10 @@
     .photo-upper-grid .photo-carousel-outer {
       max-width: none;
       margin: 0;
+    }
+    /* Mehr Innenabstand im Glasfenster */
+    .photo-upper .video-wrap {
+      padding: 32px 32px 48px;
     }
 
     /* ── Weltkarte: transparentes Fenster ──────────────────────── */
