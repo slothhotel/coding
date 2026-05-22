@@ -471,11 +471,26 @@
 
     /* ── SECTION 4: VOICE ──────────────────────────────────────── */
 
-    #voice { background: var(--light-3); }
+    #voice {
+      background: var(--light-3);
+      position: relative;   /* Anker für Canvas-Visualisierung */
+      overflow: hidden;
+    }
 
-    #voice .section-label { color: var(--tq); }
-    #voice .section-title { color: var(--text-dark); }
-    #voice .section-title::after { background: var(--tq); }
+    #voice .section-label {
+      color: var(--tq);
+      text-align: center;
+    }
+    #voice .section-title {
+      color: var(--text-dark);
+      display: block;
+      text-align: center;
+    }
+    #voice .section-title::after {
+      background: var(--tq);
+      left: 50%;
+      transform: translateX(-50%);
+    }
 
     .voice-intro {
       max-width: 680px;
@@ -484,15 +499,19 @@
       color: var(--text-mid);
       font-weight: 300;
       margin-bottom: 52px;
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .voice-intro p + p { margin-top: 14px; }
 
     .voice-meta {
       display: flex;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;
       gap: 8px;
       margin-top: 20px;
+      justify-content: center;
     }
 
     .voice-meta-tag {
@@ -1828,6 +1847,97 @@
     (function() {
       var CX = 350, CY = 440;
 
+      /* ── Waben-Visualisierung ────────────────────────────────── */
+      var voiceEl   = document.getElementById('voice');
+      var vizCanvas = document.createElement('canvas');
+      vizCanvas.style.cssText =
+        'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;';
+      voiceEl.insertBefore(vizCanvas, voiceEl.firstChild);
+      var vizCtx = vizCanvas.getContext('2d');
+
+      var hexCells  = [];
+      var vizActive = false;
+      var vizT0     = 0;
+      var vizAnimId = null;
+
+      function buildHexGrid() {
+        hexCells = [];
+        var w = vizCanvas.width  = voiceEl.offsetWidth;
+        var h = vizCanvas.height = voiceEl.offsetHeight;
+        var r  = 18;                   // Umkreisradius (pointy-top)
+        var dx = r * Math.sqrt(3);     // waagrechter Abstand
+        var dy = r * 1.5;              // senkrechter Abstand
+        for (var row = -1; row <= Math.ceil(h / dy) + 1; row++) {
+          for (var col = -1; col <= Math.ceil(w / dx) + 1; col++) {
+            hexCells.push([
+              col * dx + (row % 2 === 0 ? 0 : dx * 0.5),
+              row * dy
+            ]);
+          }
+        }
+      }
+
+      function getPlayerCenter() {
+        var sr = document.getElementById('hexPlayer').getBoundingClientRect();
+        var vr = voiceEl.getBoundingClientRect();
+        return { x: sr.left + sr.width  * 0.5 - vr.left,
+                 y: sr.top  + sr.height * 0.5 - vr.top  };
+      }
+
+      function drawViz() {
+        if (!vizActive) return;
+        vizCtx.clearRect(0, 0, vizCanvas.width, vizCanvas.height);
+
+        var elapsed = (Date.now() - vizT0) / 1000;
+        var c       = getPlayerCenter();
+        var maxDist = Math.hypot(vizCanvas.width, vizCanvas.height) * 0.68;
+        var SPEED   = 130;   // px/s  – Ausbreitungsgeschwindigkeit
+        var FREQ    = 0.038; // rad/px – bestimmt Ringabstand (~165 px)
+        var r       = 17;
+
+        vizCtx.lineWidth = 0.85;
+        for (var i = 0; i < hexCells.length; i++) {
+          var cx   = hexCells[i][0];
+          var cy   = hexCells[i][1];
+          var dist = Math.hypot(cx - c.x, cy - c.y);
+          var wave = Math.sin(elapsed * SPEED * FREQ - dist * FREQ);
+          if (wave <= 0) continue;
+          var alpha = wave * Math.max(0, 1 - dist / maxDist) * 0.17;
+          if (alpha < 0.006) continue;
+
+          vizCtx.beginPath();
+          for (var k = 0; k < 6; k++) {
+            var a  = Math.PI / 6 + k * Math.PI / 3; // pointy-top
+            var vx = cx + r * Math.cos(a);
+            var vy = cy + r * Math.sin(a);
+            if (k === 0) vizCtx.moveTo(vx, vy); else vizCtx.lineTo(vx, vy);
+          }
+          vizCtx.closePath();
+          vizCtx.strokeStyle = 'rgba(91,184,180,' + alpha.toFixed(3) + ')';
+          vizCtx.stroke();
+        }
+        vizAnimId = requestAnimationFrame(drawViz);
+      }
+
+      function startViz() {
+        if (vizActive) return;
+        vizActive = true;
+        vizT0 = Date.now();
+        buildHexGrid();
+        drawViz();
+      }
+
+      function stopViz() {
+        vizActive = false;
+        if (vizAnimId) { cancelAnimationFrame(vizAnimId); vizAnimId = null; }
+        vizCtx.clearRect(0, 0, vizCanvas.width, vizCanvas.height);
+      }
+
+      window.addEventListener('resize', function() {
+        if (vizActive) buildHexGrid();
+        else { vizCanvas.width = voiceEl.offsetWidth; vizCanvas.height = voiceEl.offsetHeight; }
+      });
+
       /* Tracks: Index entspricht Ring-Slot */
       var tracks = [
         { label: 'Imagefilm',     file: 'audio/Imagefilm.m4a'     }, // slot 0
@@ -1915,6 +2025,7 @@
           audios[playingIdx].currentTime = 0;
           playingIdx = -1;
           centerIcon.textContent = '▶';
+          stopViz();
         }
       }
 
@@ -1970,15 +2081,18 @@
           if (audios[idx].paused) {
             audios[idx].play();
             centerIcon.textContent = '⏸';
+            startViz();
           } else {
             audios[idx].pause();
             centerIcon.textContent = '▶';
+            stopViz();
           }
         } else {
           stopPlayback();
           playingIdx = idx;
           audios[idx].play();
           centerIcon.textContent = '⏸';
+          startViz();
         }
       });
 
@@ -1988,6 +2102,7 @@
           if (playingIdx === idx) {
             playingIdx = -1;
             centerIcon.textContent = '▶';
+            stopViz();
           }
         });
       });
