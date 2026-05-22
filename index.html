@@ -1551,12 +1551,28 @@
 
       let last=null, elapsed=0, nextSpawn=2;
 
+      // ═══════════════════════════════════════════════════════════════
+      // ANIMATION-EINSTELLUNGEN — bitte nicht ohne Rückfrage ändern!
+      //
+      // GEWÜNSCHTER EFFEKT (Stefan Kochert, Mai 2025):
+      //   Haupteffekt = alle kleinen Waben atmen individuell sichtbar.
+      //   Großer Ring-Puls = seltener Zusatz, ca. alle 15 Sekunden.
+      //
+      // WICHTIGE WERTE:
+      //   breathe-Basis:       0.042  (Grundhelligkeit aller Waben)
+      //   breathe-Amplitude:   0.022  (Stärke des globalen Pulsierens)
+      //   Eigenphase-Stärke:   0.018  (individuelle Variation pro Wabe)
+      //   Linienbreite Basis:  0.9
+      //   Ring-Puls-Intervall: 12–18 Sekunden   (nextSpawn + 12 + Math.random()*6)
+      //   Max. gleichz. Ringe: 2
+      // ═══════════════════════════════════════════════════════════════
+
       function frame(ts){
         if(!last) last=ts;
         const dt=Math.min((ts-last)/1000, 0.05);
         last=ts; elapsed+=dt;
 
-        // Großen Ring-Puls nur alle ~15 Sekunden
+        // Großen Ring-Puls nur alle ~15 Sekunden (12–18 s)
         if(elapsed>nextSpawn){
           spawnPulse();
           nextSpawn=elapsed + 12 + Math.random()*6;
@@ -1570,15 +1586,13 @@
         ctx.save();
         ctx.lineCap='round';
 
-        // Globales Grundatmen – kräftiger, alle Waben sichtbar
+        // Globales Grundatmen — Haupteffekt: alle Waben deutlich sichtbar
         const breathe = 0.042 + 0.022*Math.sin(elapsed*0.35);
 
-        // Zwei Render-Pässe: erst Basis, dann helle Pulse mit Glow
-        // Pass 1 – Grundleuchten aller sichtbaren Kanten (stärker, individuelle Phase)
+        // Pass 1 – alle Kanten leuchten mit individueller Eigenphase
         ctx.shadowBlur=0;
         edges.forEach(e=>{
           if(e.mx<-TW||e.mx>W+TW||e.my<-TH||e.my>H+TH) return;
-          // Eigenatmen jeder Kante deutlich versetzt → alle Waben pulsieren individuell
           const a = breathe + 0.018*Math.sin(elapsed*0.55+e.phase);
           ctx.beginPath();
           ctx.moveTo(e.ax,e.ay); ctx.lineTo(e.bx,e.by);
