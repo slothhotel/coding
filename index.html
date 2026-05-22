@@ -505,28 +505,40 @@
       margin-right: 8px;
     }
 
-    .voice-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+    /* ── HEX AUDIO PLAYER ─────────────────────────────────────── */
+    .hex-player-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 8px;
     }
-
-    @media (max-width: 860px) { .voice-grid { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 520px) { .voice-grid { grid-template-columns: 1fr; } }
-
-    .voice-card {
-      border: 1px solid rgba(91,184,180,0.22);
-      background: rgba(255,255,255,0.55);
-      overflow: hidden;
+    #hexPlayer {
+      width: 100%;
+      max-width: 560px;
+      height: auto;
+      overflow: visible;
     }
-
-    .voice-card-label {
-      padding: 11px 16px;
-      font-size: 0.63rem;
-      letter-spacing: 0.22em;
+    .hex-btn { cursor: pointer; }
+    .hp-bg {
+      fill: rgba(91,184,180,0.10);
+      transition: fill 0.25s;
+    }
+    .hex-btn:hover .hp-bg { fill: rgba(91,184,180,0.26); }
+    .hex-btn.playing .hp-bg { fill: rgba(91,184,180,0.38); }
+    .hp-icon {
+      font-size: 16px;
+      fill: #5bb8b4;
+      font-family: sans-serif;
+      pointer-events: none;
+      user-select: none;
+    }
+    .hp-label {
+      font-size: 8.5px;
+      fill: #1a2a35;
+      font-family: var(--font);
       text-transform: uppercase;
-      color: var(--text-dark);
-      border-bottom: 1px solid rgba(91,184,180,0.18);
+      letter-spacing: 0.13em;
+      pointer-events: none;
+      user-select: none;
     }
 
     /* ── SECTION 5: PHOTOGRAPHY ────────────────────────────────── */
@@ -1170,61 +1182,103 @@
           <span class="voice-meta-tag">Alemannisch / Schwäbisch</span>
         </div>
       </div>
-      <div class="voice-grid fade-up">
-        <div class="voice-card">
-          <div class="voice-card-label">TV-Spot</div>
-          <div class="embed-wrap">
-            <iframe src="https://player.vimeo.com/video/313548657"
-              title="Hörprobe TV-Spot"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowfullscreen loading="lazy"></iframe>
-          </div>
-        </div>
-        <div class="voice-card">
-          <div class="voice-card-label">Radio-Spot</div>
-          <div class="embed-wrap">
-            <iframe src="https://player.vimeo.com/video/313549237"
-              title="Hörprobe Radio-Spot"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowfullscreen loading="lazy"></iframe>
-          </div>
-        </div>
-        <div class="voice-card">
-          <div class="voice-card-label">Werbung — Dummy</div>
-          <div class="embed-wrap">
-            <iframe src="https://player.vimeo.com/video/865510345"
-              title="Hörprobe Werbung"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowfullscreen loading="lazy"></iframe>
-          </div>
-        </div>
-        <div class="voice-card">
-          <div class="voice-card-label">Stationvoice</div>
-          <div class="embed-wrap">
-            <iframe src="https://player.vimeo.com/video/877026803"
-              title="Hörprobe Stationvoice"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowfullscreen loading="lazy"></iframe>
-          </div>
-        </div>
-        <div class="voice-card">
-          <div class="voice-card-label">Infomercial</div>
-          <div class="embed-wrap">
-            <iframe src="https://player.vimeo.com/video/372093240"
-              title="Hörprobe Infomercial"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowfullscreen loading="lazy"></iframe>
-          </div>
-        </div>
-        <div class="voice-card">
-          <div class="voice-card-label">Imagefilm</div>
-          <div class="embed-wrap">
-            <iframe src="https://player.vimeo.com/video/803925335"
-              title="Hörprobe Imagefilm"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowfullscreen loading="lazy"></iframe>
-          </div>
-        </div>
+      <!-- ── Hex Audio Player ──────────────────────────────────── -->
+      <div class="hex-player-wrap fade-up">
+        <svg id="hexPlayer" viewBox="0 0 700 620" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Hörproben">
+          <defs>
+            <!-- Clip paths: central + 6 outer hexagons -->
+            <clipPath id="hpCC"><polygon points="350,180 463,245 463,375 350,440 237,375 237,245"/></clipPath>
+            <clipPath id="hpC0"><polygon points="350,180 358,132 420,139 463,164 500,214 463,245"/></clipPath>
+            <clipPath id="hpC1"><polygon points="463,245 508,228 533,285 533,335 508,392 463,375"/></clipPath>
+            <clipPath id="hpC2"><polygon points="463,375 500,406 463,456 420,481 358,488 350,440"/></clipPath>
+            <clipPath id="hpC3"><polygon points="350,440 342,488 280,481 237,456 200,406 237,375"/></clipPath>
+            <clipPath id="hpC4"><polygon points="237,375 192,392 167,335 167,285 192,228 237,245"/></clipPath>
+            <clipPath id="hpC5"><polygon points="237,245 200,214 237,164 280,139 342,132 350,180"/></clipPath>
+          </defs>
+
+          <!-- CENTRAL HEX – Foto -->
+          <g clip-path="url(#hpCC)">
+            <image href="images/Audio-Player.png" x="237" y="180" width="226" height="260"
+                   preserveAspectRatio="xMidYMid slice"/>
+          </g>
+          <polygon points="350,180 463,245 463,375 350,440 237,375 237,245"
+                   fill="none" stroke="#5bb8b4" stroke-width="3"/>
+
+          <!-- BTN 0: oben-rechts — Imagefilm -->
+          <g class="hex-btn" data-track="0">
+            <g clip-path="url(#hpC0)">
+              <polygon class="hp-bg" points="350,180 358,132 420,139 463,164 500,214 463,245"/>
+            </g>
+            <polygon points="350,180 358,132 420,139 463,164 500,214 463,245"
+                     fill="none" stroke="rgba(91,184,180,0.55)" stroke-width="1.5"/>
+            <polygon points="350,180 358,132 420,139 463,164 500,214 463,245" fill="transparent"/>
+            <text class="hp-icon" x="426" y="173" text-anchor="middle" dominant-baseline="middle">&#9654;</text>
+            <text class="hp-label" x="426" y="189" text-anchor="middle">Imagefilm</text>
+          </g>
+
+          <!-- BTN 1: rechts — TV-Spot (schmales Hex, Text gedreht) -->
+          <g class="hex-btn" data-track="1">
+            <g clip-path="url(#hpC1)">
+              <polygon class="hp-bg" points="463,245 508,228 533,285 533,335 508,392 463,375"/>
+            </g>
+            <polygon points="463,245 508,228 533,285 533,335 508,392 463,375"
+                     fill="none" stroke="rgba(91,184,180,0.55)" stroke-width="1.5"/>
+            <polygon points="463,245 508,228 533,285 533,335 508,392 463,375" fill="transparent"/>
+            <text class="hp-icon" x="501" y="300" text-anchor="middle" dominant-baseline="middle">&#9654;</text>
+            <text class="hp-label" x="501" y="320" text-anchor="middle"
+                  transform="rotate(-90,501,320)">TV-Spot</text>
+          </g>
+
+          <!-- BTN 2: unten-rechts — Infomercial -->
+          <g class="hex-btn" data-track="2">
+            <g clip-path="url(#hpC2)">
+              <polygon class="hp-bg" points="463,375 500,406 463,456 420,481 358,488 350,440"/>
+            </g>
+            <polygon points="463,375 500,406 463,456 420,481 358,488 350,440"
+                     fill="none" stroke="rgba(91,184,180,0.55)" stroke-width="1.5"/>
+            <polygon points="463,375 500,406 463,456 420,481 358,488 350,440" fill="transparent"/>
+            <text class="hp-icon" x="426" y="436" text-anchor="middle" dominant-baseline="middle">&#9654;</text>
+            <text class="hp-label" x="426" y="452" text-anchor="middle">Infomercial</text>
+          </g>
+
+          <!-- BTN 3: unten-links — Radio-Spot -->
+          <g class="hex-btn" data-track="3">
+            <g clip-path="url(#hpC3)">
+              <polygon class="hp-bg" points="350,440 342,488 280,481 237,456 200,406 237,375"/>
+            </g>
+            <polygon points="350,440 342,488 280,481 237,456 200,406 237,375"
+                     fill="none" stroke="rgba(91,184,180,0.55)" stroke-width="1.5"/>
+            <polygon points="350,440 342,488 280,481 237,456 200,406 237,375" fill="transparent"/>
+            <text class="hp-icon" x="274" y="436" text-anchor="middle" dominant-baseline="middle">&#9654;</text>
+            <text class="hp-label" x="274" y="452" text-anchor="middle">Radio-Spot</text>
+          </g>
+
+          <!-- BTN 4: links — Stationvoice (schmales Hex, Text gedreht) -->
+          <g class="hex-btn" data-track="4">
+            <g clip-path="url(#hpC4)">
+              <polygon class="hp-bg" points="237,375 192,392 167,335 167,285 192,228 237,245"/>
+            </g>
+            <polygon points="237,375 192,392 167,335 167,285 192,228 237,245"
+                     fill="none" stroke="rgba(91,184,180,0.55)" stroke-width="1.5"/>
+            <polygon points="237,375 192,392 167,335 167,285 192,228 237,245" fill="transparent"/>
+            <text class="hp-icon" x="199" y="300" text-anchor="middle" dominant-baseline="middle">&#9654;</text>
+            <text class="hp-label" x="199" y="320" text-anchor="middle"
+                  transform="rotate(90,199,320)">Stationvoice</text>
+          </g>
+
+          <!-- BTN 5: oben-links — Werbung Dummy -->
+          <g class="hex-btn" data-track="5">
+            <g clip-path="url(#hpC5)">
+              <polygon class="hp-bg" points="237,245 200,214 237,164 280,139 342,132 350,180"/>
+            </g>
+            <polygon points="237,245 200,214 237,164 280,139 342,132 350,180"
+                     fill="none" stroke="rgba(91,184,180,0.55)" stroke-width="1.5"/>
+            <polygon points="237,245 200,214 237,164 280,139 342,132 350,180" fill="transparent"/>
+            <text class="hp-icon" x="274" y="170" text-anchor="middle" dominant-baseline="middle">&#9654;</text>
+            <text class="hp-label" x="274" y="185" text-anchor="middle">Werbung</text>
+            <text class="hp-label" x="274" y="196" text-anchor="middle">Dummy</text>
+          </g>
+        </svg>
       </div>
     </div>
   </section>
@@ -1713,6 +1767,79 @@
           .catch(function(err) { console.warn('Weltkarte konnte nicht geladen werden:', err); });
       };
       document.head.appendChild(topoScript);
+    })();
+
+    /* ── Hex Audio Player ─────────────────────────────────────── */
+    (function() {
+      const files = [
+        'audio/Imagefilm.m4a',      // track 0 – oben-rechts
+        'audio/TV-Spot.m4a',        // track 1 – rechts
+        'audio/Infomercial.m4a',    // track 2 – unten-rechts
+        'audio/Radio-Spot.m4a',     // track 3 – unten-links
+        'audio/Stationvoice.m4a',   // track 4 – links
+        'audio/Werbung_Dummy.m4a',  // track 5 – oben-links
+      ];
+
+      const audios = files.map(src => {
+        const a = new Audio();
+        a.src = src;
+        a.preload = 'none';
+        return a;
+      });
+
+      let currentIdx = -1;
+
+      function getBtn(idx) {
+        return document.querySelector('.hex-btn[data-track="' + idx + '"]');
+      }
+
+      function resetBtn(idx) {
+        const btn = getBtn(idx);
+        if (!btn) return;
+        btn.querySelector('.hp-icon').textContent = '▶';
+        btn.classList.remove('playing');
+      }
+
+      function activateBtn(idx) {
+        const btn = getBtn(idx);
+        if (!btn) return;
+        btn.querySelector('.hp-icon').textContent = '⏸';
+        btn.classList.add('playing');
+      }
+
+      document.querySelectorAll('.hex-btn').forEach(function(btn) {
+        var idx = parseInt(btn.dataset.track, 10);
+
+        audios[idx].addEventListener('ended', function() {
+          resetBtn(idx);
+          if (currentIdx === idx) currentIdx = -1;
+        });
+
+        btn.addEventListener('click', function() {
+          if (currentIdx === idx) {
+            // Gleicher Track: Play/Pause umschalten
+            if (audios[idx].paused) {
+              audios[idx].play();
+              activateBtn(idx);
+            } else {
+              audios[idx].pause();
+              resetBtn(idx);
+              currentIdx = -1;
+            }
+          } else {
+            // Anderen Track stoppen
+            if (currentIdx >= 0) {
+              audios[currentIdx].pause();
+              audios[currentIdx].currentTime = 0;
+              resetBtn(currentIdx);
+            }
+            // Neuen Track starten
+            audios[idx].play();
+            activateBtn(idx);
+            currentIdx = idx;
+          }
+        });
+      });
     })();
 
   </script>
