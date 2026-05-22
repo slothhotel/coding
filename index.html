@@ -523,12 +523,17 @@
     .hp-nav-btn:hover circle { fill: rgba(91,184,180,0.30); }
     .hp-outer-label {
       font-size: 11px;
-      fill: #1a2a35;
+      fill: rgba(255,255,255,0.95);
       font-family: var(--font);
+      font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.12em;
       pointer-events: none;
       user-select: none;
+      paint-order: stroke fill;
+      stroke: rgba(0,0,0,0.55);
+      stroke-width: 3px;
+      stroke-linejoin: round;
     }
     .hp-track-name {
       font-size: 10px;
@@ -1190,10 +1195,17 @@
       <div class="wheel-player-wrap fade-up">
         <svg id="hexPlayer" viewBox="0 0 700 755" xmlns="http://www.w3.org/2000/svg" aria-label="Hörproben">
           <defs>
-            <!-- Clip für Mittelwabe -->
+            <!-- Clip Mittelwabe -->
             <clipPath id="hpCCC">
               <polygon points="445,440 397.5,357.75 302.5,357.75 255,440 302.5,522.25 397.5,522.25"/>
             </clipPath>
+            <!-- Clips Außenwaben (rotieren mit dem Ring) -->
+            <clipPath id="hpCS0"><polygon points="445,275.5 397.5,193.25 302.5,193.25 255,275.5 302.5,357.75 397.5,357.75"/></clipPath>
+            <clipPath id="hpCS1"><polygon points="587.5,357.75 540,275.5 445,275.5 397.5,357.75 445,440 540,440"/></clipPath>
+            <clipPath id="hpCS2"><polygon points="587.5,522.25 540,440 445,440 397.5,522.25 445,604.5 540,604.5"/></clipPath>
+            <clipPath id="hpCS3"><polygon points="445,604.5 397.5,522.25 302.5,522.25 255,604.5 302.5,686.75 397.5,686.75"/></clipPath>
+            <clipPath id="hpCS4"><polygon points="302.5,522.25 255,604.5 160,604.5 112.5,522.25 160,440 255,440"/></clipPath>
+            <clipPath id="hpCS5"><polygon points="302.5,357.75 255,440 160,440 112.5,357.75 160,275.5 255,275.5"/></clipPath>
           </defs>
 
           <!-- ── Zeiger + Track-Name ──────────────────────────── -->
@@ -1208,9 +1220,11 @@
           <g id="hexRing">
 
             <!-- Slot 0 – oben (Imagefilm) -->
-            <polygon class="hp-outer-bg"
-                     points="445,275.5 397.5,193.25 302.5,193.25 255,275.5 302.5,357.75 397.5,357.75"/>
-            <polygon fill="none" stroke="rgba(91,184,180,0.48)" stroke-width="1.5"
+            <g clip-path="url(#hpCS0)">
+              <image href="images/Audio-Player_02.jpg" x="255" y="193.25" width="190" height="164.5" preserveAspectRatio="xMidYMid slice"/>
+              <polygon points="445,275.5 397.5,193.25 302.5,193.25 255,275.5 302.5,357.75 397.5,357.75" fill="rgba(0,0,0,0.36)"/>
+            </g>
+            <polygon fill="none" stroke="rgba(91,184,180,0.62)" stroke-width="1.5"
                      points="445,275.5 397.5,193.25 302.5,193.25 255,275.5 302.5,357.75 397.5,357.75"/>
             <g class="hp-label-group">
               <text class="hp-outer-label" x="350" y="275.5"
@@ -1218,9 +1232,11 @@
             </g>
 
             <!-- Slot 1 – oben-rechts (TV-Spot) -->
-            <polygon class="hp-outer-bg"
-                     points="587.5,357.75 540,275.5 445,275.5 397.5,357.75 445,440 540,440"/>
-            <polygon fill="none" stroke="rgba(91,184,180,0.48)" stroke-width="1.5"
+            <g clip-path="url(#hpCS1)">
+              <image href="images/Audio-Player_02.jpg" x="397.5" y="275.5" width="190" height="164.5" preserveAspectRatio="xMidYMid slice"/>
+              <polygon points="587.5,357.75 540,275.5 445,275.5 397.5,357.75 445,440 540,440" fill="rgba(0,0,0,0.36)"/>
+            </g>
+            <polygon fill="none" stroke="rgba(91,184,180,0.62)" stroke-width="1.5"
                      points="587.5,357.75 540,275.5 445,275.5 397.5,357.75 445,440 540,440"/>
             <g class="hp-label-group">
               <text class="hp-outer-label" x="492.5" y="357.75"
@@ -1228,9 +1244,11 @@
             </g>
 
             <!-- Slot 2 – unten-rechts (Infomercial) -->
-            <polygon class="hp-outer-bg"
-                     points="587.5,522.25 540,440 445,440 397.5,522.25 445,604.5 540,604.5"/>
-            <polygon fill="none" stroke="rgba(91,184,180,0.48)" stroke-width="1.5"
+            <g clip-path="url(#hpCS2)">
+              <image href="images/Audio-Player_02.jpg" x="397.5" y="440" width="190" height="164.5" preserveAspectRatio="xMidYMid slice"/>
+              <polygon points="587.5,522.25 540,440 445,440 397.5,522.25 445,604.5 540,604.5" fill="rgba(0,0,0,0.36)"/>
+            </g>
+            <polygon fill="none" stroke="rgba(91,184,180,0.62)" stroke-width="1.5"
                      points="587.5,522.25 540,440 445,440 397.5,522.25 445,604.5 540,604.5"/>
             <g class="hp-label-group">
               <text class="hp-outer-label" x="492.5" y="522.25"
@@ -1238,9 +1256,11 @@
             </g>
 
             <!-- Slot 3 – unten (Radio-Spot) -->
-            <polygon class="hp-outer-bg"
-                     points="445,604.5 397.5,522.25 302.5,522.25 255,604.5 302.5,686.75 397.5,686.75"/>
-            <polygon fill="none" stroke="rgba(91,184,180,0.48)" stroke-width="1.5"
+            <g clip-path="url(#hpCS3)">
+              <image href="images/Audio-Player_02.jpg" x="255" y="522.25" width="190" height="164.5" preserveAspectRatio="xMidYMid slice"/>
+              <polygon points="445,604.5 397.5,522.25 302.5,522.25 255,604.5 302.5,686.75 397.5,686.75" fill="rgba(0,0,0,0.36)"/>
+            </g>
+            <polygon fill="none" stroke="rgba(91,184,180,0.62)" stroke-width="1.5"
                      points="445,604.5 397.5,522.25 302.5,522.25 255,604.5 302.5,686.75 397.5,686.75"/>
             <g class="hp-label-group">
               <text class="hp-outer-label" x="350" y="604.5"
@@ -1248,9 +1268,11 @@
             </g>
 
             <!-- Slot 4 – unten-links (Stationvoice) -->
-            <polygon class="hp-outer-bg"
-                     points="302.5,522.25 255,604.5 160,604.5 112.5,522.25 160,440 255,440"/>
-            <polygon fill="none" stroke="rgba(91,184,180,0.48)" stroke-width="1.5"
+            <g clip-path="url(#hpCS4)">
+              <image href="images/Audio-Player_02.jpg" x="112.5" y="440" width="190" height="164.5" preserveAspectRatio="xMidYMid slice"/>
+              <polygon points="302.5,522.25 255,604.5 160,604.5 112.5,522.25 160,440 255,440" fill="rgba(0,0,0,0.36)"/>
+            </g>
+            <polygon fill="none" stroke="rgba(91,184,180,0.62)" stroke-width="1.5"
                      points="302.5,522.25 255,604.5 160,604.5 112.5,522.25 160,440 255,440"/>
             <g class="hp-label-group">
               <text class="hp-outer-label" x="207.5" y="522.25"
@@ -1258,9 +1280,11 @@
             </g>
 
             <!-- Slot 5 – oben-links (Werbung Dummy) -->
-            <polygon class="hp-outer-bg"
-                     points="302.5,357.75 255,440 160,440 112.5,357.75 160,275.5 255,275.5"/>
-            <polygon fill="none" stroke="rgba(91,184,180,0.48)" stroke-width="1.5"
+            <g clip-path="url(#hpCS5)">
+              <image href="images/Audio-Player_02.jpg" x="112.5" y="275.5" width="190" height="164.5" preserveAspectRatio="xMidYMid slice"/>
+              <polygon points="302.5,357.75 255,440 160,440 112.5,357.75 160,275.5 255,275.5" fill="rgba(0,0,0,0.36)"/>
+            </g>
+            <polygon fill="none" stroke="rgba(91,184,180,0.62)" stroke-width="1.5"
                      points="302.5,357.75 255,440 160,440 112.5,357.75 160,275.5 255,275.5"/>
             <g class="hp-label-group">
               <text class="hp-outer-label" x="207.5" y="350.75"
@@ -1273,17 +1297,9 @@
 
           <!-- ── Mittelwabe (fest, über Ring gezeichnet) ────── -->
           <g id="hpCenterHex" class="hp-center-hex">
-            <!-- Foto -->
-            <g clip-path="url(#hpCCC)">
-              <image href="images/Audio-Player.png"
-                     x="255" y="357.75" width="190" height="164.5"
-                     preserveAspectRatio="xMidYMid slice"/>
-            </g>
-            <!-- Overlay für Icon-Lesbarkeit -->
-            <g clip-path="url(#hpCCC)">
-              <polygon points="445,440 397.5,357.75 302.5,357.75 255,440 302.5,522.25 397.5,522.25"
-                       fill="rgba(0,0,0,0.22)"/>
-            </g>
+            <!-- Dunkle Füllung -->
+            <polygon points="445,440 397.5,357.75 302.5,357.75 255,440 302.5,522.25 397.5,522.25"
+                     fill="#152333"/>
             <!-- Rahmen -->
             <polygon points="445,440 397.5,357.75 302.5,357.75 255,440 302.5,522.25 397.5,522.25"
                      fill="none" stroke="#5bb8b4" stroke-width="3"/>
