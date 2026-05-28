@@ -469,6 +469,115 @@
       border: 0;
     }
 
+    /* ── Filmografie Tab & Panel ────────────────────────────────── */
+    .filmografie-tab-frame {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 210px;
+      height: 54px;
+      clip-path: polygon(0% 0%, calc(100% - 27px) 0%, 100% 50%, calc(100% - 27px) 100%, 0% 100%);
+      background: rgba(91,184,180,0.85);
+      padding: 2px;
+      box-sizing: border-box;
+    }
+    .filmografie-tab {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      clip-path: polygon(0% 0%, calc(100% - 24px) 0%, 100% 50%, calc(100% - 24px) 100%, 0% 100%);
+      background: rgba(12,24,32,0.75);
+      border: none;
+      cursor: pointer;
+      font-family: var(--font);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-lighter);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-right: 18px;
+      transition: background 0.2s;
+    }
+    .filmografie-tab:hover { background: rgba(255,255,255,0.15); }
+    .filmografie-tab.open  { background: rgba(255,255,255,0.20); color: var(--tq-light); }
+
+    .filmografie-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.55s cubic-bezier(0.4,0,0.2,1);
+      background: var(--dark-1);
+    }
+    .filmografie-panel.open { max-height: 3000px; }
+
+    .filmografie-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 52px 40px 64px;
+    }
+    .filmografie-section-title {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--tq);
+      margin-bottom: 16px;
+      margin-top: 36px;
+      border-bottom: 1px solid rgba(91,184,180,0.2);
+      padding-bottom: 8px;
+    }
+    .filmografie-section-title:first-child { margin-top: 0; }
+    .filmografie-intro {
+      font-size: 0.88rem;
+      color: var(--text-light);
+      line-height: 1.8;
+    }
+    .filmografie-intro + .filmografie-intro { margin-top: 10px; }
+    .filmografie-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+    .filmografie-table tr { border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .filmografie-table tr:last-child { border-bottom: none; }
+    .filmografie-table td {
+      padding: 13px 0;
+      vertical-align: top;
+      line-height: 1.6;
+    }
+    .filmografie-table td:first-child {
+      width: 56px;
+      font-size: 0.73rem;
+      color: var(--grey);
+      letter-spacing: 0.05em;
+      padding-right: 18px;
+      white-space: nowrap;
+    }
+    .filmografie-table td:nth-child(2) {
+      width: 280px;
+      padding-right: 32px;
+    }
+    .ft-title {
+      font-weight: 600;
+      color: var(--text-lighter);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      font-size: 0.82rem;
+    }
+    .ft-meta {
+      font-size: 0.77rem;
+      color: var(--grey);
+      margin-top: 2px;
+    }
+    .ft-awards {
+      font-size: 0.78rem;
+      color: var(--tq-light);
+      line-height: 1.75;
+    }
+
     /* ── SECTION 4: VOICE ──────────────────────────────────────── */
 
     #voice {
@@ -1210,7 +1319,144 @@
       </div>
 
     </div>
+
+    <!-- Filmografie-Tab (Reiter unten links, Spitze zeigt rechts) -->
+    <div class="filmografie-tab-frame">
+      <button class="filmografie-tab" id="filmografie-tab" aria-expanded="false" aria-controls="filmografie-panel">
+        Filmografie
+      </button>
+    </div>
   </section>
+
+  <!-- Filmografie Aufklapp-Panel -->
+  <div class="filmografie-panel" id="filmografie-panel" role="region">
+    <div class="filmografie-inner">
+
+      <div class="filmografie-section-title">Auswahl</div>
+      <p class="filmografie-intro"><strong style="color:var(--text-lighter)">Werbung:</strong> u.&thinsp;a. Siemens, Amnesty International, Pickup, Sixt, Postcode Lotterie, Joop</p>
+      <p class="filmografie-intro"><strong style="color:var(--text-lighter)">Musikvideos:</strong> Selig, Andreas Bourani, Mark Forster &amp; Felix Jaehn, Angus &amp; Julia Stone, Kilian &amp; Jo, u.&thinsp;v.&thinsp;m.</p>
+      <p class="filmografie-intro" style="margin-top:10px">Für die <strong style="color:var(--text-lighter)">Deutsche Grammophon</strong> und <strong style="color:var(--text-lighter)">Decca</strong> verantwortete ich als Kameramann, Regisseur und Produzent EPKs und Livemitschnitte von Künstlern wie Olafur Arnalds, Li Yundi, Alice Sara Ott, Valery Afanassiev und Andreas Ottensamer.</p>
+
+      <div class="filmografie-section-title">Filmographie (Auswahl)</div>
+      <table class="filmografie-table">
+        <tr>
+          <td>2012</td>
+          <td>
+            <div class="ft-title">MA VIE – MEIN LEBEN</div>
+            <div class="ft-meta">Dokumentarfilm · Regie: Marcel Wehn · 53 Min.</div>
+          </td>
+          <td class="ft-awards">ARTE, RBB</td>
+        </tr>
+        <tr>
+          <td>2012</td>
+          <td>
+            <div class="ft-title">KANN JA NOCH KOMMEN</div>
+            <div class="ft-meta">Kurzfilm · Regie: Philipp Doering · 15 Min.</div>
+          </td>
+          <td class="ft-awards">
+            Hauptpreis: Bester Kurzfilm, Filmkunstfest Schwerin 2014<br>
+            Publikumspreis, Filmfest Dresden<br>
+            Goldener Storch, Wendland Shorts 2013
+          </td>
+        </tr>
+        <tr>
+          <td>2012</td>
+          <td>
+            <div class="ft-title">FOREVER ANGEL</div>
+            <div class="ft-meta">Dokumentarfilm · Regie: Marcel Wehn · 90 Min. · 2. Kamera</div>
+          </td>
+          <td class="ft-awards">ARD, RBB, ARTE</td>
+        </tr>
+        <tr>
+          <td>2011</td>
+          <td>
+            <div class="ft-title">NAGEL ZUM SARG</div>
+            <div class="ft-meta">Kurzfilm · Regie: Philipp Döring · 28 Min.</div>
+          </td>
+          <td class="ft-awards">
+            Goldener Reiter, Int. Filmfest Dresden 2012<br>
+            Prädikat: besonders wertvoll
+          </td>
+        </tr>
+        <tr>
+          <td>2009</td>
+          <td>
+            <div class="ft-title">WAY OF MONEY</div>
+            <div class="ft-meta">Werbespot · Regie: T. Braun · 1 Min.</div>
+          </td>
+          <td class="ft-awards">
+            Silver, Young Directors Award Cannes 2009<br>
+            Best Creative Commercial, L.A. Short Film Festival 2010<br>
+            Finalist, New York Int. Advertising Award 2010<br>
+            Finalist, First Steps 2009<br>
+            Bronze, „Die Klappe" Hamburg 2010
+          </td>
+        </tr>
+        <tr>
+          <td>2009</td>
+          <td>
+            <div class="ft-title">DAS RUDEL</div>
+            <div class="ft-meta">Dokumentarfilm · Regie: Alexander Schimpke · 47 Min.</div>
+          </td>
+          <td class="ft-awards">Dok Leipzig – Lobende Erwähnung</td>
+        </tr>
+        <tr>
+          <td>2009</td>
+          <td>
+            <div class="ft-title">IZ ON TOUR</div>
+            <div class="ft-meta">Konzert-DVD · Xavier Naidoo &amp; Söhne Mannheims · Regie: Daniel Lwowski</div>
+          </td>
+          <td class="ft-awards">Camera Operator</td>
+        </tr>
+        <tr>
+          <td>2008</td>
+          <td>
+            <div class="ft-title">AUSGESTOSSEN</div>
+            <div class="ft-meta">Kurzfilm · Regie: H. Schweier · 9 Min. · 16mm</div>
+          </td>
+          <td class="ft-awards">
+            Hofer Filmtage 2008<br>
+            Filmfestspiele Biberach 2009<br>
+            Filmfest Max Ophüls 2008<br>
+            Int. Shortfilmfest „inthepalace" Bulgarien 2008<br>
+            ARTE / SWR
+          </td>
+        </tr>
+        <tr>
+          <td>2007</td>
+          <td>
+            <div class="ft-title">LOST PARADISE</div>
+            <div class="ft-meta">Dokumentarfilm · Regie: S. Heinzel · 60 Min. · 16mm</div>
+          </td>
+          <td class="ft-awards">
+            Int. Filmfest Sofia 2008<br>
+            Int. Dokumentarfilmfest Kassel 2008
+          </td>
+        </tr>
+        <tr>
+          <td>2007</td>
+          <td>
+            <div class="ft-title">METABO / NAHAUFNAHMEN</div>
+            <div class="ft-meta">Imagefilm · Regie: S. Heinzel · 6 Min. · 16mm</div>
+          </td>
+          <td class="ft-awards">Econ Award 2007</td>
+        </tr>
+        <tr>
+          <td>2006</td>
+          <td>
+            <div class="ft-title">DERYA</div>
+            <div class="ft-meta">Dokumentarfilm · Regie: S. Heinzel · 40 Min. · 16mm</div>
+          </td>
+          <td class="ft-awards">
+            Prädikat: wertvoll<br>
+            Kurzfilme des Monats, Nov. 2006<br>
+            ZDF Dokukanal
+          </td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
 
   <!-- ── DIVIDER: Cinematography → Voice ───────────────────── -->
   <div class="hex-divider" aria-hidden="true"></div>
@@ -1623,6 +1869,15 @@
       const open = cvPanel.classList.toggle('open');
       cvTab.classList.toggle('open', open);
       cvTab.setAttribute('aria-expanded', open);
+    });
+
+    /* Filmografie aufklappen */
+    const filmTab   = document.getElementById('filmografie-tab');
+    const filmPanel = document.getElementById('filmografie-panel');
+    filmTab.addEventListener('click', () => {
+      const open = filmPanel.classList.toggle('open');
+      filmTab.classList.toggle('open', open);
+      filmTab.setAttribute('aria-expanded', open);
     });
 
     /* Fade-in beim Scrollen */
