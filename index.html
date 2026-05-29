@@ -1993,19 +1993,31 @@
     /* Lebenslauf aufklappen */
     const cvTab = document.getElementById('cv-tab');
     const cvPanel = document.getElementById('cv-panel');
-    cvTab.addEventListener('click', () => {
+    function toggleCV() {
       const open = cvPanel.classList.toggle('open');
       cvTab.classList.toggle('open', open);
       cvTab.setAttribute('aria-expanded', open);
+    }
+    cvTab.addEventListener('click', toggleCV);
+    /* iOS Safari-Fallback */
+    cvTab.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      toggleCV();
     });
 
     /* Filmografie aufklappen */
     const filmTab   = document.getElementById('filmografie-tab');
     const filmPanel = document.getElementById('filmografie-panel');
-    filmTab.addEventListener('click', () => {
+    function toggleFilmografie() {
       const open = filmPanel.classList.toggle('open');
       filmTab.classList.toggle('open', open);
       filmTab.setAttribute('aria-expanded', open);
+    }
+    filmTab.addEventListener('click', toggleFilmografie);
+    /* iOS Safari-Fallback: touchend explizit binden */
+    filmTab.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      toggleFilmografie();
     });
 
     /* Fade-in beim Scrollen */
