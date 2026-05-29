@@ -427,7 +427,7 @@
 
     /* ── SECTION 3: CINEMATOGRAPHY ─────────────────────────────── */
 
-    #cinematography { background: transparent; }
+    #cinematography { background: transparent; overflow: visible; }
 
     #cinematography .section-label { color: var(--tq-light); }
     #cinematography .section-title { color: var(--text-lighter); }
@@ -482,6 +482,7 @@
       background: rgba(91,184,180,0.85);
       padding: 2px;
       box-sizing: border-box;
+      pointer-events: none; /* iOS Safari: clip-path blockiert sonst Touch auf Kindelementen */
     }
     .filmografie-tab {
       position: relative;
@@ -489,6 +490,8 @@
       height: 100%;
       clip-path: polygon(0% 0%, calc(100% - 24px) 0%, 100% 50%, calc(100% - 24px) 100%, 0% 100%);
       background: rgba(12,24,32,0.42);
+      pointer-events: auto; /* Touch-Events explizit aktivieren */
+      touch-action: manipulation;
       border: none;
       cursor: pointer;
       font-family: var(--font);
@@ -1833,6 +1836,12 @@
 
       function snap() {
         const W = window.innerWidth, H = window.innerHeight;
+        // Auf mobilen Screens einfach fest an die rechte untere Ecke pinnen
+        if (W < 600) {
+          btn.style.right  = '12px';
+          btn.style.bottom = '24px';
+          return;
+        }
         // Ziel: die Wabe, die am nächsten zur unteren rechten Ecke liegt
         const tx = W - BW / 2 - 58; // eine Wabe nach links versetzt
         const ty = H - BH / 2 - 6;
