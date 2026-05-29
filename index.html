@@ -338,18 +338,26 @@
       align-items: start;
     }
 
-    /* Tablet Hochformat: 2 Spalten, Portrait rechts, Formen darunter */
+    /* Tablet Querformat: Formen leicht nach links (Desktop-Layout bleibt) */
+    @media (min-width: 900px) and (max-width: 1200px) {
+      .geo-ring-1 { right: 80px; }
+      .geo-ring-2 { right: 50px; }
+      .geo-disk   { right: 150px; }
+      .geo-line-h { right: 190px; }
+    }
+
+    /* Tablet Hochformat: 2 Spalten, Portrait + Formen weiter unten/rechts */
     @media (min-width: 601px) and (max-width: 900px) {
       .about-grid { grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
-      .about-geo { height: 480px; }
-      /* Portrait oben zentriert in rechter Spalte */
-      .hex-portrait { top: 16px; right: auto; left: 50%; transform: translateX(-50%); }
-      /* Dekorationsformen: links in rechter Spalte, nah am Text */
-      .geo-ring-1 { top: 290px; right: auto; left: -30px; transform: none; }
-      .geo-ring-2 { top: 260px; right: auto; left: -60px; transform: none; }
-      .geo-disk   { top: 300px; right: auto; left: 40px;  transform: none; }
-      .geo-sq     { bottom: auto; top: 390px; left: 10px; transform: rotate(18deg); }
-      .geo-line-h { top: 280px; left: 60px; transform: none; }
+      .about-geo { height: 560px; }
+      /* Portrait weiter unten, rechtsbündig */
+      .hex-portrait { top: 80px; left: auto; right: 10px; transform: none; }
+      /* Formen: weiter unten und etwas nach rechts */
+      .geo-ring-1 { top: 370px; right: auto; left: 50px;  transform: none; }
+      .geo-ring-2 { top: 340px; right: auto; left: 20px;  transform: none; }
+      .geo-disk   { top: 380px; right: auto; left: 120px; transform: none; }
+      .geo-sq     { bottom: auto; top: 470px; left: 90px; transform: rotate(18deg); }
+      .geo-line-h { top: 360px; left: 140px; transform: none; }
     }
 
     @media (max-width: 600px) {
