@@ -483,6 +483,7 @@
       background: rgba(91,184,180,0.85);
       padding: 2px;
       box-sizing: border-box;
+      z-index: 10;
     }
     .filmografie-tab {
       position: relative;
@@ -1039,9 +1040,6 @@
         );
       }
       .cv-tab-frame { width: 160px; }
-      .filmografie-tab-frame { clip-path: none; border-radius: 0 6px 6px 0; }
-      .filmografie-tab { clip-path: none; border-radius: 0 4px 4px 0; }
-
       /* Filmografie-Tabelle: 3→2 Spalten (Jahr + Titel, Awards darunter) */
       .filmografie-table td:nth-child(2) { width: auto; padding-right: 0; }
       .filmografie-table td:nth-child(3) {
@@ -1102,8 +1100,8 @@
       .cv-table td:first-child { width: 90px; font-size: 0.7rem; }
 
       /* Filmografie-Tab */
-      .filmografie-tab-frame { width: 140px; height: 50px; clip-path: none; border-radius: 0 6px 6px 0; }
-      .filmografie-tab { font-size: 0.68rem; letter-spacing: 0.15em; padding-right: 14px; clip-path: none; border-radius: 0 4px 4px 0; }
+      .filmografie-tab-frame { width: 140px; height: 50px; }
+      .filmografie-tab { font-size: 0.68rem; letter-spacing: 0.15em; padding-right: 14px; }
 
       /* Filmografie-Tabelle: Jahr + Titel + Awards gestapelt */
       .filmografie-table { font-size: 0.8rem; }
