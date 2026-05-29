@@ -427,7 +427,8 @@
 
     /* ── SECTION 3: CINEMATOGRAPHY ─────────────────────────────── */
 
-    #cinematography { background: transparent; overflow: visible; }
+    #cinematography { background: transparent; }
+    .cine-wrap { position: relative; }
 
     #cinematography .section-label { color: var(--tq-light); }
     #cinematography .section-title { color: var(--text-lighter); }
@@ -1405,6 +1406,7 @@
   </section>
 
   <!-- ── 03 CINEMATOGRAPHY ──────────────────────────────────── -->
+  <div class="cine-wrap">
   <section id="cinematography">
     <div class="section-inner">
       <div class="section-label fade-up">03 — Showreel</div>
@@ -1440,14 +1442,15 @@
       </div>
 
     </div>
-
-    <!-- Filmografie-Tab (Reiter unten links, Spitze zeigt rechts) -->
-    <div class="filmografie-tab-frame">
-      <button class="filmografie-tab" id="filmografie-tab" aria-expanded="false" aria-controls="filmografie-panel">
-        Filmografie
-      </button>
-    </div>
   </section>
+
+  <!-- Filmografie-Tab (Reiter unten links, außerhalb section) -->
+  <div class="filmografie-tab-frame">
+    <button class="filmografie-tab" id="filmografie-tab" aria-expanded="false" aria-controls="filmografie-panel">
+      Filmografie
+    </button>
+  </div>
+  </div><!-- /.cine-wrap -->
 
   <!-- Filmografie Aufklapp-Panel -->
   <div class="filmografie-panel" id="filmografie-panel" role="region">
