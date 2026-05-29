@@ -1010,6 +1010,130 @@
       .section-inner { padding: 90px 24px; }
       .hero-corner { display: none; }
     }
+
+    /* ── Tablet (max 768px) ──────────────────────────────────────── */
+    @media (max-width: 768px) {
+      /* Allgemein */
+      .section-inner { padding: 80px 24px; }
+      .section-title { margin-bottom: 36px; }
+      .hex-divider { height: 60px; }
+
+      /* Hero */
+      .hero-subtitle {
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+      }
+
+      /* About */
+      .about-geo { height: 360px; }
+      .about-panel {
+        clip-path: polygon(
+          0% 0%, 100% 0%, 100% calc(100% - 54px),
+          calc(100% - 160px) calc(100% - 54px),
+          calc(100% - 187px) calc(100% - 27px),
+          calc(100% - 160px) 100%, 0% 100%
+        );
+      }
+      .cv-tab-frame { width: 160px; }
+
+      /* Filmografie-Tabelle: 3→2 Spalten (Jahr + Titel, Awards darunter) */
+      .filmografie-table td:nth-child(2) { width: auto; padding-right: 0; }
+      .filmografie-table td:nth-child(3) {
+        display: block;
+        padding-top: 2px;
+        padding-bottom: 10px;
+      }
+
+      /* Voice */
+      .voice-text-inner { padding: 80px 24px 24px; }
+      .voice-player-inner { padding: 0 16px 32px; }
+
+      /* Wheel Player: Pfeile nach innen rücken */
+      #hexPlayer { max-width: 100%; }
+
+      /* Foto-Bereiche */
+      .photo-upper .video-wrap { padding: 24px; }
+
+      /* Rock'n'Roll */
+      .rocknroll-text { font-size: 0.92rem; }
+
+      /* Footer */
+      footer { padding: 36px 20px 28px; }
+    }
+
+    /* ── Mobil (max 480px) ───────────────────────────────────────── */
+    @media (max-width: 480px) {
+      /* Allgemein */
+      .section-inner { padding: 64px 20px; }
+      .section-title { font-size: 1.4rem; margin-bottom: 28px; }
+      .hex-divider { height: 40px; }
+      .hero-corner { display: none; }
+
+      /* Hero Nav-Links: untereinander */
+      .hero-subtitle {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+      .hero-subtitle a { width: 200px; text-align: center; }
+
+      /* About Geo-Map: kleiner */
+      .about-geo { height: 260px; }
+
+      /* CV Tab: schmaler */
+      .about-panel {
+        clip-path: polygon(
+          0% 0%, 100% 0%, 100% calc(100% - 50px),
+          calc(100% - 140px) calc(100% - 50px),
+          calc(100% - 165px) calc(100% - 25px),
+          calc(100% - 140px) 100%, 0% 100%
+        );
+      }
+      .cv-tab-frame { width: 140px; height: 50px; }
+      .cv-tab { font-size: 0.68rem; letter-spacing: 0.15em; }
+
+      /* CV-Tabelle: Datumsspalte schmaler */
+      .cv-table td:first-child { width: 90px; font-size: 0.7rem; }
+
+      /* Filmografie-Tab */
+      .filmografie-tab-frame { width: 140px; height: 50px; }
+      .filmografie-tab { font-size: 0.68rem; letter-spacing: 0.15em; padding-right: 14px; }
+
+      /* Filmografie-Tabelle: Jahr + Titel + Awards gestapelt */
+      .filmografie-table { font-size: 0.8rem; }
+      .filmografie-table td:first-child { width: 44px; font-size: 0.7rem; }
+      .filmografie-table td:nth-child(2) { width: auto; padding-right: 0; }
+      .filmografie-table td:nth-child(3) {
+        display: block;
+        padding-top: 2px;
+        padding-bottom: 12px;
+        padding-left: 44px;
+      }
+
+      /* Voice */
+      .voice-text-inner { padding: 64px 20px 20px; }
+      .voice-player-inner { padding: 0 8px 24px; }
+      .voice-meta { gap: 6px; }
+      .voice-meta-tag { font-size: 0.6rem; padding: 4px 10px; }
+
+      /* Wheel Player */
+      #hexPlayer { max-width: 100%; }
+
+      /* Foto-Bereiche */
+      .photo-upper .video-wrap { padding: 16px; }
+      .photo-carousel-inner { aspect-ratio: 4/3; }
+
+      /* Musikbereich */
+      .rocknroll-text { font-size: 0.88rem; max-width: 100%; }
+      .btn-outline { width: 100%; justify-content: center; }
+
+      /* Footer */
+      footer { padding: 28px 16px 24px; font-size: 0.58rem; }
+
+      /* Schwebender Kontakt-Button: kleiner */
+      .contact-float { width: 42px; height: 48px; }
+    }
   </style>
 </head>
 <body>
