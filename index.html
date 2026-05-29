@@ -1446,7 +1446,8 @@
 
   <!-- Filmografie-Tab (Reiter unten links, außerhalb section) -->
   <div class="filmografie-tab-frame">
-    <button class="filmografie-tab" id="filmografie-tab" aria-expanded="false" aria-controls="filmografie-panel">
+    <button class="filmografie-tab" id="filmografie-tab" aria-expanded="false" aria-controls="filmografie-panel"
+      onclick="var p=document.getElementById('filmografie-panel');var o=p.classList.toggle('open');this.classList.toggle('open',o);this.setAttribute('aria-expanded',o);">
       Filmografie
     </button>
   </div>
