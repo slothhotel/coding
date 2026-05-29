@@ -344,12 +344,12 @@
       .about-geo { height: 480px; }
       /* Portrait oben zentriert in rechter Spalte */
       .hex-portrait { top: 16px; right: auto; left: 50%; transform: translateX(-50%); }
-      /* Dekorationsformen unterhalb des Portraits */
-      .geo-ring-1 { top: 290px; right: auto; left: 50%; transform: translateX(-20%); }
-      .geo-ring-2 { top: 260px; right: auto; left: 50%; transform: translateX(-50%); }
-      .geo-disk   { top: 300px; right: auto; left: 50%; transform: translateX(40%); }
-      .geo-sq     { bottom: auto; top: 390px; left: 50%; transform: translateX(-50%) rotate(18deg); }
-      .geo-line-h { top: 278px; left: 20%; transform: none; }
+      /* Dekorationsformen: links in rechter Spalte, nah am Text */
+      .geo-ring-1 { top: 290px; right: auto; left: -30px; transform: none; }
+      .geo-ring-2 { top: 260px; right: auto; left: -60px; transform: none; }
+      .geo-disk   { top: 300px; right: auto; left: 40px;  transform: none; }
+      .geo-sq     { bottom: auto; top: 390px; left: 10px; transform: rotate(18deg); }
+      .geo-line-h { top: 280px; left: 60px; transform: none; }
     }
 
     @media (max-width: 600px) {
